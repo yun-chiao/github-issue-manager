@@ -1,13 +1,12 @@
 import { BiEdit, BiTrashAlt } from "react-icons/bi";
 import { Menu, MenuItem } from '@szhsin/react-menu';
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { closeIssue } from '../service';
 
 function IssueCard({ issue }) {
     const [tmpState, setTmpState] = useState('');
     const [textColor, setTextColor] = useState('');
-    const token = useSelector(state => state.tokenReducer.token);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -29,7 +28,7 @@ function IssueCard({ issue }) {
     }
 
     const deleteIssue = () => {
-        closeIssue(dispatch, token, issue.number);
+        closeIssue(dispatch, issue.number);
     }
     return (
         <div className="bg-white h-40 w-full my-4 rounded-xl shrink-0 pt-6">

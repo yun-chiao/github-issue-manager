@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { getToken } from '../service';
 import { useNavigate } from "react-router-dom";
 
 function Login() {
     const client_id = process.env.REACT_APP_CLIENT_ID
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -13,9 +11,9 @@ function Login() {
       const urlParams = new URLSearchParams(queryString);
       let code = urlParams.get("code");
       if (code !== null){
-          getToken(dispatch, navigate, code)
+          getToken(navigate, code)
       }
-    }, [dispatch, navigate])
+    }, [navigate])
     const login = async() => window.location = `https://github.com/login/oauth/authorize?client_id=${client_id}&amp;scope=repo`;
     
 

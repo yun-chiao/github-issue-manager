@@ -6,19 +6,18 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import "./Issues.css"
 
 function Issues() {
-    const token = useSelector(state => state.tokenReducer.token);
     const issues = useSelector(state => state.issuesReducer.issues);
     const hasMore = useSelector(state => state.hasMoreReducer.hasMore);
     const [page, setPage] = useState(1);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        getIssues(dispatch, token, page);
+        getIssues(dispatch, page);
         setPage(page+1);
-    }, [dispatch, token])
+    }, [dispatch])
 
     const fetchMoreIssues = () => {
-        getIssues(dispatch, token, page);
+        getIssues(dispatch, page);
         setPage(page+1);
     }
 

@@ -5,8 +5,9 @@ const client_id = process.env.REACT_APP_CLIENT_ID
 const client_secret = process.env.REACT_APP_CLIENT_SECRET
 const owner = "yun-chiao"
 const repo = "dcard-frontend-hw"
+let token = null;
 
-export const getToken = async (dispatch, navigate, code) => {
+export const getToken = async (navigate, code) => {
     try {
         const response = await axios.post('https://github.com/login/oauth/access_token', {
           client_id,
@@ -17,14 +18,14 @@ export const getToken = async (dispatch, navigate, code) => {
             accept: 'application/json'
           }
         });
-        dispatch({ type: 'GET_TOKEN', payload: { token: response.data.access_token } })
+        token = response.data.access_token;
         navigate("/issues");
       } catch (error) {
         console.error(error);
       }
 }
 
-export const getIssues = async (dispatch, token, page) => {
+export const getIssues = async (dispatch, page) => {
     try {
         const octokit = new Octokit({
             auth: token
@@ -52,7 +53,7 @@ export const getIssues = async (dispatch, token, page) => {
     }
 }
 
-export const closeIssue = async (dispatch, token, issue_number) => {
+export const closeIssue = async (dispatch, issue_number) => {
     try {
         const octokit = new Octokit({
             auth: token
