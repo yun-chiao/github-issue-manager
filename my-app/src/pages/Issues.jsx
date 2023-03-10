@@ -24,10 +24,10 @@ function Issues() {
 
     return (
         <div className="bg-sky-900 w-full h-full flex justify-center min-h-screen">
-            <div className="bg-white w-1/4 h-full flex flex-col items-center divide-y min-h-screen">
+            <div className="bg-white w-1/4 h-full flex flex-col items-center min-h-screen">
                 <InfiniteScroll  
                     style={{"overflow": "hidden"}}
-                    className='overflow-hidden'
+                    className='divide-y'
                     dataLength={issues.length}
                     next={fetchMoreIssues}
                     hasMore={hasMore}
