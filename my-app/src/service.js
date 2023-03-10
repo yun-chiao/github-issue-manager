@@ -69,3 +69,28 @@ export const closeIssue = async (dispatch, issue_number) => {
     console.error(error);
     }
 }
+
+export const updateState = async (dispatch, issue_number, newState, labels) => {
+  const states = ["Open", "Progressing", "Done"];
+
+  let newLabels = [ {name: newState}, ...labels.filter( label => !states.includes(label.name))]
+
+  try {
+      const octokit = new Octokit({
+          auth: token
+        })
+
+      await octokit.request(`PATCH /repos/${owner}/${repo}/issues/${issue_number}`, {
+        owner,
+        repo,
+        issue_number,
+        labels: newLabels,
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28'
+        }
+      })
+      dispatch({type: 'UPDATE_STATE', payload: { issue_number, labels: newLabels } })
+  } catch (error) {
+  console.error(error);
+  }
+}

@@ -19,6 +19,16 @@ export const issuesReducer = (state = issuesState, action) => {
             return{
                 issues: state.issues.filter( item => item.number !== action.payload.closed_number)
             }
+        case 'UPDATE_STATE':
+            return{
+                issues: state.issues.map(item => {
+                            if (item.number === action.payload.issue_number) {
+                                // 在需要更新的元素上應用所需的更改
+                                return { ...item, labels: action.payload.labels };
+                            }
+                            return item;
+                        })
+            }
       default:
         return state;
     }

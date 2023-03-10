@@ -2,45 +2,62 @@ import { BiEdit, BiTrashAlt } from "react-icons/bi";
 import { Menu, MenuItem } from '@szhsin/react-menu';
 import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
-import { closeIssue } from '../service';
+import { closeIssue, updateState } from '../service';
+
+// Define kinds of displaying label.
+const states = ["Open", "Progressing", "Done"];
+
+// Define text's color for different labels.
+const LABEL_COLOR = {
+    "Open": "text-gray-500",
+    "Progressing": "text-red-500",
+    "Done": "text-green-500",
+}
 
 function IssueCard({ issue }) {
-    const [tmpState, setTmpState] = useState('');
+
     const [textColor, setTextColor] = useState('');
+    const [labelText, setLabelText] = useState('')
     const dispatch = useDispatch();
 
+    /// To initial state view.
     useEffect(() => {
-        setTmpState(issue.state);
-    }, [])
+        let label = issue.labels.filter( label => states.includes(label.name));
+        label = label.length === 0? "Open" : label[0];
+        if(label.name === "Progressing"){
+            setLabelText("Progressing");
+            setTextColor(LABEL_COLOR.Progressing);      
+        }else if(label.name === "Done"){
+            setLabelText("Done");
+            setTextColor(LABEL_COLOR.Done);   
+        }else{
+            setLabelText("Open");
+            setTextColor(LABEL_COLOR.Open);             
+        }   
+    }, [issue])
 
-    useEffect(() => {
-        if(tmpState === "Open"){
-            setTextColor("text-gray-500");
-        }else if(tmpState === "In Progress"){
-            setTextColor("text-red-500");
-        }else if(tmpState === "Done"){
-            setTextColor("text-green-500");
-        }
-    }, [tmpState])
-
+    /// To change the text for displaying state.
     const ChangeState = (e) => {
-        setTmpState(e.syntheticEvent.target.innerText)
+        let label = e.syntheticEvent.target.innerText;
+        updateState(dispatch, issue.number, label, issue.labels)
     }
 
+    /// To close the issue when users click the trash icon.
     const deleteIssue = () => {
         closeIssue(dispatch, issue.number);
     }
+
     return (
         <div className="bg-white h-40 w-full my-4 rounded-xl shrink-0 pt-6">
             <div className="w-full h-1/4 flex items-center justify-between pl-7 pr-4">
                 <Menu menuClassName="bg-slate-100 w-28 h-28 p-2 rounded-md flex flex-col justify-evenly"
                       direction="right"
                       offsetX={12}
-                      menuButton={<button className={`bg-slate-100 w-24 h-full rounded-md hover:bg-slate-400 ${textColor}`}>{tmpState}</button>} 
+                      menuButton={<button className={`bg-slate-100 w-24 h-full rounded-md hover:bg-slate-400 ${textColor}`}>{labelText}</button>} 
                       transition
                 >
                     <MenuItem className="text-gray-500 state-item" onClick={(e) => ChangeState(e)}>Open</MenuItem>
-                    <MenuItem className="text-red-500 state-item" onClick={(e) => ChangeState(e)}>In Progress</MenuItem>
+                    <MenuItem className="text-red-500 state-item" onClick={(e) => ChangeState(e)}>Progressing</MenuItem>
                     <MenuItem className="text-green-500 state-item" onClick={(e) => ChangeState(e)}>Done</MenuItem>
                 </Menu>
                 
