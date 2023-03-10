@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .state-item{
+        @apply h-12 flex items-center hover:cursor-pointer hover:bg-slate-300;
+    }
+}
