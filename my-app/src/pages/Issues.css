@@ -1,0 +1,5 @@
+/* To solve the css problem for infinite-scroll-component__outerdiv 
+which auto-genarated by infinite-scroll-component */
+.infinite-scroll-component__outerdiv {
+    width: 100%;
+}
