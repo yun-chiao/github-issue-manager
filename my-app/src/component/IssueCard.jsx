@@ -25,7 +25,7 @@ function IssueCard({ issue }) {
     const navigate = useNavigate();
 
     const editIssue = () => {
-        navigate(`/issue/${issue.number}`);
+        navigate(`/edit/${issue.number}`);
     }
     
     /// To initial state view.
