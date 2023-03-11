@@ -14,7 +14,9 @@ function Issues() {
     useEffect(() => {
         getIssues(dispatch, page);
         setPage(page+1);
-    }, [dispatch])
+        console.log('getIssues')
+        console.log(issues)
+    }, [])
 
     const fetchMoreIssues = () => {
         getIssues(dispatch, page);

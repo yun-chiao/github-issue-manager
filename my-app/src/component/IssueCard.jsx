@@ -3,6 +3,7 @@ import { Menu, MenuItem } from '@szhsin/react-menu';
 import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
 import { closeIssue, updateState } from '../service';
+import { useNavigate } from "react-router-dom";
 import ReactMarkdown from 'react-markdown';
 import 'github-markdown-css/github-markdown.css';
 
@@ -21,7 +22,12 @@ function IssueCard({ issue }) {
     const [textColor, setTextColor] = useState('');
     const [labelText, setLabelText] = useState('')
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
+    const editIssue = () => {
+        navigate(`/issue/${issue.number}`);
+    }
+    
     /// To initial state view.
     useEffect(() => {
         let label = issue.labels.filter( label => states.includes(label.name));
@@ -64,7 +70,7 @@ function IssueCard({ issue }) {
                 </Menu>
                 
                 <div className="w-16 h-full flex items-center justify-between">
-                    <button className="h-8 w-8 rounded-md hover:bg-slate-300 flex justify-center items-center"><BiEdit /></button>
+                    <button className="h-8 w-8 rounded-md hover:bg-slate-300 flex justify-center items-center" onClick={editIssue}><BiEdit /></button>
                     <button className="h-8 w-8 rounded-md hover:bg-slate-300 flex justify-center items-center"
                             onClick={deleteIssue}
                     >
