@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
 import { closeIssue, updateState } from '../service';
 import ReactMarkdown from 'react-markdown';
+import 'github-markdown-css/github-markdown.css';
 
 // Define kinds of displaying label.
 const states = ["Open", "Progressing", "Done"];
@@ -73,7 +74,10 @@ function IssueCard({ issue }) {
             </div>
             <div className="w-full h-4/5 pl-8 pr-6 py-2">
                 <div className="h-1/4 text-2xl truncate pt-1">{issue.title} </div>
-                <ReactMarkdown className="pt-2 break-all h-3/4 overflow-y-auto">{issue.body}</ReactMarkdown>
+                <ReactMarkdown escapeHtml={false} 
+                               className="markdown-body pt-2 list-disc break-all h-3/4 overflow-y-auto whitespace-pre-wrap">
+                                   {issue.body}
+                </ReactMarkdown>
             </div>
         </div>
             );
