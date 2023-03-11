@@ -31,7 +31,7 @@ function EditIssue() {
     const handleTitleChange = (text) => setTitle(text);
 
     /// Navigating to issues page when users click the back button.
-    const backToIssues = () => navigate("/issues");
+    const toPreviousPage = () => navigate(-1);
 
     /// To updata issue data to database when users click the submit button.  
     const updateIssue = () => {
@@ -48,20 +48,15 @@ function EditIssue() {
                                         className="border-none rounded-lg h-full focus:outline-0 w-full"
                     ></TextareaAutosize>
                 </div>
-                <div className="w-full h-36">
+                <div className="w-full h-96 bg-slate-100 rounded-lg">
                     <TextareaAutosize   value={body}
                                         onChange={e => handleBodyChange(e.target.value)}
-                                        minRows={20}
-                                        maxRows={20}
-                                        className="border-none bg-slate-100 rounded-lg h-full p-4 focus:outline-0 w-full"
+                                        minRows={15}
+                                        maxRows={15}
+                                        className="border-none bg-slate-100 h-full p-4 focus:outline-0 w-full"
                     ></TextareaAutosize>
-                    {/* <MdEditor
-                        value={text}
-                        renderHTML={(text) => mdParser.render(text)}
-                        onChange={handleEditorChange}
-                    /> */}
                     <div className='w-full flex justify-end mt-2 gap-x-4'>
-                        <button className="bg-gray-100 w-16 h-10 rounded-md hover:bg-gray-300" onClick={backToIssues}>返回</button>
+                        <button className="bg-gray-100 w-16 h-10 rounded-md hover:bg-gray-300" onClick={toPreviousPage}>返回</button>
                         <button className="bg-gray-100 w-16 h-10 rounded-md hover:bg-gray-300" onClick={updateIssue}>提交</button>
                     </div>
                 </div>

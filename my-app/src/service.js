@@ -120,7 +120,7 @@ export const UpdateIssue = async (dispatch, navigate, issue_number, body, title)
       })
       console.log(response.data)
       dispatch({type: 'UPDATE_STATE', payload: { issue_number, body, title} })
-      navigate('/issues')
+      navigate(`/issue/${issue_number}`)
   } catch (error) {
   console.error(error);
   }
