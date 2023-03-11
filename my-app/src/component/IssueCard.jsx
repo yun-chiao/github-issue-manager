@@ -3,6 +3,7 @@ import { Menu, MenuItem } from '@szhsin/react-menu';
 import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
 import { closeIssue, updateState } from '../service';
+import ReactMarkdown from 'react-markdown';
 
 // Define kinds of displaying label.
 const states = ["Open", "Progressing", "Done"];
@@ -48,8 +49,8 @@ function IssueCard({ issue }) {
     }
 
     return (
-        <div className="bg-white h-40 w-full my-4 rounded-xl shrink-0 pt-6">
-            <div className="w-full h-1/4 flex items-center justify-between pl-7 pr-4">
+        <div className="bg-white h-56 w-full my-4 shrink-0 pt-6">
+            <div className="w-full h-1/5 flex items-center justify-between pl-7 pr-4">
                 <Menu menuClassName="bg-slate-100 w-28 h-28 p-2 rounded-md flex flex-col justify-evenly"
                       direction="right"
                       offsetX={12}
@@ -70,9 +71,9 @@ function IssueCard({ issue }) {
                     </button>
                 </div>
             </div>
-            <div className="w-full h-3/4 pl-8 pr-6 py-2">
-                <div className="text-2xl truncate">{issue.title}</div>
-                <div className="pt-2 break-all h-full overflow-y-auto">{issue.body}</div>
+            <div className="w-full h-4/5 pl-8 pr-6 py-2">
+                <div className="h-1/4 text-2xl truncate pt-1">{issue.title} </div>
+                <ReactMarkdown className="pt-2 break-all h-3/4 overflow-y-auto">{issue.body}</ReactMarkdown>
             </div>
         </div>
             );
