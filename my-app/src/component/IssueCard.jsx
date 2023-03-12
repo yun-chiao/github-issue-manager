@@ -76,9 +76,14 @@ function IssueCard({ issue }) {
                 </Menu>
                 
                 <div className="w-16 h-full flex items-center justify-between">
-                    <button className="h-8 w-8 rounded-md hover:bg-slate-300 flex justify-center items-center" onClick={editIssue}><BiEdit /></button>
+                    <button className="h-8 w-8 rounded-md hover:bg-slate-300 flex justify-center items-center"
+                            onClick={editIssue}
+                            title="Edit">
+                        <BiEdit />
+                    </button>
                     <button className="h-8 w-8 rounded-md hover:bg-slate-300 flex justify-center items-center"
                             onClick={deleteIssue}
+                            title="Close issue"
                     >
                         <BiTrashAlt />
                     </button>

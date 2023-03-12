@@ -9,9 +9,15 @@ function Filter() {
                 <input className='bg-transparent text-white w-64 h-8 truncate pl-3 focus:outline-none text-sm'
                        placeholder="這有搜尋可以用喔">
                 </input>
-                <button className='h-8 w-8 text-white hover:bg-sky-800 flex justify-center items-center rounded-md' title="搜尋"><BiSearch></BiSearch></button>
+                <button className='h-8 w-8 text-white hover:bg-sky-800 flex justify-center items-center rounded-md'
+                        title="Search">
+                    <BiSearch></BiSearch>
+                </button>
             </div>         
-            <button className='bg-sky-700 hover:bg-sky-800 text-white w-8 h-8 rounded-lg flex justify-center items-center'><BiPlus></BiPlus></button>
+            <button className='bg-sky-700 hover:bg-sky-800 text-white w-8 h-8 rounded-lg flex justify-center items-center'
+                    title="Create issue">
+                <BiPlus></BiPlus>
+            </button>
         </div>
     );
 }
