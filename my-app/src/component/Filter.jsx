@@ -12,6 +12,8 @@ function Filter() {
     const toCreateIssue = () => navigate(`/create`);
     const [state, setState] = useState({"Open": true, "Progressing": true, "Done": true});
     const [queryLabels, setQueryLabels] = useState(["Open", "Progressing", "Done"]);
+    const [order, setOrder] = useState('desc');
+    const [orderText, setOrderText] = useState("新舊");
 
     const ChangeState = (e) => {
         let newState = state;
@@ -24,7 +26,20 @@ function Filter() {
         setQueryLabels(newQueryLabels)
         newState[e.value] = !newState[e.value];
         setState(newState);
-        getFilterIssue(dispatch, newQueryLabels)
+        getFilterIssue(dispatch, newQueryLabels, order)
+    }
+
+    const changeOrder = () => {
+        let newOrder = order;
+        if(order === 'asc'){
+            newOrder = 'desc';
+            setOrderText("新舊");
+        }else if(order === 'desc'){
+            newOrder = 'asc';
+            setOrderText("舊新");
+        }
+        setOrder(newOrder);
+        getFilterIssue(dispatch, queryLabels, newOrder)
     }
 
     return (
@@ -49,7 +64,7 @@ function Filter() {
                     Done
                 </MenuItem>
             </Menu>
-            <button className='bg-sky-700 hover:bg-sky-800 text-white w-12 h-8 rounded-md text-sm'>新舊</button>
+            <button className='bg-sky-700 hover:bg-sky-800 text-white w-12 h-8 rounded-md text-sm' onClick={changeOrder}>{orderText}</button>
             <div className='bg-sky-700 w-64 h-8 rounded-md flex justify-between'>
                 <input className='bg-transparent text-white w-64 h-8 truncate pl-3 focus:outline-none text-sm'
                        placeholder="這有搜尋可以用喔">
