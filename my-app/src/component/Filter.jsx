@@ -14,6 +14,7 @@ function Filter() {
     const [queryLabels, setQueryLabels] = useState(["Open", "Progressing", "Done"]);
     const [order, setOrder] = useState('desc');
     const [orderText, setOrderText] = useState("新舊");
+    const [searchKey, setSearchKey] = useState("");
 
     const ChangeState = (e) => {
         let newState = state;
@@ -26,7 +27,7 @@ function Filter() {
         setQueryLabels(newQueryLabels)
         newState[e.value] = !newState[e.value];
         setState(newState);
-        getFilterIssue(dispatch, newQueryLabels, order)
+        getFilterIssue(dispatch, newQueryLabels, order, searchKey)
     }
 
     const changeOrder = () => {
@@ -39,7 +40,15 @@ function Filter() {
             setOrderText("舊新");
         }
         setOrder(newOrder);
-        getFilterIssue(dispatch, queryLabels, newOrder)
+        getFilterIssue(dispatch, queryLabels, newOrder, searchKey)
+    }
+
+    const handleSearchKey = (e) => {
+        setSearchKey(e.target.value)
+    }
+
+    const searchIssue = (e) => {
+        getFilterIssue(dispatch, queryLabels, order, searchKey);
     }
 
     return (
@@ -67,10 +76,13 @@ function Filter() {
             <button className='bg-sky-700 hover:bg-sky-800 text-white w-12 h-8 rounded-md text-sm' onClick={changeOrder}>{orderText}</button>
             <div className='bg-sky-700 w-64 h-8 rounded-md flex justify-between'>
                 <input className='bg-transparent text-white w-64 h-8 truncate pl-3 focus:outline-none text-sm'
-                       placeholder="這有搜尋可以用喔">
+                       placeholder="這有搜尋可以用喔"
+                       value={searchKey}
+                       onChange={handleSearchKey}>
                 </input>
                 <button className='h-8 w-8 text-white hover:bg-sky-800 flex justify-center items-center rounded-md'
-                        title="Search">
+                        title="Search"
+                        onClick={searchIssue}>
                     <BiSearch></BiSearch>
                 </button>
             </div>         

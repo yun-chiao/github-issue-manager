@@ -175,10 +175,10 @@ export const getIssue = async (issue_number) => {
   }
 }
 
-export const getFilterIssue = async (dispatch, labels=['Open', 'Progressing', 'Done'], order) => {
+export const getFilterIssue = async (dispatch, labels=['Open', 'Progressing', 'Done'], order, searchKey) => {
   try {
     const labelsQuery = labels.map((label) => label).join(',');
-    const url = `https://api.github.com/search/issues?q=label:${labelsQuery}+sort:created-${order}+repo:${owner}/${repo}+type:issue`;
+    const url = `https://api.github.com/search/issues?q=label:${labelsQuery}+sort:created-${order}+${searchKey} in:title,body+repo:${owner}/${repo}+type:issue`;
     const response = await axios.get(url);
     dispatch({ type: 'INIT_ISSUES', payload: { issues: response.data.items } })
   } catch (error) {
