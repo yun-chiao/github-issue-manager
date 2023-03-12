@@ -1,6 +1,10 @@
 import { BiSearch, BiPlus } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 function Filter() {
+    const navigate = useNavigate();
+    const toCreateIssue = () => navigate(`/create`);
+
     return (
         <div className="bg-sky-600 w-full h-full p-6 flex justify-between items-center">
             <button className='bg-sky-700 hover:bg-sky-800 text-white w-12 h-8 rounded-md text-sm'>狀態</button>
@@ -15,7 +19,8 @@ function Filter() {
                 </button>
             </div>         
             <button className='bg-sky-700 hover:bg-sky-800 text-white w-8 h-8 rounded-lg flex justify-center items-center'
-                    title="Create issue">
+                    title="Create issue"
+                    onClick={toCreateIssue}>
                 <BiPlus></BiPlus>
             </button>
         </div>

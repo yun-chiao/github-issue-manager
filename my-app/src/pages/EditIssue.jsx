@@ -4,12 +4,13 @@ import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import { useState, useEffect } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { UpdateIssue, getIssue } from '../service';
+import { UpdateIssue, getIssue, createIssue } from '../service';
 function EditIssue() {
     const [body, setBody] = useState('');
     const [title, setTitle] = useState('');
+    const location = useLocation();
     const { id } = useParams();
     const dispatch = useDispatch();
     // const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -21,7 +22,9 @@ function EditIssue() {
             setTitle(data.title)
             setBody(data.body)
         }
-        getContent()
+        if(location.pathname.includes('edit')){
+            getContent()
+        }
     }, [])
 
     /// Change the state of body when users type.
@@ -35,7 +38,11 @@ function EditIssue() {
 
     /// To updata issue data to database when users click the submit button.  
     const updateIssue = () => {
-        UpdateIssue(dispatch, navigate, id, body, title);
+        if(location.pathname.includes('edit')){
+            UpdateIssue(dispatch, navigate, id, body, title);
+        }else if(location.pathname.includes('create')){
+            createIssue(navigate, body, title);
+        }
     }
     return (
         <div className="bg-sky-900 w-full h-full flex justify-center min-h-screen">

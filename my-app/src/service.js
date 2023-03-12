@@ -95,6 +95,35 @@ export const updateState = async (dispatch, issue_number, newState, labels) => {
   }
 }
 
+export const createIssue = async (navigate, body, title) => {
+  if(body.length < 30){
+    console.log("要大於30字");
+    return;
+  }else if(title.length === 0){
+    console.log("要有title");
+    return;
+  }
+  try {
+      const octokit = new Octokit({
+          auth: token
+        })
+
+      const response = await octokit.request(`POST /repos/${owner}/${repo}/issues`, {
+        owner,
+        repo,
+        title,
+        body,
+        labels:['Open'],
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28'
+        }
+      })
+      navigate(`/issue/${response.data.number}`)
+  } catch (error) {
+  console.error(error);
+  }
+}
+
 export const UpdateIssue = async (dispatch, navigate, issue_number, body, title) => {
   if(body.length < 30){
     console.log("要大於30字");
