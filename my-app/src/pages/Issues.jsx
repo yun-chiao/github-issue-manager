@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getIssues } from '../service';
 import IssueCard from '../component/IssueCard';
 import InfiniteScroll from "react-infinite-scroll-component";
+import Fliter from '../component/Fliter';
 import "./Issues.css"
 
 function Issues() {
@@ -26,6 +27,9 @@ function Issues() {
     return (
         <div className="bg-sky-900 w-full h-full flex justify-center min-h-screen">
             <div className="bg-white w-1/4 h-full flex flex-col items-center min-h-screen">
+            <div className='bg-sky-600 w-full h-20 sticky top-0'>
+                <Fliter></Fliter>
+            </div>
                 <InfiniteScroll  
                     style={{"overflow": "hidden"}}
                     className='divide-y'
