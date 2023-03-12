@@ -1,6 +1,6 @@
 import { BiSearch } from "react-icons/bi";
 
-function Fliter() {
+function Filter() {
     return (
         <div className="bg-sky-600 w-full h-full p-6 flex justify-begin items-center gap-4">
             <button className='bg-sky-700 hover:bg-sky-800 text-white w-12 h-8 rounded-md text-sm'>狀態</button>
@@ -15,4 +15,4 @@ function Fliter() {
     );
 }
 
-export default Fliter;
+export default Filter;
