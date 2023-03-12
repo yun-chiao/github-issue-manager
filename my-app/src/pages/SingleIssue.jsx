@@ -33,11 +33,11 @@ function SingleIssues() {
                     <div className="h-full bg-slate-100  rounded-lg">
                         <div className="markdown-body p-4  whitespace-pre-wrap" style={{background: "transparent"}} dangerouslySetInnerHTML={{ __html: body }} />
                     </div>
-                    <div className='w-full flex justify-end mt-2 gap-x-4'>
+                </div>
+                <div className='w-full flex justify-end mt-2 gap-x-4'>
                         <button className="bg-gray-100 w-16 h-10 rounded-md hover:bg-gray-300" onClick={toPreviousPage}>返回</button>
                         <button className="bg-gray-100 w-16 h-10 rounded-md hover:bg-gray-300" onClick={toEditIssue}>編輯</button>
                     </div>
-                </div>
                 
             </div>
         </div>

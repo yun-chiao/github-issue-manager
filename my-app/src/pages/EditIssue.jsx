@@ -51,15 +51,15 @@ function EditIssue() {
                 <div className="w-full h-96 bg-slate-100 rounded-lg">
                     <TextareaAutosize   value={body}
                                         onChange={e => handleBodyChange(e.target.value)}
-                                        minRows={15}
-                                        maxRows={15}
-                                        className="border-none bg-slate-100 h-full p-4 focus:outline-0 w-full"
+                                        minRows={14}
+                                        maxRows={14}
+                                        className="border-none bg-transparent h-full p-4 focus:outline-0 w-full"
                     ></TextareaAutosize>
-                    <div className='w-full flex justify-end mt-2 gap-x-4'>
+                </div>
+                <div className='w-full flex justify-end mt-2 gap-x-4'>
                         <button className="bg-gray-100 w-16 h-10 rounded-md hover:bg-gray-300" onClick={toPreviousPage}>返回</button>
                         <button className="bg-gray-100 w-16 h-10 rounded-md hover:bg-gray-300" onClick={updateIssue}>提交</button>
                     </div>
-                </div>
                 
             </div>
         </div>
