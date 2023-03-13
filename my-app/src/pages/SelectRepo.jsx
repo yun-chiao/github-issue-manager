@@ -13,7 +13,7 @@ function SelectRepo() {
             setRepos(await getRepos())
         }
         getData()
-    })
+    }, [])
 
     const handleRepoKey = (e) => {
         setRepoKey(e.target.value)
