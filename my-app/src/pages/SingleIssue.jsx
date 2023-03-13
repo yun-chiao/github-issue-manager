@@ -27,7 +27,7 @@ function SingleIssues() {
 
     return (
         <div className="bg-sky-900 w-full h-full flex justify-center min-h-screen">
-            <div className="bg-white w-1/4 h-full flex flex-col items-center min-h-screen px-14 pt-36">
+            <div className="bg-white w-list h-full flex flex-col items-center min-h-screen px-14 pt-36">
                 <div className="w-full h-[28rem] bg-sky-600 rounded-lg p-6 text-white divide-y-2 divide-sky-200">
                     <div className="w-full text-3xl font-normal truncate pb-1">{title}</div>
                     <div className="">

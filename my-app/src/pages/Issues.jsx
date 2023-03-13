@@ -26,7 +26,7 @@ function Issues() {
 
     return (
         <div className="bg-sky-900 w-full h-full flex justify-center min-h-screen">
-            <div className="bg-white w-[30rem] h-full flex flex-col items-center min-h-screen">
+            <div className="bg-white w-list h-full flex flex-col items-center min-h-screen">
             <div className='bg-sky-600 w-full h-20 sticky top-0'>
                 <Filter></Filter>
             </div>
