@@ -45,29 +45,29 @@ function EditIssue() {
         }
     }
     return (
+
         <div className="bg-sky-900 w-full h-full flex justify-center min-h-screen">
             <div className="bg-white w-1/4 h-full flex flex-col items-center min-h-screen px-14 pt-36">
-                <div className="h-16 w-full text-3xl px-2 mb-6">
+                <div className="w-full h-[28rem] bg-sky-600 rounded-lg p-6 text-white divide-y-2 divide-sky-200">
                     <TextareaAutosize   value={title}
                                         onChange={e => handleTitleChange(e.target.value)}
                                         minRows={1}
                                         maxRows={2}
-                                        className="border-none rounded-lg h-full focus:outline-0 w-full"
+                                        className="border-none rounded-lg pb-1 h-full bg-transparent focus:outline-0 w-full text-3xl font-normal truncate"
                     ></TextareaAutosize>
-                </div>
-                <div className="w-full h-96 bg-slate-100 rounded-lg">
-                    <TextareaAutosize   value={body}
-                                        onChange={e => handleBodyChange(e.target.value)}
-                                        minRows={14}
-                                        maxRows={14}
-                                        className="border-none bg-transparent h-full p-4 focus:outline-0 w-full"
-                    ></TextareaAutosize>
-                </div>
-                <div className='w-full flex justify-end mt-2 gap-x-4'>
-                        <button className="bg-gray-100 w-16 h-10 rounded-md hover:bg-gray-300" onClick={toPreviousPage}>返回</button>
-                        <button className="bg-gray-100 w-16 h-10 rounded-md hover:bg-gray-300" onClick={updateIssue}>提交</button>
+                    <div className="">
+                        <TextareaAutosize   value={body}
+                                            onChange={e => handleBodyChange(e.target.value)}
+                                            minRows={14}
+                                            maxRows={14}
+                                            className="border-none bg-transparent h-full pt-4 focus:outline-0 w-full"
+                        ></TextareaAutosize>
                     </div>
-                
+                </div>
+                <div className='w-full flex justify-end mt-2 gap-x-4 text-white'>
+                    <button className="bg-sky-600 w-16 h-10 rounded-md hover:bg-sky-700" onClick={toPreviousPage}>返回</button>
+                    <button className="bg-sky-600 w-16 h-10 rounded-md hover:bg-sky-700" onClick={updateIssue}>提交</button>
+                </div>
             </div>
         </div>
     );
