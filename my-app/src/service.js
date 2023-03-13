@@ -34,7 +34,10 @@ export const getIssues = async (dispatch, page) => {
           per_page: 10,
           page: page,
           headers: {
-            'X-GitHub-Api-Version': '2022-11-28'
+            'X-GitHub-Api-Version': '2022-11-28',
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
           }
         })
         if(response.data.length === 0){
@@ -86,7 +89,10 @@ export const updateState = async (dispatch, issue_number, newState, labels) => {
         issue_number,
         labels: newLabels,
         headers: {
-          'X-GitHub-Api-Version': '2022-11-28'
+          'X-GitHub-Api-Version': '2022-11-28',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
         }
       })
       dispatch({type: 'UPDATE_STATE', payload: { issue_number, labels: newLabels } })
@@ -144,10 +150,12 @@ export const UpdateIssue = async (dispatch, navigate, issue_number, body, title)
         title,
         body,
         headers: {
-          'X-GitHub-Api-Version': '2022-11-28'
+          'X-GitHub-Api-Version': '2022-11-28',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
         }
       })
-      console.log(response.data)
       dispatch({type: 'UPDATE_STATE', payload: { issue_number, body, title} })
       navigate(`/issue/${issue_number}`)
   } catch (error) {
@@ -166,7 +174,10 @@ export const getIssue = async (issue_number) => {
         repo: 'REPO',
         issue_number: 'ISSUE_NUMBER',
         headers: {
-          'X-GitHub-Api-Version': '2022-11-28'
+          'X-GitHub-Api-Version': '2022-11-28',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
         }
       })
       return { title: response.data.title, body: response.data.body}
@@ -175,6 +186,7 @@ export const getIssue = async (issue_number) => {
   }
 }
 
+/// TODO add page parameter
 export const getFilterIssue = async (dispatch, labels=['Open', 'Progressing', 'Done'], order, searchKey) => {
   try {
     const labelsQuery = labels.map((label) => label).join(',');
