@@ -1,18 +1,28 @@
 import { useEffect } from 'react';
-import { getToken } from '../service';
+import { getToken, getUser } from '../service';
 import { useNavigate } from "react-router-dom";
+import { useCookies } from 'react-cookie';
 
 function Login() {
     const client_id = process.env.REACT_APP_CLIENT_ID
     const navigate = useNavigate();
+    const [cookies, setCookie] = useCookies(['token', 'owner']);
 
     useEffect(() => {
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      let code = urlParams.get("code");
-      if (code !== null){
-          getToken(navigate, code)
-      }
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        let code = urlParams.get("code");
+        const toGetToken = async () => {
+            let token = await getToken(code)
+            console.log('token', token)
+            setCookie('token', token, { path: '/' })
+            let owner = await getUser(token);
+            setCookie('owner', owner, { path: '/' })
+            navigate("/select");
+        }
+        if (code !== null){
+            toGetToken()
+        }
     }, [navigate])
     const login = async() => window.location = `https://github.com/login/oauth/authorize?client_id=${client_id}&amp;scope=repo`;
     

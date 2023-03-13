@@ -4,23 +4,23 @@ import { getIssues } from '../service';
 import IssueCard from '../component/IssueCard';
 import InfiniteScroll from "react-infinite-scroll-component";
 import Filter from '../component/Filter';
+import { useCookies } from 'react-cookie';
 import "./Issues.css"
 
 function Issues() {
     const issues = useSelector(state => state.issuesReducer.issues);
     const hasMore = useSelector(state => state.hasMoreReducer.hasMore);
     const [page, setPage] = useState(1);
+    const [cookies] = useCookies(['token', 'owner', 'repo']);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        getIssues(dispatch, page);
+        getIssues(dispatch, page, cookies['token'], cookies['owner'], cookies['repo']);
         setPage(page+1);
-        console.log('getIssues')
-        console.log(issues)
     }, [])
 
     const fetchMoreIssues = () => {
-        getIssues(dispatch, page);
+        getIssues(dispatch, page, cookies['token'], cookies['owner'], cookies['repo']);
         setPage(page+1);
     }
 

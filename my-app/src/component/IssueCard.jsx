@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { closeIssue, updateState } from '../service';
 import { useNavigate } from "react-router-dom";
 import MarkdownIt from 'markdown-it';
+import { useCookies } from 'react-cookie';
 
 import 'github-markdown-css/github-markdown.css';
 
@@ -19,7 +20,7 @@ const LABEL_COLOR = {
 }
 
 function IssueCard({ issue }) {
-
+    const [cookies] = useCookies(['token', 'owner', 'repo']);
     const [textColor, setTextColor] = useState('');
     const [labelText, setLabelText] = useState('')
     const dispatch = useDispatch();
@@ -53,12 +54,12 @@ function IssueCard({ issue }) {
     /// To change the text for displaying state.
     const ChangeState = (e) => {
         let label = e.syntheticEvent.target.innerText;
-        updateState(dispatch, issue.number, label, issue.labels)
+        updateState(dispatch, issue.number, label, issue.labels, cookies['token'], cookies['owner'], cookies['repo'])
     }
 
     /// To close the issue when users click the trash icon.
     const deleteIssue = () => {
-        closeIssue(dispatch, issue.number);
+        closeIssue(dispatch, issue.number, cookies['token'], cookies['owner'], cookies['repo']);
     }
 
     return (

@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react';
-import { getUser, getRepos, checkRepo} from '../service';
+import { getRepos } from '../service';
 import { useNavigate } from "react-router-dom"
+import { useCookies } from 'react-cookie';
+
 function SelectRepo() {
     const [isSelect, setIsSelect] = useState(false);
     const [repos, setRepos] = useState([]);
     const [repoKey, setRepoKey] = useState("");
+    const [cookies, setCookie] = useCookies(['token', 'owner', 'repo']);
+
     const navigate = useNavigate();
 
     useEffect(() => {
         const getData = async () => {
-            await getUser()
-            setRepos(await getRepos())
+            setRepos(await getRepos(cookies['token'], cookies['owner']));
         }
         getData()
     }, [])
@@ -20,7 +23,7 @@ function SelectRepo() {
     }
 
     const selectRepo = (e) => {
-        checkRepo(e.target.innerText)
+        setCookie('repo', e.target.innerText, { path: '/' })
         navigate("/issues")
     }
 

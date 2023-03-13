@@ -7,7 +7,10 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { UpdateIssue, getIssue, createIssue } from '../service';
+import { useCookies } from 'react-cookie';
+
 function EditIssue() {
+    const [cookies] = useCookies(['token', 'owner', 'repo']);
     const [body, setBody] = useState('');
     const [title, setTitle] = useState('');
     const location = useLocation();
@@ -18,7 +21,7 @@ function EditIssue() {
 
     useEffect( () => {
         const getContent = async () => {
-            let data = await getIssue(id)
+            let data = await getIssue(id, cookies['token'], cookies['owner'], cookies['repo'])
             setTitle(data.title)
             setBody(data.body)
         }
@@ -39,9 +42,9 @@ function EditIssue() {
     /// To updata issue data to database when users click the submit button.  
     const updateIssue = () => {
         if(location.pathname.includes('edit')){
-            UpdateIssue(dispatch, navigate, id, body, title);
+            UpdateIssue(dispatch, navigate, id, body, title, cookies['token'], cookies['owner'], cookies['repo']);
         }else if(location.pathname.includes('create')){
-            createIssue(navigate, body, title);
+            createIssue(navigate, body, title, cookies['token'], cookies['owner'], cookies['repo']);
         }
     }
     return (

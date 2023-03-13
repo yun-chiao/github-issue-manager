@@ -3,11 +3,8 @@ import { Octokit } from '@octokit/rest';
 
 const client_id = process.env.REACT_APP_CLIENT_ID
 const client_secret = process.env.REACT_APP_CLIENT_SECRET
-let owner = ""
-let repo = ""
-let token = null;
 
-export const getToken = async (navigate, code) => {
+export const getToken = async (code) => {
     try {
         const response = await axios.post('https://github.com/login/oauth/access_token', {
           client_id,
@@ -18,14 +15,13 @@ export const getToken = async (navigate, code) => {
             accept: 'application/json'
           }
         });
-        token = response.data.access_token;
-        navigate("/select");
+        return response.data.access_token;
       } catch (error) {
         console.error(error);
       }
 }
 
-export const getUser = async () => {
+export const getUser = async (token) => {
   try {
     const octokit = new Octokit({
       auth: token
@@ -36,14 +32,13 @@ export const getUser = async () => {
         'X-GitHub-Api-Version': '2022-11-28'
       }
     })
-    owner =  response.data.name;
-    return response.data
+    return response.data.name
   } catch (error) {
     console.error(error);
   }
 }
 
-export const getRepos = async () => {
+export const getRepos = async (token, owner) => {
   try {
     const octokit = new Octokit({
       auth: token
@@ -55,14 +50,13 @@ export const getRepos = async () => {
         'X-GitHub-Api-Version': '2022-11-28'
       }
     })
-    // console.log(response.data)
     return response.data
   } catch (error) {
     console.error(error);
   }
 }
 
-export const getIssues = async (dispatch, page) => {
+export const getIssues = async (dispatch, page, token, owner, repo) => {
     try {
         const octokit = new Octokit({
             auth: token
@@ -93,7 +87,7 @@ export const getIssues = async (dispatch, page) => {
     }
 }
 
-export const closeIssue = async (dispatch, issue_number) => {
+export const closeIssue = async (dispatch, issue_number, token, owner, repo) => {
     try {
         const octokit = new Octokit({
             auth: token
@@ -110,7 +104,7 @@ export const closeIssue = async (dispatch, issue_number) => {
     }
 }
 
-export const updateState = async (dispatch, issue_number, newState, labels) => {
+export const updateState = async (dispatch, issue_number, newState, labels, token, owner, repo) => {
   const states = ["Open", "Progressing", "Done"];
 
   let newLabels = [ {name: newState}, ...labels.filter( label => !states.includes(label.name))]
@@ -138,7 +132,7 @@ export const updateState = async (dispatch, issue_number, newState, labels) => {
   }
 }
 
-export const createIssue = async (navigate, body, title) => {
+export const createIssue = async (navigate, body, title, token, owner, repo) => {
   if(body.length < 30){
     console.log("要大於30字");
     return;
@@ -167,7 +161,7 @@ export const createIssue = async (navigate, body, title) => {
   }
 }
 
-export const UpdateIssue = async (dispatch, navigate, issue_number, body, title) => {
+export const UpdateIssue = async (dispatch, navigate, issue_number, body, title, token, owner, repo) => {
   if(body.length < 30){
     console.log("要大於30字");
     return;
@@ -200,7 +194,7 @@ export const UpdateIssue = async (dispatch, navigate, issue_number, body, title)
   }
 }
 
-export const getIssue = async (issue_number) => {
+export const getIssue = async (issue_number, token, owner, repo) => {
   try {
       const octokit = new Octokit({
           auth: token
@@ -224,7 +218,7 @@ export const getIssue = async (issue_number) => {
 }
 
 /// TODO add page parameter
-export const getFilterIssue = async (dispatch, labels=['Open', 'Progressing', 'Done'], order, searchKey) => {
+export const getFilterIssue = async (dispatch, labels=['Open', 'Progressing', 'Done'], order, searchKey, owner, repo) => {
   try {
     const labelsQuery = labels.map((label) => label).join(',');
     const url = `https://api.github.com/search/issues?q=label:${labelsQuery}+sort:created-${order}+${searchKey} in:title,body+repo:${owner}/${repo}+type:issue`;
@@ -234,7 +228,3 @@ export const getFilterIssue = async (dispatch, labels=['Open', 'Progressing', 'D
     console.error(error);
   }
 }
-
-export const checkRepo = (selectedRepo) => {
-  repo = selectedRepo
-} 

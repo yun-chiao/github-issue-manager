@@ -3,8 +3,10 @@ import MarkdownIt from 'markdown-it';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { getIssue } from '../service';
+import { useCookies } from 'react-cookie';
 
 function SingleIssues() {
+    const [cookies] = useCookies(['token', 'owner', 'repo']);
     const [body, setBody] = useState('');
     const [title, setTitle] = useState('');
     const { id } = useParams();
@@ -13,7 +15,7 @@ function SingleIssues() {
 
     useEffect( () => {
         const getContent = async () => {
-            let data = await getIssue(id)
+            let data = await getIssue(id, cookies['token'], cookies['owner'], cookies['repo'])
             setTitle(data.title)
             setBody( mdParser.render(data.body))
         }

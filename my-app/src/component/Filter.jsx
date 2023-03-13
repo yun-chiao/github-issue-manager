@@ -4,9 +4,11 @@ import { useDispatch } from 'react-redux';
 import { Menu, MenuItem } from '@szhsin/react-menu';
 import { useState } from "react";
 import { getFilterIssue } from "../service";
+import { useCookies } from 'react-cookie';
 import '@szhsin/react-menu/dist/transitions/slide.css'
 
 function Filter() {
+    const [cookies] = useCookies(['owner', 'repo']);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const toCreateIssue = () => navigate(`/create`);
@@ -27,7 +29,7 @@ function Filter() {
         setQueryLabels(newQueryLabels)
         newState[e.value] = !newState[e.value];
         setState(newState);
-        getFilterIssue(dispatch, newQueryLabels, order, searchKey)
+        getFilterIssue(dispatch, newQueryLabels, order, searchKey, cookies['owner'], cookies['repo'])
     }
 
     const changeOrder = () => {
@@ -40,7 +42,7 @@ function Filter() {
             setOrderText("舊新");
         }
         setOrder(newOrder);
-        getFilterIssue(dispatch, queryLabels, newOrder, searchKey)
+        getFilterIssue(dispatch, queryLabels, newOrder, searchKey, cookies['owner'], cookies['repo'])
     }
 
     const handleSearchKey = (e) => {
@@ -48,7 +50,7 @@ function Filter() {
     }
 
     const searchIssue = (e) => {
-        getFilterIssue(dispatch, queryLabels, order, searchKey);
+        getFilterIssue(dispatch, queryLabels, order, searchKey, cookies['owner'], cookies['repo']);
     }
 
     return (
