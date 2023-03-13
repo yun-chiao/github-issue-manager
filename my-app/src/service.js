@@ -3,8 +3,8 @@ import { Octokit } from '@octokit/rest';
 
 const client_id = process.env.REACT_APP_CLIENT_ID
 const client_secret = process.env.REACT_APP_CLIENT_SECRET
-const owner = "yun-chiao"
-const repo = "dcard-frontend-hw"
+let owner = ""
+let repo = ""
 let token = null;
 
 export const getToken = async (navigate, code) => {
@@ -19,10 +19,47 @@ export const getToken = async (navigate, code) => {
           }
         });
         token = response.data.access_token;
-        navigate("/issues");
+        navigate("/select");
       } catch (error) {
         console.error(error);
       }
+}
+
+export const getUser = async () => {
+  try {
+    const octokit = new Octokit({
+      auth: token
+    })
+    
+    const response = await octokit.request('GET /user', {
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    })
+    owner =  response.data.name;
+    return response.data
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export const getRepos = async () => {
+  try {
+    const octokit = new Octokit({
+      auth: token
+    })
+    
+    const response = await octokit.request(`GET /users/${owner}/repos`, {
+      username: owner,
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    })
+    // console.log(response.data)
+    return response.data
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export const getIssues = async (dispatch, page) => {
@@ -197,3 +234,7 @@ export const getFilterIssue = async (dispatch, labels=['Open', 'Progressing', 'D
     console.error(error);
   }
 }
+
+export const checkRepo = (selectedRepo) => {
+  repo = selectedRepo
+} 
