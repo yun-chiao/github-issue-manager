@@ -66,35 +66,37 @@ function SingleIssues() {
 
     return (
         <div className="bg-sky-900 w-full h-full flex justify-center min-h-screen">
-            <div className="bg-white w-list h-full flex flex-col items-center min-h-screen px-14 pt-36">
-                <div className="w-full h-[28rem] bg-sky-600 rounded-lg p-6 text-white divide-y-2 divide-sky-200">
-                    <div onClick={handleTitleFocus} className={`w-full text-3xl font-normal truncate pb-1 ${isTitleFocus?"hidden":""} `}>{title}</div>
-                    <TextareaAutosize   onBlur={handleTitleBlur}
-                                        ref={titleRef}
-                                        value={title}
-                                        onChange={e => handleTitleChange(e.target.value)}
-                                        minRows={1}
-                                        maxRows={1}
-                                        className={`border-none rounded-lg pb-1 h-full bg-transparent focus:outline-0 w-full text-3xl font-normal truncate ${!isTitleFocus?"hidden":""} `}
-                    ></TextareaAutosize>
+            <div className="bg-white w-list h-full flex flex-col items-center min-h-screen">
+                <div className='w-full flex justify-end items-center gap-x-4 sticky top-0 bg-sky-600 h-16 px-10'>
+                    <button className="bg-sky-700 w-16 h-10 rounded-md hover:bg-sky-900 text-white" onClick={toPreviousPage}>返回</button>
+                    <button className="bg-sky-700  w-16 h-10 rounded-md hover:bg-sky-900 text-white" onClick={toEditIssue}>提交</button>
+                </div>
+                <div className="w-full min-h-screen bg-white p-10 text-black divide-y-2 divide-sky-200">
+                    <div className='pb-2 text-3xl font-normal cursor-text'>
+                        <div onClick={handleTitleFocus} className={`w-full ${isTitleFocus?"hidden":""} truncate`}>{title}</div>
+                        <TextareaAutosize   onBlur={handleTitleBlur}
+                                            ref={titleRef}
+                                            value={title}
+                                            onChange={e => handleTitleChange(e.target.value)}
+                                            minRows={1}
+                                            maxRows={1}
+                                            className={`border-none h-full bg-transparent focus:outline-0 truncate ${!isTitleFocus?"hidden":""} `}
+                        ></TextareaAutosize>
+                    </div>
                         <div onClick={handleEditorFocus}
-                            onBlur={handleEditorBlur}>
-                            <div className={`whitespace-pre text-lg pt-4 ${isBodyFocus?"hidden":""} flex flex-col items-start`} 
-                                style={{background: "transparent", color: "white"}}
+                            onBlur={handleEditorBlur}
+                            className="pt-2 cursor-text">
+                            <div className={`whitespace-pre text-lg pt-4 ${isBodyFocus?"hidden":""}`} 
+                                style={{background: "transparent", color: "black"}}
                                 dangerouslySetInnerHTML={{ __html:  mdParser.render(body) }} 
                             />
                             <TextareaAutosize   value={body}
                                 onChange={e => handleBodyChange(e.target.value)}
-                                minRows={14}
-                                maxRows={14}
+                                minRows={1}
                                 ref={bodyRef}
-                                className={`border-none bg-transparent h-full pt-4 focus:outline-0 w-full ${!isBodyFocus?"hidden":""}`}
+                                className={`border-none bg-transparent h-full pt-4 focus:outline-1 outline-sky-700 focus:caret-blue-500 w-full ${!isBodyFocus?"hidden":""}`}
                             ></TextareaAutosize>
                         </div>
-                </div>
-                <div className='w-full flex justify-end mt-2 gap-x-4'>
-                    <button className="bg-sky-600  w-16 h-10 rounded-md hover:bg-sky-700 text-white" onClick={toPreviousPage}>返回</button>
-                    <button className="bg-sky-600  w-16 h-10 rounded-md hover:bg-sky-700 text-white" onClick={toEditIssue}>編輯</button>
                 </div>
             </div>
         </div>
