@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom";
 import MarkdownIt from 'markdown-it';
 import { useCookies } from 'react-cookie';
 
-import 'github-markdown-css/github-markdown.css';
-
 // Define kinds of displaying label.
 const states = ["Open", "Progressing", "Done"];
 
@@ -92,7 +90,7 @@ function IssueCard({ issue }) {
             </div>
             <div className="w-full h-4/5 pl-8 pr-6 py-2">
                 <div className="h-1/4 text-2xl truncate pt-1 hover:cursor-pointer hover:underline" onClick={toFocusIssue}>{issue.title} </div>
-                <div  className="markdown-body pt-2 h-3/4 break-all overflow-y-auto whitespace-pre-wrap hover:cursor-pointer hover:underline" 
+                <div  className="pt-2 h-3/4 break-all overflow-y-auto whitespace-pre-wrap hover:cursor-pointer hover:underline" 
                       style={{background: "transparent"}} 
                       onClick={toFocusIssue}
                       dangerouslySetInnerHTML={{ __html:  mdParser.render(issue.body) }} />

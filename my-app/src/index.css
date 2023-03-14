@@ -2,6 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    h1 {
+        @apply text-3xl font-medium;
+      }
+    h2 {
+        @apply text-2xl font-medium;
+    }
+    h3 {
+        @apply text-xl font-medium;
+    }
+    h4 {
+        @apply text-lg font-medium;
+    }
+    h5 {
+        @apply text-base font-medium;
+    }
+    h6 {
+        @apply text-sm font-medium;
+    }
+    ul {
+        @apply list-disc list-inside flex flex-col;
+    }
+    ol {
+        @apply list-decimal list-inside	flex flex-col;
+    }
+    a {
+        color: #0069d6;
+    }
+    a:hover {
+        color: #0050a3;
+        text-decoration: none;
+    }
+    a img {
+        border: none;
+    }
+    body * {
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        word-break: break-all;
+    }
+}
+
 @layer components {
     .state-item{
         @apply h-12 flex items-center hover:cursor-pointer hover:bg-slate-300;

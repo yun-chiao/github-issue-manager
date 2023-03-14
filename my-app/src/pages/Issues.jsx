@@ -6,6 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Filter from '../component/Filter';
 import { useCookies } from 'react-cookie';
 import "./Issues.css"
+import './markdown.css'
 
 function Issues() {
     const issues = useSelector(state => state.issuesReducer.issues);
