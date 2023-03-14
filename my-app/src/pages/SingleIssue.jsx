@@ -54,6 +54,7 @@ function SingleIssues() {
     }, [isTitleFocus])
     
     useEffect( () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         const getContent = async () => {
             let data = await getIssue(id, cookies['token'], cookies['owner'], cookies['repo'])
             setTitle(data.title)
