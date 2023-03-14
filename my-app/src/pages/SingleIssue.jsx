@@ -79,9 +79,9 @@ function SingleIssues() {
     return (
         <div className="bg-sky-900 w-full h-full flex justify-center min-h-screen">
             <div className="bg-white w-list h-full flex flex-col items-center min-h-screen">
-                <div className='w-full flex justify-end items-center gap-x-4 sticky top-0 bg-sky-600 h-16 px-10'>
-                    <button className="bg-sky-700 w-16 h-10 rounded-md hover:bg-sky-900 text-white" onClick={toPreviousPage}>返回</button>
-                    <button className="bg-sky-700  w-16 h-10 rounded-md hover:bg-sky-900 text-white" onClick={updateIssue}>提交</button>
+                <div className='w-full flex justify-end items-center gap-x-4 sticky top-0 bg-sky-600 h-20 px-10'>
+                    <button className="bg-sky-700 hover:bg-sky-800 text-white w-12 h-8 rounded-md text-sm" onClick={toPreviousPage}>返回</button>
+                    <button className="bg-sky-700 hover:bg-sky-800 text-white w-12 h-8 rounded-md text-sm" onClick={updateIssue}>提交</button>
                 </div>
                 <div className="w-full min-h-screen bg-white p-10 text-black divide-y-2 divide-sky-200">
                     <div className='pb-2 text-3xl font-normal cursor-text'>
