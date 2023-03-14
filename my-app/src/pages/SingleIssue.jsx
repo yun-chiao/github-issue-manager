@@ -59,7 +59,9 @@ function SingleIssues() {
             setTitle(data.title)
             setBody(data.body)
         }
-        getContent()
+        if(location.pathname.includes('edit')){
+            getContent()
+        }
     }, [])
 
     /// Navigating to issues page when users click the back button.
@@ -82,20 +84,21 @@ function SingleIssues() {
                 </div>
                 <div className="w-full min-h-screen bg-white p-10 text-black divide-y-2 divide-sky-200">
                     <div className='pb-2 text-3xl font-normal cursor-text'>
-                        <div onClick={handleTitleFocus} className={`w-full ${isTitleFocus?"hidden":""} truncate`}>{title}</div>
+                        <div onClick={handleTitleFocus} className={`w-full ${isTitleFocus || title.length===0?"hidden":""} truncate`}>{title}</div>
                         <TextareaAutosize   onBlur={handleTitleBlur}
                                             ref={titleRef}
                                             value={title}
                                             onChange={e => handleTitleChange(e.target.value)}
                                             minRows={1}
                                             maxRows={1}
-                                            className={`border-none h-full bg-transparent focus:outline-0 truncate ${!isTitleFocus?"hidden":""} `}
+                                            placeholder={"請輸入標題"}
+                                            className={`border-none h-full bg-transparent focus:outline-0 truncate ${isTitleFocus || title.length === 0?"":"hidden"} `}
                         ></TextareaAutosize>
                     </div>
                         <div onClick={handleEditorFocus}
                             onBlur={handleEditorBlur}
                             className="pt-2 cursor-text">
-                            <div className={`whitespace-pre text-lg pt-4 ${isBodyFocus?"hidden":""}`} 
+                            <div className={`whitespace-pre text-lg pt-4 ${isBodyFocus || body.length===0?"hidden":""}`} 
                                 style={{background: "transparent", color: "black"}}
                                 dangerouslySetInnerHTML={{ __html:  mdParser.render(body) }} 
                             />
@@ -103,7 +106,8 @@ function SingleIssues() {
                                 onChange={e => handleBodyChange(e.target.value)}
                                 minRows={1}
                                 ref={bodyRef}
-                                className={`border-none bg-transparent h-full pt-4 focus:outline-1 outline-sky-700 focus:caret-blue-500 w-full ${!isBodyFocus?"hidden":""}`}
+                                placeholder={"請用markdown語法輸入超過30字的內容"}
+                                className={`border-none bg-transparent h-full pt-2 focus:outline-1 outline-sky-700 focus:caret-blue-500 w-full ${isBodyFocus || body.length === 0?"":"hidden"}`}
                             ></TextareaAutosize>
                         </div>
                 </div>
