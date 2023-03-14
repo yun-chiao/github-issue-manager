@@ -155,7 +155,7 @@ export const createIssue = async (navigate, body, title, token, owner, repo) => 
           'X-GitHub-Api-Version': '2022-11-28'
         }
       })
-      navigate(`/issue/${response.data.number}`)
+      navigate(`/edit/${response.data.number}`)
   } catch (error) {
   console.error(error);
   }
@@ -188,7 +188,7 @@ export const UpdateIssue = async (dispatch, navigate, issue_number, body, title,
         }
       })
       dispatch({type: 'UPDATE_STATE', payload: { issue_number, body, title} })
-      navigate(`/issue/${issue_number}`)
+      navigate(`/edit/${issue_number}`)
   } catch (error) {
   console.error(error);
   }

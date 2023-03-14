@@ -25,12 +25,8 @@ function IssueCard({ issue }) {
     const navigate = useNavigate();
     const mdParser = new MarkdownIt(/* Markdown-it options */);
 
-    const editIssue = () => {
+    const toEditIssue = () => {
         navigate(`/edit/${issue.number}`);
-    }
-    
-    const toFocusIssue = () => {
-        navigate(`/issue/${issue.number}`);
     }
     
     /// To initial state view.
@@ -76,7 +72,7 @@ function IssueCard({ issue }) {
                 
                 <div className="w-16 h-full flex items-center justify-between">
                     <button className="h-8 w-8 rounded-md hover:bg-slate-300 flex justify-center items-center"
-                            onClick={editIssue}
+                            onClick={toEditIssue}
                             title="Edit">
                         <BiEdit />
                     </button>
@@ -89,10 +85,10 @@ function IssueCard({ issue }) {
                 </div>
             </div>
             <div className="w-full h-4/5 pl-8 pr-6 py-2">
-                <div className="h-1/4 text-2xl truncate pt-1 hover:cursor-pointer hover:underline" onClick={toFocusIssue}>{issue.title} </div>
+                <div className="h-1/4 text-2xl truncate pt-1 hover:cursor-pointer hover:underline" onClick={toEditIssue}>{issue.title} </div>
                 <div  className="pt-2 h-3/4 break-all overflow-y-auto whitespace-pre-wrap hover:cursor-pointer hover:underline" 
                       style={{background: "transparent"}} 
-                      onClick={toFocusIssue}
+                      onClick={toEditIssue}
                       dangerouslySetInnerHTML={{ __html:  mdParser.render(issue.body) }} />
             </div>
         </div>

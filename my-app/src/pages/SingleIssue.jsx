@@ -1,8 +1,9 @@
 import MarkdownIt from 'markdown-it';
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
-import { getIssue } from '../service';
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { UpdateIssue, getIssue, createIssue } from '../service';
 import { useCookies } from 'react-cookie';
+import { useDispatch } from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
 import './markdown.css'
 
@@ -10,10 +11,12 @@ function SingleIssues() {
     const [cookies] = useCookies(['token', 'owner', 'repo']);
     const [body, setBody] = useState('');
     const [title, setTitle] = useState('');
+    const location = useLocation();
     const { id } = useParams();
     const mdParser = new MarkdownIt(/* Markdown-it options */);
     const bodyRef = useRef(null);
     const titleRef = useRef(null);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isBodyFocus, setIsBodyFocus] = useState(false);
     const [isTitleFocus, setIsTitleFocus] = useState(false);
@@ -62,14 +65,20 @@ function SingleIssues() {
     /// Navigating to issues page when users click the back button.
     const toPreviousPage = () => navigate("/issues");
 
-    const toEditIssue = () => navigate(`/edit/${id}`);
-
+    /// To updata issue data to database when users click the submit button.  
+    const updateIssue = () => {
+        if(location.pathname.includes('edit')){
+            UpdateIssue(dispatch, navigate, id, body, title, cookies['token'], cookies['owner'], cookies['repo']);
+        }else if(location.pathname.includes('create')){
+            createIssue(navigate, body, title, cookies['token'], cookies['owner'], cookies['repo']);
+        }
+    }
     return (
         <div className="bg-sky-900 w-full h-full flex justify-center min-h-screen">
             <div className="bg-white w-list h-full flex flex-col items-center min-h-screen">
                 <div className='w-full flex justify-end items-center gap-x-4 sticky top-0 bg-sky-600 h-16 px-10'>
                     <button className="bg-sky-700 w-16 h-10 rounded-md hover:bg-sky-900 text-white" onClick={toPreviousPage}>返回</button>
-                    <button className="bg-sky-700  w-16 h-10 rounded-md hover:bg-sky-900 text-white" onClick={toEditIssue}>提交</button>
+                    <button className="bg-sky-700  w-16 h-10 rounded-md hover:bg-sky-900 text-white" onClick={updateIssue}>提交</button>
                 </div>
                 <div className="w-full min-h-screen bg-white p-10 text-black divide-y-2 divide-sky-200">
                     <div className='pb-2 text-3xl font-normal cursor-text'>
