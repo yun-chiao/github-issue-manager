@@ -68,12 +68,13 @@ function SingleIssues() {
     const toPreviousPage = () => navigate("/issues");
 
     /// To updata issue data to database when users click the submit button.  
-    const updateIssue = () => {
+    const updateIssue = async () => {
         if(location.pathname.includes('edit')){
-            UpdateIssue(dispatch, navigate, id, body, title, cookies['token'], cookies['owner'], cookies['repo']);
+            await UpdateIssue(dispatch, id, body, title, cookies['token'], cookies['owner'], cookies['repo']);
         }else if(location.pathname.includes('create')){
-            createIssue(navigate, body, title, cookies['token'], cookies['owner'], cookies['repo']);
+            await createIssue(body, title, cookies['token'], cookies['owner'], cookies['repo']);
         }
+        navigate('/issues')
     }
     return (
         <div className="bg-sky-900 w-full h-full flex justify-center min-h-screen">

@@ -132,7 +132,7 @@ export const updateState = async (dispatch, issue_number, newState, labels, toke
   }
 }
 
-export const createIssue = async (navigate, body, title, token, owner, repo) => {
+export const createIssue = async (body, title, token, owner, repo) => {
   if(body.length < 30){
     console.log("要大於30字");
     return;
@@ -155,13 +155,12 @@ export const createIssue = async (navigate, body, title, token, owner, repo) => 
           'X-GitHub-Api-Version': '2022-11-28'
         }
       })
-      navigate(`/edit/${response.data.number}`)
   } catch (error) {
   console.error(error);
   }
 }
 
-export const UpdateIssue = async (dispatch, navigate, issue_number, body, title, token, owner, repo) => {
+export const UpdateIssue = async (dispatch, issue_number, body, title, token, owner, repo) => {
   if(body.length < 30){
     console.log("要大於30字");
     return;
@@ -188,7 +187,6 @@ export const UpdateIssue = async (dispatch, navigate, issue_number, body, title,
         }
       })
       dispatch({type: 'UPDATE_STATE', payload: { issue_number, body, title} })
-      navigate(`/edit/${issue_number}`)
   } catch (error) {
   console.error(error);
   }
