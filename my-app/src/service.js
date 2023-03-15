@@ -163,8 +163,6 @@ export const UpdateIssue = async (dispatch, issue_number, body, title, token, ow
           'Expires': '0'
         }
       })
-      console.log('reponse ok!')
-      // dispatch({type: 'UPDATE_STATE', payload: { issue_number, body, title} })
   } catch (error) {
   console.error(error);
   }
