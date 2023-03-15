@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { UpdateIssue, getIssue, createIssue } from '../service';
 import { useCookies } from 'react-cookie';
-import { useDispatch } from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
 import './markdown.css'
 
@@ -16,7 +15,6 @@ function SingleIssues() {
     const mdParser = new MarkdownIt(/* Markdown-it options */);
     const bodyRef = useRef(null);
     const titleRef = useRef(null);
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isBodyFocus, setIsBodyFocus] = useState(false);
     const [isTitleFocus, setIsTitleFocus] = useState(false);
@@ -78,7 +76,7 @@ function SingleIssues() {
             return;
         }
         if(location.pathname.includes('edit')){
-            await UpdateIssue(dispatch, id, body, title, cookies['token'], cookies['owner'], cookies['repo']);
+            await UpdateIssue(id, body, title, cookies['token'], cookies['owner'], cookies['repo']);
         }else if(location.pathname.includes('create')){
             await createIssue(body, title, cookies['token'], cookies['owner'], cookies['repo']);
         }

@@ -130,7 +130,7 @@ export const createIssue = async (body, title, token, owner, repo) => {
   }
 }
 
-export const UpdateIssue = async (dispatch, issue_number, body, title, token, owner, repo) => {
+export const UpdateIssue = async (issue_number, body, title, token, owner, repo) => {
   try {
       const octokit = new Octokit({
           auth: token
@@ -209,3 +209,4 @@ export const getIssues = async (dispatch, labels, orderState, searchKey, owner, 
     console.error(error);
   }
 }
+
