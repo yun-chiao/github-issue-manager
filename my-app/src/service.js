@@ -67,13 +67,13 @@ export const closeIssue = async (dispatch, issue_number, token, owner, repo) => 
                 'X-GitHub-Api-Version': '2022-11-28'
             }
         })
-        dispatch({ type: 'CLOSE_ISSUE', payload: { closed_number: issue_number } })
+        dispatch({ type: 'REMOVE_ISSUE', payload: { closed_number: issue_number } })
     } catch (error) {
     console.error(error);
     }
 }
 
-export const updateState = async (dispatch, issue_number, newState, labels, token, owner, repo) => {
+export const updateState = async (dispatch, issue_number, newState, labels, token, owner, repo, filterState) => {
   const states = ["Open", "Progressing", "Done"];
 
   let newLabels = [ {name: newState}, ...labels.filter( label => !states.includes(label.name))]
@@ -95,7 +95,15 @@ export const updateState = async (dispatch, issue_number, newState, labels, toke
           'Expires': '0'
         }
       })
-      dispatch({type: 'UPDATE_STATE', payload: { issue_number, labels: newLabels } })
+
+      // If the [newState] is in the [filterState] the users checked, the IssueCard would change label.
+      // Otherwise, it would be removed from issue list
+      // By this way, it doesn't to call api and bring the slower experience or feel the view refreshing to users.
+      if(filterState[newState]){
+        dispatch({type: 'UPDATE_STATE', payload: { issue_number, labels: newLabels } })
+      }else{
+        dispatch({ type: 'REMOVE_ISSUE', payload: { closed_number: issue_number } })
+      }
   } catch (error) {
   console.error(error);
   }

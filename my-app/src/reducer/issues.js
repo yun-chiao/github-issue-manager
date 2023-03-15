@@ -15,7 +15,7 @@ export const issuesReducer = (state = issuesState, action) => {
                     ...action.payload.issues
                 ],
             }
-        case 'CLOSE_ISSUE':
+        case 'REMOVE_ISSUE':
             return{
                 issues: state.issues.filter( item => item.number !== action.payload.closed_number)
             }

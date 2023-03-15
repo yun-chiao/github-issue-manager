@@ -1,7 +1,7 @@
 import { BiEdit, BiTrashAlt } from "react-icons/bi";
 import { Menu, MenuItem } from '@szhsin/react-menu';
 import { useEffect, useState } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { closeIssue, updateState } from '../service';
 import { useNavigate } from "react-router-dom";
 import MarkdownIt from 'markdown-it';
@@ -19,6 +19,7 @@ const LABEL_COLOR = {
 
 function IssueCard({ issue }) {
     const [cookies] = useCookies(['token', 'owner', 'repo']);
+    const filterState = useSelector(state => state.filterStateReducer);
     const [textColor, setTextColor] = useState('');
     const [labelText, setLabelText] = useState('')
     const dispatch = useDispatch();
@@ -28,7 +29,7 @@ function IssueCard({ issue }) {
     const toEditIssue = () => {
         navigate(`/edit/${issue.number}`);
     }
-    
+
     /// To initial state view.
     useEffect(() => {
         let label = issue.labels.filter( label => states.includes(label.name));
@@ -48,7 +49,7 @@ function IssueCard({ issue }) {
     /// To change the text for displaying state.
     const ChangeState = (e) => {
         let label = e.syntheticEvent.target.innerText;
-        updateState(dispatch, issue.number, label, issue.labels, cookies['token'], cookies['owner'], cookies['repo'])
+        updateState(dispatch, issue.number, label, issue.labels, cookies['token'], cookies['owner'], cookies['repo'], filterState)
     }
 
     /// To close the issue when users click the trash icon.
