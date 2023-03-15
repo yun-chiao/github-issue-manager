@@ -56,37 +56,6 @@ export const getRepos = async (token, owner) => {
   }
 }
 
-export const getIssues = async (dispatch, page, token, owner, repo) => {
-    try {
-        const octokit = new Octokit({
-            auth: token
-          })
-        const response = await octokit.request(`GET /repos/${owner}/${repo}/issues`, {
-          per_page: 10,
-          page: page,
-          headers: {
-            'X-GitHub-Api-Version': '2022-11-28',
-            'Cache-Control': 'no-cache, no-store, must-revalidate',
-            'Pragma': 'no-cache',
-            'Expires': '0'
-          }
-        })
-        if(response.data.length === 0){
-            dispatch({ type: 'NON_HAS_MORE' })
-            return
-        }else{
-            dispatch({ type: 'HAS_MORE' })
-        }
-        if(page === 1){
-            dispatch({ type: 'INIT_ISSUES', payload: { issues: response.data } })
-        }else{
-            dispatch({ type: 'UPDATE_ISSUES', payload: { issues: response.data } })
-        }
-    } catch (error) {
-    console.error(error);
-    }
-}
-
 export const closeIssue = async (dispatch, issue_number, token, owner, repo) => {
     try {
         const octokit = new Octokit({
@@ -215,8 +184,8 @@ export const getIssue = async (issue_number, token, owner, repo) => {
   }
 }
 
-/// TODO add page parameter
-export const getFilterIssue = async (dispatch, labels, orderState, searchKey, owner, repo) => {
+export const getIssues = async (dispatch, labels, orderState, searchKey, owner, repo, page) => {
+  let per_page = 10
   let labelsList = Object.keys(labels).filter((key) => labels[key])
   try {
     const labelsQuery = labelsList.map((label) => label).join(',');
@@ -226,10 +195,23 @@ export const getFilterIssue = async (dispatch, labels, orderState, searchKey, ow
         'Cache-Control': 'no-cache, no-store, must-revalidate',
         'Pragma': 'no-cache',
         'Expires': '0'
+      },
+      params: {
+        per_page,
+        page: page
       }
     };
     const response = await axios.get(url, config);
-    dispatch({ type: 'INIT_ISSUES', payload: { issues: response.data.items } })
+    if(response.data.items.length < per_page){
+      dispatch({ type: 'NON_HAS_MORE' })
+    }else{
+      dispatch({ type: 'HAS_MORE' })
+    }
+    if(page === 1){
+      dispatch({ type: 'INIT_ISSUES', payload: { issues: response.data.items } })
+    }else{
+      dispatch({ type: 'UPDATE_ISSUES', payload: { issues: response.data.items } })
+    }
   } catch (error) {
     console.error(error);
   }

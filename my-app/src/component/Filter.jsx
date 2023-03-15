@@ -2,9 +2,7 @@ import { BiSearch, BiPlus, BiCheck } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { Menu, MenuItem } from '@szhsin/react-menu';
-import { useState, useEffect } from "react";
-import { getFilterIssue } from "../service";
-import { useCookies } from 'react-cookie';
+import { useState } from "react";
 import '@szhsin/react-menu/dist/transitions/slide.css'
 
 const textColor = {
@@ -19,7 +17,6 @@ const orderText = {
 }
 
 function Filter() {
-    const [cookies] = useCookies(['owner', 'repo']);
     const filterState = useSelector(state => state.filterStateReducer);
     const filterOrder = useSelector(state => state.filterOrderReducer);
     const preSearchKey = useSelector(state => state.filterKeywordReducer.keyword);
@@ -27,12 +24,6 @@ function Filter() {
     const dispatch = useDispatch();
     const toCreateIssue = () => navigate(`/create`);
     const [searchKey, setSearchKey] = useState(preSearchKey);
-
-    useEffect(() => {
-        console.log('filterState', filterState)
-        const getIssue = async () => await getFilterIssue(dispatch, filterState, filterOrder, preSearchKey, cookies['owner'], cookies['repo'])
-        getIssue();
-      }, [filterState, filterOrder, preSearchKey]);
 
     const ChangeState = (e) => dispatch({type: 'CHANGE_STATE', payload: { changeState: e.value } })
 

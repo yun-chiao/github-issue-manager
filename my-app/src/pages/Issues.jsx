@@ -11,17 +11,22 @@ import './markdown.css'
 function Issues() {
     const issues = useSelector(state => state.issuesReducer.issues);
     const hasMore = useSelector(state => state.hasMoreReducer.hasMore);
+    const filterState = useSelector(state => state.filterStateReducer);
+    const filterOrder = useSelector(state => state.filterOrderReducer);
+    const preSearchKey = useSelector(state => state.filterKeywordReducer.keyword);
     const [page, setPage] = useState(1);
     const [cookies] = useCookies(['token', 'owner', 'repo']);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        getIssues(dispatch, page, cookies['token'], cookies['owner'], cookies['repo']);
-        setPage(page+1);
-    }, [])
+        const getIssue = async () => await getIssues(dispatch, filterState, filterOrder, preSearchKey, cookies['owner'], cookies['repo'], 1)
+        getIssue()
+        setPage(2);
+    }, [filterState, filterOrder, preSearchKey])
 
     const fetchMoreIssues = () => {
-        getIssues(dispatch, page, cookies['token'], cookies['owner'], cookies['repo']);
+        const getIssue = async () => await getIssues(dispatch, filterState, filterOrder, preSearchKey, cookies['owner'], cookies['repo'], page)
+        getIssue()
         setPage(page+1);
     }
 
