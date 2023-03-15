@@ -216,11 +216,19 @@ export const getIssue = async (issue_number, token, owner, repo) => {
 }
 
 /// TODO add page parameter
-export const getFilterIssue = async (dispatch, labels=['Open', 'Progressing', 'Done'], order, searchKey, owner, repo) => {
+export const getFilterIssue = async (dispatch, labels, orderState, searchKey, owner, repo) => {
+  let labelsList = Object.keys(labels).filter((key) => labels[key])
   try {
-    const labelsQuery = labels.map((label) => label).join(',');
-    const url = `https://api.github.com/search/issues?q=label:${labelsQuery}+sort:created-${order}+${searchKey} in:title,body+repo:${owner}/${repo}+type:issue`;
-    const response = await axios.get(url);
+    const labelsQuery = labelsList.map((label) => label).join(',');
+    const url = `https://api.github.com/search/issues?q=label:${labelsQuery}+sort:created-${orderState.order}+${searchKey} in:title,body+repo:${owner}/${repo}+type:issue`;
+    const config = {
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    };
+    const response = await axios.get(url, config);
     dispatch({ type: 'INIT_ISSUES', payload: { issues: response.data.items } })
   } catch (error) {
     console.error(error);

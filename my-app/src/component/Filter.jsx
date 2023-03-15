@@ -1,63 +1,49 @@
 import { BiSearch, BiPlus, BiCheck } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Menu, MenuItem } from '@szhsin/react-menu';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getFilterIssue } from "../service";
 import { useCookies } from 'react-cookie';
 import '@szhsin/react-menu/dist/transitions/slide.css'
 
+const textColor = {
+    "Open": "text-gray-500",
+    "Progressing": "text-red-500",
+    "Done": "text-green-500"
+}
+
+const orderText = {
+    'asc': "舊新",
+    'desc': "新舊"
+}
+
 function Filter() {
     const [cookies] = useCookies(['owner', 'repo']);
+    const filterState = useSelector(state => state.filterStateReducer);
+    const filterOrder = useSelector(state => state.filterOrderReducer);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const toCreateIssue = () => navigate(`/create`);
-    const [state, setState] = useState({"Open": true, "Progressing": true, "Done": true});
-    const [queryLabels, setQueryLabels] = useState(["Open", "Progressing", "Done"]);
-    const [order, setOrder] = useState('desc');
-    const [orderText, setOrderText] = useState("新舊");
     const [searchKey, setSearchKey] = useState("");
 
-    const ChangeState = (e) => {
-        let newState = state;
-        let newQueryLabels = [];
-        if(state[e.value]){
-            newQueryLabels = queryLabels.filter(item => item !== e.value)
-        }else{
-            newQueryLabels = [...queryLabels, e.value]
-        }
-        setQueryLabels(newQueryLabels)
-        newState[e.value] = !newState[e.value];
-        setState(newState);
-        getFilterIssue(dispatch, newQueryLabels, order, searchKey, cookies['owner'], cookies['repo'])
-    }
+    useEffect(() => {
+        console.log('filterState', filterState)
+        const getIssue = async () => await getFilterIssue(dispatch, filterState, filterOrder, searchKey, cookies['owner'], cookies['repo'])
+        getIssue();
+      }, [filterState, filterOrder]);
 
-    const changeOrder = () => {
-        let newOrder = order;
-        if(order === 'asc'){
-            newOrder = 'desc';
-            setOrderText("新舊");
-        }else if(order === 'desc'){
-            newOrder = 'asc';
-            setOrderText("舊新");
-        }
-        setOrder(newOrder);
-        getFilterIssue(dispatch, queryLabels, newOrder, searchKey, cookies['owner'], cookies['repo'])
-    }
+    const ChangeState = (e) => dispatch({type: 'CHANGE_STATE', payload: { changeState: e.value } })
+
+    const toggleOrder = () => dispatch({type: 'TOGGLE_ORDER'})
 
     const handleSearchKey = (e) => {
         setSearchKey(e.target.value)
     }
 
-    const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            searchIssue()
-        }
-      };
-
-    const searchIssue = () => {
-        getFilterIssue(dispatch, queryLabels, order, searchKey, cookies['owner'], cookies['repo']);
-    }
+    const handleKeyDown = (event) => {if (event.key === 'Enter') searchIssue()}
+        
+    const searchIssue = async () => await getFilterIssue(dispatch, filterState, filterOrder, searchKey, cookies['owner'], cookies['repo']);
 
     return (
         <div className="bg-sky-600 w-full h-full p-6 flex justify-between items-center">
@@ -68,20 +54,16 @@ function Filter() {
                   transition
                   onItemClick={(e) => (e.keepOpen = true)}
             >
-                <MenuItem type="checkbox" checked={state["Open"]} value={"Open"} onClick={ChangeState} className="text-gray-500 state-item">
-                    <BiCheck className={`mx-2 ${state["Open"]?"visible":"invisible"}`}></BiCheck>
-                    Open
-                </MenuItem>
-                <MenuItem type="checkbox" checked={state["Progressing"]} value={"Progressing"} onClick={ChangeState} className="text-red-500 state-item">
-                    <BiCheck className={`mx-2 ${state["Progressing"]?"visible":"invisible"}`}></BiCheck>
-                    Progressing
-                </MenuItem>
-                <MenuItem type="checkbox" checked={state["Done"]} value={"Done"} onClick={ChangeState} className="text-green-500 state-item">
-                    <BiCheck className={`mx-2 ${state["Done"]?"visible":"invisible"}`}></BiCheck>
-                    Done
-                </MenuItem>
+                {Object.keys(filterState).map((key) => {
+                    return (
+                        <MenuItem type="checkbox" key={key} checked={filterState[key]} value={key} onClick={ChangeState} className={`state-item ${textColor[key]}`}>
+                            <BiCheck className={`mx-2 ${filterState[key]?"visible":"invisible"}`}></BiCheck>
+                             {key}
+                        </MenuItem>
+                    )
+                })}
             </Menu>
-            <button className='bg-sky-700 hover:bg-sky-800 text-white w-12 h-8 rounded-md text-sm' onClick={changeOrder}>{orderText}</button>
+            <button className='bg-sky-700 hover:bg-sky-800 text-white w-12 h-8 rounded-md text-sm' onClick={toggleOrder}>{orderText[filterOrder.order]}</button>
             <div className='bg-sky-700 w-64 h-8 rounded-md flex justify-between'>
                 <input className='bg-transparent text-white w-64 h-8 truncate pl-3 focus:outline-none text-sm'
                        placeholder="這有搜尋可以用喔"
