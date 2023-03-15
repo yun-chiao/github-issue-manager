@@ -49,7 +49,13 @@ function Filter() {
         setSearchKey(e.target.value)
     }
 
-    const searchIssue = (e) => {
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            searchIssue()
+        }
+      };
+
+    const searchIssue = () => {
         getFilterIssue(dispatch, queryLabels, order, searchKey, cookies['owner'], cookies['repo']);
     }
 
@@ -80,7 +86,8 @@ function Filter() {
                 <input className='bg-transparent text-white w-64 h-8 truncate pl-3 focus:outline-none text-sm'
                        placeholder="這有搜尋可以用喔"
                        value={searchKey}
-                       onChange={handleSearchKey}>
+                       onChange={handleSearchKey}
+                       onKeyDown={handleKeyDown}>
                 </input>
                 <button className='h-8 w-8 text-white hover:bg-sky-800 flex justify-center items-center rounded-md'
                         title="Search"
