@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Issues from "./pages/Issues";
 import SingleIssues from "./pages/SingleIssue";
 import SelectRepo from "./pages/SelectRepo";
+import NotFound from "./pages/notFound";
 import { Provider } from 'react-redux';
 import store from './store';
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/create" element={<SingleIssues/>}/>
           <Route path="/edit/:id" element={<SingleIssues/>}/>
           <Route path="/select" element={<SelectRepo/>}/>
+          <Route path="*" element={<NotFound/>} />
         </Routes>
       </Router>
     </Provider>
