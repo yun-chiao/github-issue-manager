@@ -70,6 +70,13 @@ function SingleIssues() {
 
     /// To updata issue data to database when users click the submit button.  
     const updateIssue = async () => {
+        if(body.length < 30){
+            console.log("要大於30字");
+            return;
+        }else if(title.length === 0){
+            console.log("要有title");
+            return;
+        }
         if(location.pathname.includes('edit')){
             await UpdateIssue(dispatch, id, body, title, cookies['token'], cookies['owner'], cookies['repo']);
         }else if(location.pathname.includes('create')){

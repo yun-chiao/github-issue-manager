@@ -61,7 +61,7 @@ export const closeIssue = async (dispatch, issue_number, token, owner, repo) => 
         const octokit = new Octokit({
             auth: token
           })
-        const response = await octokit.request(`PATCH /repos/${owner}/${repo}/issues/${issue_number}`, {
+        await octokit.request(`PATCH /repos/${owner}/${repo}/issues/${issue_number}`, {
             state: 'close',
             headers: {
                 'X-GitHub-Api-Version': '2022-11-28'
@@ -110,19 +110,12 @@ export const updateState = async (dispatch, issue_number, newState, labels, toke
 }
 
 export const createIssue = async (body, title, token, owner, repo) => {
-  if(body.length < 30){
-    console.log("要大於30字");
-    return;
-  }else if(title.length === 0){
-    console.log("要有title");
-    return;
-  }
   try {
       const octokit = new Octokit({
           auth: token
         })
 
-      const response = await octokit.request(`POST /repos/${owner}/${repo}/issues`, {
+      await octokit.request(`POST /repos/${owner}/${repo}/issues`, {
         owner,
         repo,
         title,
@@ -138,19 +131,12 @@ export const createIssue = async (body, title, token, owner, repo) => {
 }
 
 export const UpdateIssue = async (dispatch, issue_number, body, title, token, owner, repo) => {
-  if(body.length < 30){
-    console.log("要大於30字");
-    return;
-  }else if(title.length === 0){
-    console.log("要有title");
-    return;
-  }
   try {
       const octokit = new Octokit({
           auth: token
         })
 
-      const response = await octokit.request(`PATCH /repos/${owner}/${repo}/issues/${issue_number}`, {
+      await octokit.request(`PATCH /repos/${owner}/${repo}/issues/${issue_number}`, {
         owner,
         repo,
         issue_number,
@@ -175,9 +161,9 @@ export const getIssue = async (issue_number, token, owner, repo) => {
         })
 
       const response = await octokit.request(`GET /repos/${owner}/${repo}/issues/${issue_number}`, {
-        owner: 'OWNER',
-        repo: 'REPO',
-        issue_number: 'ISSUE_NUMBER',
+        owner,
+        repo,
+        issue_number,
         headers: {
           'X-GitHub-Api-Version': '2022-11-28',
           'Cache-Control': 'no-cache, no-store, must-revalidate',
