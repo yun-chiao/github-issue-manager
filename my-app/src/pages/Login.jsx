@@ -14,7 +14,6 @@ function Login() {
         let code = urlParams.get("code");
         const toGetToken = async () => {
             let token = await getToken(code)
-            console.log('token', token)
             setCookie('token', token, { path: '/' })
             let owner = await getUser(token);
             setCookie('owner', owner, { path: '/' })
