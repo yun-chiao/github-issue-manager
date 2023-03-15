@@ -211,7 +211,6 @@ export const getIssues = async (dispatch, labels, orderState, searchKey, owner, 
       }
     };
     const response = await axios.get(url, config);
-    console.log(response.data.items)
     if(response.data.items.length < per_page){
       dispatch({ type: 'NON_HAS_MORE' })
     }else{
