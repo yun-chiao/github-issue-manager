@@ -163,7 +163,8 @@ export const UpdateIssue = async (dispatch, issue_number, body, title, token, ow
           'Expires': '0'
         }
       })
-      dispatch({type: 'UPDATE_STATE', payload: { issue_number, body, title} })
+      console.log('reponse ok!')
+      // dispatch({type: 'UPDATE_STATE', payload: { issue_number, body, title} })
   } catch (error) {
   console.error(error);
   }
@@ -197,7 +198,7 @@ export const getIssues = async (dispatch, labels, orderState, searchKey, owner, 
   let labelsList = Object.keys(labels).filter((key) => labels[key])
   try {
     const labelsQuery = labelsList.map((label) => label).join(',');
-    const url = `https://api.github.com/search/issues?q=label:${labelsQuery}+sort:created-${orderState.order}+${searchKey} in:title,body+repo:${owner}/${repo}+type:issue`;
+    const url = `https://api.github.com/search/issues?q=label:${labelsQuery}+sort:created-${orderState.order}+${searchKey} in:title,body+repo:${owner}/${repo}+type:issue&timestamp=${Date.now()}`;
     const config = {
       headers: {
         'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -210,6 +211,7 @@ export const getIssues = async (dispatch, labels, orderState, searchKey, owner, 
       }
     };
     const response = await axios.get(url, config);
+    console.log(response.data.items)
     if(response.data.items.length < per_page){
       dispatch({ type: 'NON_HAS_MORE' })
     }else{
