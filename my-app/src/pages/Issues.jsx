@@ -19,13 +19,13 @@ function Issues() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const getIssue = async () => await getIssues(dispatch, filterState, filterOrder, preSearchKey, cookies['owner'], cookies['repo'], 1)
+        const getIssue = async () => await getIssues(dispatch, filterState, filterOrder, preSearchKey, cookies['token'],cookies['owner'], cookies['repo'], 1)
         getIssue()
         setPage(2);
     }, [filterState, filterOrder, preSearchKey])
 
     const fetchMoreIssues = () => {
-        const getIssue = async () => await getIssues(dispatch, filterState, filterOrder, preSearchKey, cookies['owner'], cookies['repo'], page)
+        const getIssue = async () => await getIssues(dispatch, filterState, filterOrder, preSearchKey, cookies['token'], cookies['owner'], cookies['repo'], page)
         getIssue()
         setPage(page+1);
     }
