@@ -43,7 +43,7 @@ function Filter() {
             <span className="h-full w-2 flex flex-col justify-between">
                 {Object.keys(filterState).map((key) => {
                     return (
-                        <span className={`h-2 w-2 rounded-lg bg-${stateColor[key]} ${filterState[key]?"visible":"invisible"}`}></span>
+                        <span key={`${key}-info`} className={`h-2 w-2 rounded-lg bg-${stateColor[key]} ${filterState[key]?"visible":"invisible"}`}></span>
                     )
                 })}
             </span>
