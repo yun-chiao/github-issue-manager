@@ -5,10 +5,11 @@ import { Menu, MenuItem } from '@szhsin/react-menu';
 import { useState } from "react";
 import '@szhsin/react-menu/dist/transitions/slide.css'
 
-const textColor = {
-    "Open": "text-gray-500",
-    "Progressing": "text-red-500",
-    "Done": "text-green-500"
+// Define text's color for different labels.
+const stateColor = {
+    "Open": "amber-500",
+    "Progressing": "rose-500",
+    "Done": "emerald-500"
 }
 
 const orderText = {
@@ -39,6 +40,13 @@ function Filter() {
       
     return (
         <div className="bg-sky-600 w-full h-full p-6 flex justify-between items-center">
+            <span className="h-full w-2 flex flex-col justify-between">
+                {Object.keys(filterState).map((key) => {
+                    return (
+                        <span className={`h-2 w-2 rounded-lg bg-${stateColor[key]} ${filterState[key]?"visible":"invisible"}`}></span>
+                    )
+                })}
+            </span>
             <Menu menuClassName="bg-slate-100 w-36 h-28 p-2 rounded-md flex flex-col justify-evenly"
                   direction="left"
                   offsetX={12}
@@ -48,7 +56,7 @@ function Filter() {
             >
                 {Object.keys(filterState).map((key) => {
                     return (
-                        <MenuItem type="checkbox" key={key} checked={filterState[key]} value={key} onClick={ChangeState} className={`state-item ${textColor[key]}`}>
+                        <MenuItem type="checkbox" key={key} checked={filterState[key]} value={key} onClick={ChangeState} className={`state-item text-${stateColor[key]}`}>
                             <BiCheck className={`mx-2 ${filterState[key]?"visible":"invisible"}`}></BiCheck>
                              {key}
                         </MenuItem>

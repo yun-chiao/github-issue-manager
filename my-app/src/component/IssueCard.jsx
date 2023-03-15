@@ -11,10 +11,10 @@ import { useCookies } from 'react-cookie';
 const states = ["Open", "Progressing", "Done"];
 
 // Define text's color for different labels.
-const LABEL_COLOR = {
-    "Open": "text-gray-500",
-    "Progressing": "text-red-500",
-    "Done": "text-green-500",
+const stateColor = {
+    "Open": "amber-500",
+    "Progressing": "rose-500",
+    "Done": "emerald-500"
 }
 
 function IssueCard({ issue }) {
@@ -33,17 +33,9 @@ function IssueCard({ issue }) {
     /// To initial state view.
     useEffect(() => {
         let label = issue.labels.filter( label => states.includes(label.name));
-        label = label.length === 0? "Open" : label[0];
-        if(label.name === "Progressing"){
-            setLabelText("Progressing");
-            setTextColor(LABEL_COLOR.Progressing);      
-        }else if(label.name === "Done"){
-            setLabelText("Done");
-            setTextColor(LABEL_COLOR.Done);   
-        }else{
-            setLabelText("Open");
-            setTextColor(LABEL_COLOR.Open);             
-        }   
+        label = label.length === 0? "Open" : label[0]; // Avoid any issue has no label about state.
+        setLabelText(label.name)
+        setTextColor(stateColor[label.name])
     }, [issue])
 
     /// To change the text for displaying state.
@@ -63,12 +55,16 @@ function IssueCard({ issue }) {
                 <Menu menuClassName="bg-slate-100 w-28 h-28 p-2 rounded-md flex flex-col justify-evenly"
                       direction="right"
                       offsetX={12}
-                      menuButton={<button className={`bg-slate-100 w-24 h-full rounded-md hover:bg-slate-400 ${textColor}`}>{labelText}</button>} 
+                      menuButton={<button className={`bg-slate-100 w-24 h-full rounded-md hover:bg-slate-400 text-${textColor}`}>{labelText}</button>} 
                       transition
                 >
-                    <MenuItem className="text-gray-500 state-item" onClick={(e) => ChangeState(e)}>Open</MenuItem>
-                    <MenuItem className="text-red-500 state-item" onClick={(e) => ChangeState(e)}>Progressing</MenuItem>
-                    <MenuItem className="text-green-500 state-item" onClick={(e) => ChangeState(e)}>Done</MenuItem>
+                    {Object.keys(filterState).map((key) => {
+                    return (
+                        <MenuItem key={`${issue.number}-${key}`}  onClick={(e) => ChangeState(e)} className={`state-item text-${stateColor[key]}`}>
+                             {key}
+                        </MenuItem>
+                    )
+                })}
                 </Menu>
                 
                 <div className="w-16 h-full flex items-center justify-between">
