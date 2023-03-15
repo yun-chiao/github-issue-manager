@@ -22,16 +22,17 @@ function Filter() {
     const [cookies] = useCookies(['owner', 'repo']);
     const filterState = useSelector(state => state.filterStateReducer);
     const filterOrder = useSelector(state => state.filterOrderReducer);
+    const preSearchKey = useSelector(state => state.filterKeywordReducer.keyword);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const toCreateIssue = () => navigate(`/create`);
-    const [searchKey, setSearchKey] = useState("");
+    const [searchKey, setSearchKey] = useState(preSearchKey);
 
     useEffect(() => {
         console.log('filterState', filterState)
-        const getIssue = async () => await getFilterIssue(dispatch, filterState, filterOrder, searchKey, cookies['owner'], cookies['repo'])
+        const getIssue = async () => await getFilterIssue(dispatch, filterState, filterOrder, preSearchKey, cookies['owner'], cookies['repo'])
         getIssue();
-      }, [filterState, filterOrder]);
+      }, [filterState, filterOrder, preSearchKey]);
 
     const ChangeState = (e) => dispatch({type: 'CHANGE_STATE', payload: { changeState: e.value } })
 
@@ -43,8 +44,8 @@ function Filter() {
 
     const handleKeyDown = (event) => {if (event.key === 'Enter') searchIssue()}
         
-    const searchIssue = async () => await getFilterIssue(dispatch, filterState, filterOrder, searchKey, cookies['owner'], cookies['repo']);
-
+    const searchIssue = async () => dispatch({type: 'UPDATE_KEYWORD', payload: { keyword: searchKey } })
+      
     return (
         <div className="bg-sky-600 w-full h-full p-6 flex justify-between items-center">
             <Menu menuClassName="bg-slate-100 w-36 h-28 p-2 rounded-md flex flex-col justify-evenly"

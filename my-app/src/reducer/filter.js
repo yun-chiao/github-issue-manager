@@ -35,3 +35,17 @@ export const filterOrderReducer = (state = filterOrderState, action) => {
         return state;
     }
 };
+
+const filterKeywordState = {
+    keyword: ""
+};
+
+export const filterKeywordReducer = (state = filterKeywordState, action) => {
+    switch (action.type) {
+        case 'UPDATE_KEYWORD':
+            console.log('UPDATE_KEYWORD',  action.payload.keyword)
+            return {keyword: action.payload.keyword}
+        default:
+        return state;
+    }
+};
