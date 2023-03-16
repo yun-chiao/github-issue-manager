@@ -107,7 +107,7 @@ export const updateState = async (dispatch, issue_number, newState, labels, toke
   }
 }
 
-export const createIssue = async (body, title, token, owner, repo) => {
+export const createIssue = async (body, title, token, owner, repo, navigate) => {
   try {
     await axios.post(
       `https://api.github.com/repos/${owner}/${repo}/issues`,
@@ -126,13 +126,18 @@ export const createIssue = async (body, title, token, owner, repo) => {
       }
     );
     toast.success("成功新增issue");
+    
+    // To avoid the issue not be updated when the issue list get issues data.
+    setTimeout(() => {
+      navigate('/issues');
+    },1000);
   } catch (error) {
     toast.error('Server error');
     console.error(error);
   }
 }
 
-export const UpdateIssue = async (issue_number, body, title, token, owner, repo) => {
+export const UpdateIssue = async (issue_number, body, title, token, owner, repo, navigate) => {
   try {
     await axios.patch(`https://api.github.com/repos/${owner}/${repo}/issues/${issue_number}`, {
       title,
@@ -148,6 +153,11 @@ export const UpdateIssue = async (issue_number, body, title, token, owner, repo)
       }
     });
     toast.success("成功更新issue");
+
+    // To avoid the issue not be updated when the issue list get issues data.
+    setTimeout(() => {
+      navigate('/issues');
+    },1000);
   } catch (error) {
     toast.error('Server error');
     console.error(error);

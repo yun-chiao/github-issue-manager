@@ -77,11 +77,10 @@ function SingleIssues() {
             return;
         }
         if(location.pathname.includes('edit')){
-            await UpdateIssue(id, body, title, cookies['token'], cookies['owner'], cookies['repo']);
+            await UpdateIssue(id, body, title, cookies['token'], cookies['owner'], cookies['repo'], navigate);
         }else if(location.pathname.includes('create')){
-            await createIssue(body, title, cookies['token'], cookies['owner'], cookies['repo']);
+            await createIssue(body, title, cookies['token'], cookies['owner'], cookies['repo'], navigate);
         }
-        navigate('/issues')
     }
     return (
         <div className="bg-sky-900 w-full h-full flex justify-center min-h-screen">
