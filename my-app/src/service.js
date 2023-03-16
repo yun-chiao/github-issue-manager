@@ -1,20 +1,13 @@
 import axios from 'axios';
 import { toast } from "react-toastify";
+import { Octokit } from '@octokit/rest';
 
 const client_id = process.env.REACT_APP_CLIENT_ID
 const client_secret = process.env.REACT_APP_CLIENT_SECRET
 
 export const getToken = async (code) => {
     try {
-        const response = await axios.post('https://github.com/login/oauth/access_token', {
-          client_id,
-          client_secret,
-          code
-        }, {
-          headers: {
-            accept: 'application/json'
-          }
-        });
+        const response = await axios.get(`http://localhost:9999/authenticate/${code}`);
         return response.data.access_token;
       } catch (error) {
         toast.success('登入失敗');
@@ -24,28 +17,48 @@ export const getToken = async (code) => {
 
 export const getUser = async (token) => {
   try {
-    const response = await axios.get('https://api.github.com/user', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Accept': 'application/vnd.github.v3+json',
-        'X-GitHub-Api-Version': '2022-11-28'
-      }
-    });
-    toast.success(`嗨 ${response.data.name}！`);
-    return response.data.name;
+    const octokit = new Octokit({
+      auth: token
+    })
+    const response = await octokit.request('GET /user')
+    console.log('user', response.data)
+    return response.data.name
   } catch (error) {
-    toast.success('登入失敗');
     console.error(error);
   }
 }
+// export const getUser = async (token) => {
+//   try {
+//     const octokit = new Octokit({
+//       auth: token
+//     })
+    
+//     const response = await octokit.request('GET /user')
+//     console.log(response.data)
+//     return response.data.name
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
 
-export const getRepos = async (token, owner) => {
+// export const getUser = async (token) => {
+//   try {
+//     const response = await axios.get(`http://localhost:9999/user/${token}`);
+//     toast.success(`嗨 ${response.data.name}！`);
+//     return response.data.name;
+//   } catch (error) {
+//     toast.success('登入失敗');
+//     console.error(error);
+//   }
+// }
+
+export const getRepos = async (token, owner="yun-chiao") => {
   try {
-    const response = await axios.get(`https://api.github.com/users/${owner}/repos`, {
+    const response = await axios.get(`https://api.github.com/users/${"yun-chiao"}/repos`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `token ${token}`,
+        'x-github-api-version': 'v3',
         'Accept': 'application/vnd.github.v3+json',
-        'X-GitHub-Api-Version': '2022-11-28'
       }
     });
     return response.data;
@@ -61,8 +74,9 @@ export const closeIssue = async (dispatch, issue_number, token, owner, repo) => 
       state: 'closed',
     }, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `token ${token}`,
         'Accept': 'application/vnd.github.v3+json',
+        'x-github-api-version': 'v3',
         'X-GitHub-Api-Version': '2022-11-28',
         'Cache-Control': 'no-cache, no-store, must-revalidate',
         'Pragma': 'no-cache',
@@ -86,8 +100,9 @@ export const updateState = async (dispatch, issue_number, newState, labels, toke
       labels: newLabels,
     }, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `token ${token}`,
         'Accept': 'application/vnd.github.v3+json',
+        'x-github-api-version': 'v3',
         'X-GitHub-Api-Version': '2022-11-28',
       }
     });
@@ -119,6 +134,7 @@ export const createIssue = async (body, title, token, owner, repo, navigate) => 
       {
         headers: {
           Authorization: `token ${token}`,
+          'x-github-api-version': 'v3',
           'Accept': 'application/vnd.github.v3+json',
           'Content-Type': 'application/json',
           'X-GitHub-Api-Version': '2022-11-28',
@@ -145,6 +161,7 @@ export const UpdateIssue = async (issue_number, body, title, token, owner, repo,
     }, {
       headers: {
         'Authorization': `token ${token}`,
+        'x-github-api-version': 'v3',
         'Accept': 'application/vnd.github.v3+json',
         'X-GitHub-Api-Version': '2022-11-28',
         'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -170,6 +187,7 @@ export const getIssue = async (issue_number, token, owner, repo) => {
       headers: {
         'Authorization': `token ${token}`,
         'Accept': 'application/vnd.github.v3+json',
+        'x-github-api-version': 'v3',
         'X-GitHub-Api-Version': '2022-11-28',
         'Cache-Control': 'no-cache, no-store, must-revalidate',
         'Pragma': 'no-cache',
@@ -183,23 +201,25 @@ export const getIssue = async (issue_number, token, owner, repo) => {
   }
 }
 
-export const getIssues = async (dispatch, labels, orderState, searchKey, token, owner, repo, page) => {
+export const getIssues = async (dispatch, labels, orderState, searchKey, token,owner, repo, page) => {
   let per_page = 10
   let labelsList = Object.keys(labels).filter((key) => labels[key])
   try {
     const labelsQuery = labelsList.map((label) => label).join(',');
-    const url = `https://api.github.com/search/issues?per_page=${per_page}&page=${page}&q=state:open+label:${labelsQuery}+sort:created-${orderState.order}+${searchKey} in:title,body+repo:${owner}/${repo}+type:issue&timestamp=${Date.now()}`;
+    const url = `https://api.github.com/search/issues?q=label:${labelsQuery}+sort:created-${orderState.order}+${searchKey} in:title,body+repo:${owner}/${repo}+type:issue&timestamp=${Date.now()}`;
     const config = {
       headers: {
-        'Authorization': `token ${token}`,
-        'Accept': 'application/vnd.github.v3+json',
+        'x-github-api-version': 'v3',
         'Cache-Control': 'no-cache, no-store, must-revalidate',
         'Pragma': 'no-cache',
         'Expires': '0'
+      },
+      params: {
+        per_page,
+        page: page
       }
     };
     const response = await axios.get(url, config);
-    console.log(response.data.items)
     if(response.data.items.length < per_page){
       dispatch({ type: 'NON_HAS_MORE' })
     }else{
@@ -211,7 +231,6 @@ export const getIssues = async (dispatch, labels, orderState, searchKey, token, 
       dispatch({ type: 'UPDATE_ISSUES', payload: { issues: response.data.items } })
     }
   } catch (error) {
-    toast.error('Server error');
     console.error(error);
   }
 }
