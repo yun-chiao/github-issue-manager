@@ -54,7 +54,7 @@ export const getUser = async (token) => {
 
 export const getRepos = async (token, owner="yun-chiao") => {
   try {
-    const response = await axios.get(`https://api.github.com/users/${"yun-chiao"}/repos`, {
+    const response = await axios.get(`https://api.github.com/users/${owner}}/repos`, {
       headers: {
         Authorization: `token ${token}`,
         'x-github-api-version': 'v3',
