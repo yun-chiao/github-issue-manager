@@ -4,6 +4,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { UpdateIssue, getIssue, createIssue } from '../service';
 import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
+import { toast } from "react-toastify";
 import './markdown.css'
 
 function SingleIssues() {
@@ -68,11 +69,11 @@ function SingleIssues() {
 
     /// To updata issue data to database when users click the submit button.  
     const updateIssue = async () => {
-        if(body.length < 30){
-            console.log("要大於30字");
+        if(title.length === 0){
+            toast.warning("請輸入標題");
             return;
-        }else if(title.length === 0){
-            console.log("要有title");
+        }else if(body.length < 30){
+            toast.warning("請輸入超過30字的內文");
             return;
         }
         if(location.pathname.includes('edit')){

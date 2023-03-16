@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "./pages/ErrorFallback";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Login from './pages/Login';
 import Issues from "./pages/Issues";
@@ -14,6 +16,7 @@ function App() {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <ToastContainer autoClose={2000}  position={toast.POSITION.BOTTOM_RIGHT} />
       <Provider store={store}>
         <Router>
           <Routes>

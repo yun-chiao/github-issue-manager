@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from "react-toastify";
 
 const client_id = process.env.REACT_APP_CLIENT_ID
 const client_secret = process.env.REACT_APP_CLIENT_SECRET
@@ -16,6 +17,7 @@ export const getToken = async (code) => {
         });
         return response.data.access_token;
       } catch (error) {
+        toast.success('登入失敗');
         console.error(error);
       }
 }
@@ -29,8 +31,10 @@ export const getUser = async (token) => {
         'X-GitHub-Api-Version': '2022-11-28'
       }
     });
+    toast.success(`嗨 ${response.data.name}！`);
     return response.data.name;
   } catch (error) {
+    toast.success('登入失敗');
     console.error(error);
   }
 }
@@ -46,6 +50,7 @@ export const getRepos = async (token, owner) => {
     });
     return response.data;
   } catch (error) {
+    toast.error('Server error');
     console.error(error);
   }
 }
@@ -64,8 +69,10 @@ export const closeIssue = async (dispatch, issue_number, token, owner, repo) => 
         'Expires': '0'
       }
     });
+    toast.success("成功關掉issue");
     dispatch({ type: 'REMOVE_ISSUE', payload: { closed_number: issue_number } });
   } catch (error) {
+    toast.error('Server error');
     console.error(error);
   }
 }
@@ -93,8 +100,10 @@ export const updateState = async (dispatch, issue_number, newState, labels, toke
     }else{
       dispatch({ type: 'REMOVE_ISSUE', payload: { closed_number: issue_number } })
     }
+    toast.success("成功更新issue");
   } catch (error) {
-  console.error(error);
+    toast.error('Server error');
+    console.error(error);
   }
 }
 
@@ -116,7 +125,9 @@ export const createIssue = async (body, title, token, owner, repo) => {
         },
       }
     );
+    toast.success("成功新增issue");
   } catch (error) {
+    toast.error('Server error');
     console.error(error);
   }
 }
@@ -136,7 +147,9 @@ export const UpdateIssue = async (issue_number, body, title, token, owner, repo)
         'Expires': '0'
       }
     });
+    toast.success("成功更新issue");
   } catch (error) {
+    toast.error('Server error');
     console.error(error);
   }
 }
@@ -155,6 +168,7 @@ export const getIssue = async (issue_number, token, owner, repo) => {
     })
     return { title: response.data.title, body: response.data.body}
   } catch (error) {
+    toast.error('Server error');
     console.error(error);
   }
 }
@@ -187,7 +201,7 @@ export const getIssues = async (dispatch, labels, orderState, searchKey, token, 
       dispatch({ type: 'UPDATE_ISSUES', payload: { issues: response.data.items } })
     }
   } catch (error) {
+    toast.error('Server error');
     console.error(error);
   }
 }
-
