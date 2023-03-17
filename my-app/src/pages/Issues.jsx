@@ -19,6 +19,7 @@ function Issues() {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         const getIssue = async () => await getIssues(dispatch, filterState, filterOrder, preSearchKey, cookies['token'],cookies['owner'], cookies['repo'], 1)
         getIssue()
         setPage(2);
