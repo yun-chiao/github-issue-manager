@@ -11,10 +11,10 @@ import { useCookies } from 'react-cookie';
 const states = ["Open", "Progressing", "Done"];
 
 // Define text's color for different labels.
-const stateColor = {
-    "Open": "amber-500",
-    "Progressing": "rose-500",
-    "Done": "emerald-500"
+const itemTextColor = {
+    "Open": "text-amber-500",
+    "Progressing": "text-rose-500",
+    "Done": "text-emerald-500"
 }
 
 function IssueCard({ issue }) {
@@ -35,7 +35,7 @@ function IssueCard({ issue }) {
         let label = issue.labels.filter( label => states.includes(label.name));
         label = label.length === 0? "Open" : label[0]; // Avoid any issue has no label about state.
         setLabelText(label.name)
-        setTextColor(stateColor[label.name])
+        setTextColor(itemTextColor[label.name])
     }, [issue])
 
     /// To change the text for displaying state.
@@ -55,12 +55,12 @@ function IssueCard({ issue }) {
                 <Menu menuClassName="bg-slate-100 w-28 h-28 p-2 rounded-md flex flex-col justify-evenly"
                       direction="right"
                       offsetX={12}
-                      menuButton={<button className={`bg-slate-100 w-24 h-full rounded-md hover:bg-slate-400 text-${textColor}`}>{labelText}</button>} 
+                      menuButton={<button className={`bg-slate-100 w-24 h-full rounded-md hover:bg-slate-400 ${textColor}`}>{labelText}</button>} 
                       transition
                 >
                     {Object.keys(filterState).map((key) => {
                     return (
-                        <MenuItem key={`${issue.number}-${key}`}  onClick={(e) => ChangeState(e)} className={`state-item text-${stateColor[key]}`}>
+                        <MenuItem key={`${issue.number}-${key}`}  onClick={(e) => ChangeState(e)} className={`state-item ${itemTextColor[key]}`}>
                              {key}
                         </MenuItem>
                     )
