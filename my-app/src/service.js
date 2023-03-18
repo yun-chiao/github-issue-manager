@@ -42,11 +42,10 @@ export const getUser = async (token) => {
   }
 }
 
-export const getRepos = async (token, owner) => {
+export const getRepos = async (token) => {
   try {
     const response = await axios.post(`${serverUrl}/repos`, {
-      token,
-      owner
+      token
     }, {
       headers: {
         'Content-Type': 'application/json'

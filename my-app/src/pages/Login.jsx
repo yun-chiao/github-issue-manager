@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 function Login() {
     const client_id = process.env.REACT_APP_CLIENT_ID
     const navigate = useNavigate();
-    const [cookies, setCookie] = useCookies(['token', 'owner']);
+    const [cookies, setCookie] = useCookies(['token', 'username']);
 
     useEffect(() => {
         const queryString = window.location.search;
@@ -15,8 +15,8 @@ function Login() {
         const toGetToken = async () => {
             let token = await getToken(code)
             setCookie('token', token, { path: '/' })
-            let owner = await getUser(token);
-            setCookie('owner', owner, { path: '/' })
+            let username = await getUser(token);
+            setCookie('username', username, { path: '/' })
             navigate("/select");
         }
         if (code !== null){

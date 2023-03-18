@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getRepos } from '../service';
 import { useNavigate } from "react-router-dom"
 import { useCookies } from 'react-cookie';
+import { toast } from "react-toastify";
 
 function SelectRepo() {
     const [isSelect, setIsSelect] = useState(false);
@@ -13,7 +14,7 @@ function SelectRepo() {
 
     useEffect(() => {
         const getData = async () => {
-            setRepos(await getRepos(cookies['token'], cookies['owner']));
+            setRepos(await getRepos(cookies['token']));
         }
         getData()
     }, [])
@@ -22,8 +23,10 @@ function SelectRepo() {
         setRepoKey(e.target.value)
     }
 
-    const selectRepo = (e) => {
-        setCookie('repo', e.target.innerText, { path: '/' })
+    const selectRepo = (repo) => {
+        setCookie('owner', repo.owner.login, { path: '/' })
+        setCookie('repo', repo.name, { path: '/' })
+        toast.success(`進入${repo.owner.login}的${repo.name}！`);
         navigate("/issues")
     }
 
@@ -46,7 +49,7 @@ function SelectRepo() {
                     ).map((repo)=>{
                    return <button key={repo.name}
                                   className='h-1/3 w-full truncate px-2 flex items-center hover:bg-slate-900 text-white text-sm'
-                                  onClick={selectRepo}>{repo.name}</button>
+                                  onClick={() => selectRepo(repo)}>{repo.name}</button>
                 })}
             </div>
         </div>
