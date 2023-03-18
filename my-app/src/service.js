@@ -34,8 +34,8 @@ export const getUser = async (token) => {
         }
       }
     );
-    toast.success(`嗨 ${response.data.name}！`);
-    return response.data.name;
+    toast.success(`嗨 ${response.data.login}！`);
+    return response.data.login;
   } catch (error) {
     toast.success('登入失敗');
     console.error(error);
