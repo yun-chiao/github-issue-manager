@@ -140,12 +140,12 @@ export const createIssue = async (body, title, token, owner, repo, navigate) => 
 
 export const UpdateIssue = async (issue_number, body, title, token, owner, repo, navigate) => {
   try {
-    await axios.post(`${serverUrl}/updateIssue`, {
+    const response =await axios.post(`${serverUrl}/updateIssue`, {
       token,
       owner,
       body,
+      repo,
       title,
-      body,
       issue_number
     }, {
       headers: {
