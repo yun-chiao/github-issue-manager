@@ -1,45 +1,19 @@
 import { BiEdit, BiTrashAlt } from "react-icons/bi";
-import { Menu, MenuItem } from '@szhsin/react-menu';
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { closeIssue, updateState } from '../service';
+import { useDispatch } from 'react-redux';
+import { closeIssue } from '../service';
 import { useNavigate } from "react-router-dom";
 import MarkdownIt from 'markdown-it';
 import { useCookies } from 'react-cookie';
-
-// Define kinds of displaying label.
-const states = ["Open", "Progressing", "Done"];
-
-// Define text's color for different labels.
-const itemTextColor = {
-    "Open": "text-amber-500",
-    "Progressing": "text-rose-500",
-    "Done": "text-emerald-500"
-}
+import StateMenu from "./StateMenu";
 
 function IssueCard({ issue }) {
     const [cookies] = useCookies(['token', 'owner', 'repo']);
-    const filterState = useSelector(state => state.filterStateReducer);
-    const [labelText, setLabelText] = useState('')
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const mdParser = new MarkdownIt(/* Markdown-it options */);
 
     const toEditIssue = () => {
         navigate(`/edit/${issue.number}`);
-    }
-
-    /// To initial state view.
-    useEffect(() => {
-        let label = issue.labels.filter( label => states.includes(label.name));
-        label = label.length === 0? "Open" : label[0]; // Avoid any issue has no label about state.
-        setLabelText(label.name)
-    }, [issue])
-
-    /// To change the text for displaying state.
-    const ChangeState = (e) => {
-        let label = e.syntheticEvent.target.innerText;
-        updateState(dispatch, issue.number, label, issue.labels, cookies['token'], cookies['owner'], cookies['repo'], filterState)
     }
 
     /// To close the issue when users click the trash icon.
@@ -50,21 +24,7 @@ function IssueCard({ issue }) {
     return (
         <div className="bg-white h-56 w-full my-4 shrink-0 pt-6">
             <div className="w-full h-1/5 flex items-center justify-between pl-7 pr-4">
-                <Menu menuClassName="bg-slate-100 w-28 h-28 p-2 rounded-md flex flex-col justify-evenly"
-                      direction="right"
-                      offsetX={12}
-                      menuButton={<button className={`bg-slate-100 w-24 h-full rounded-md hover:bg-slate-400 ${itemTextColor[labelText]}`}>{labelText}</button>} 
-                      transition
-                >
-                    {Object.keys(filterState).map((key) => {
-                    return (
-                        <MenuItem key={`${issue.number}-${key}`}  onClick={(e) => ChangeState(e)} className={`state-item ${itemTextColor[key]}`}>
-                             {key}
-                        </MenuItem>
-                    )
-                })}
-                </Menu>
-                
+                <StateMenu issue={issue}></StateMenu>
                 <div className="w-16 h-full flex items-center justify-between">
                     <button className="h-8 w-8 rounded-md hover:bg-slate-300 flex justify-center items-center"
                             onClick={toEditIssue}
