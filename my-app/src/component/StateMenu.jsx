@@ -37,7 +37,7 @@ function StateMenu({issue}) {
         <Menu menuClassName="bg-slate-100 w-28 h-28 p-2 rounded-md flex flex-col justify-evenly"
                       direction="right"
                       offsetX={12}
-                      menuButton={<button className={`bg-slate-100 w-24 h-12 rounded-md hover:bg-slate-400 ${itemTextColor[labelText]}`}>{labelText}</button>} 
+                      menuButton={<button className={`bg-slate-100 w-24 h-10 rounded-md hover:bg-slate-400 ${itemTextColor[labelText]}`}>{labelText}</button>} 
                       transition
                 >
                     {Object.keys(filterState).map((key) => {
