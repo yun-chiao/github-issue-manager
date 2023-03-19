@@ -20,7 +20,6 @@ const itemTextColor = {
 function IssueCard({ issue }) {
     const [cookies] = useCookies(['token', 'owner', 'repo']);
     const filterState = useSelector(state => state.filterStateReducer);
-    const [textColor, setTextColor] = useState('');
     const [labelText, setLabelText] = useState('')
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -35,7 +34,6 @@ function IssueCard({ issue }) {
         let label = issue.labels.filter( label => states.includes(label.name));
         label = label.length === 0? "Open" : label[0]; // Avoid any issue has no label about state.
         setLabelText(label.name)
-        setTextColor(itemTextColor[label.name])
     }, [issue])
 
     /// To change the text for displaying state.
@@ -55,7 +53,7 @@ function IssueCard({ issue }) {
                 <Menu menuClassName="bg-slate-100 w-28 h-28 p-2 rounded-md flex flex-col justify-evenly"
                       direction="right"
                       offsetX={12}
-                      menuButton={<button className={`bg-slate-100 w-24 h-full rounded-md hover:bg-slate-400 ${textColor}`}>{labelText}</button>} 
+                      menuButton={<button className={`bg-slate-100 w-24 h-full rounded-md hover:bg-slate-400 ${itemTextColor[labelText]}`}>{labelText}</button>} 
                       transition
                 >
                     {Object.keys(filterState).map((key) => {
