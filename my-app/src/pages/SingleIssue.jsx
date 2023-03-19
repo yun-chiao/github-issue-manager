@@ -78,18 +78,10 @@ function SingleIssues() {
                 <div className="w-full min-h-screen bg-white p-10 text-black divide-y-2 divide-sky-200">
                     <div className='pb-2 text-3xl font-normal cursor-text'>
                         <input  value={title}
-                                            onChange={e => handleTitleChange(e.target.value)}
-                                            placeholder={"請輸入標題"}
-                                            className={`border-none h-full w-full bg-transparent focus:outline-0 truncate`}>
-                                        
+                                onChange={e => handleTitleChange(e.target.value)}
+                                placeholder={"請輸入標題"}
+                                className={`border-none h-full w-full bg-transparent focus:outline-0 truncate`}>
                         </input>
-                        {/* <TextareaAutosize   value={title}
-                                            onChange={e => handleTitleChange(e.target.value)}
-                                            minRows={1}
-                                            maxRows={1}
-                                            placeholder={"請輸入標題"}
-                                            className={`border-none h-full bg-transparent focus:outline-0 truncate`}
-                        ></TextareaAutosize> */}
                     </div>
                         <div onClick={handleEditorFocus}
                             onBlur={handleEditorBlur}
