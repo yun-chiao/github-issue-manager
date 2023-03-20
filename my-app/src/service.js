@@ -188,9 +188,15 @@ export const getIssue = async (issue_number, token, owner, repo) => {
 
 export const getIssues = async (dispatch, labels, orderState, searchKey, token, owner, repo, page) => {
   let per_page = 10
-  let labelsList = Object.keys(labels).filter((key) => labels[key])
+  let labelsQuery = '';
+  if (labels['Open'] == true) {
+    let labelsList = Object.keys(labels).filter(key => labels[key] === false);
+    labelsQuery = `-label:${labelsList.map(label => label).join(',')}`;
+  } else {
+    let labelsList = Object.keys(labels).filter(key => labels[key]);
+    labelsQuery = `label:${labelsList.map(label => label).join(',')}`;
+  }
   try {
-    const labelsQuery = labelsList.map((label) => label).join(',');
     const response = await axios.post(`${serverUrl}/issues`, {
       token,
       owner,

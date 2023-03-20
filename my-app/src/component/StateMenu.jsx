@@ -23,8 +23,8 @@ function StateMenu({issue}) {
     /// To initial state view.
     useEffect(() => {
         let label = issue.labels.filter( label => states.includes(label.name));
-        label = label.length === 0? "Open" : label[0]; // Avoid any issue has no label about state.
-        setLabelText(label.name)
+        // If the issue has no state label, give it temp label 'Open'.
+        label.length === 0 ? setLabelText('Open') : setLabelText(label[0].name);
     }, [issue])
 
     /// To change the text for displaying state.
