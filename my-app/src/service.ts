@@ -1,11 +1,14 @@
 import axios from 'axios';
 import { toast } from "react-toastify";
+import { Dispatch } from "redux";
+import { Label, FilterState, FilterOrder, Issue } from './type';
+import { NavigateFunction } from "react-router-dom";
 
 const client_id = process.env.REACT_APP_CLIENT_ID
 const client_secret = process.env.REACT_APP_CLIENT_SECRET
 const serverUrl = process.env.REACT_APP_SERVER_URL
 
-export const getToken = async (code) => {
+export const getToken = async (code: string): Promise<string> => {
   try {
       const response = await axios.post(`${serverUrl}/login/oauth/access_token`, {
         client_id,
@@ -24,7 +27,7 @@ export const getToken = async (code) => {
     }
 }
 
-export const getUser = async (token) => {
+export const getUser = async (token: string): Promise<string> => {
   try {
     const response = await axios.post(`${serverUrl}/user`, {
       token
@@ -42,7 +45,7 @@ export const getUser = async (token) => {
   }
 }
 
-export const getRepos = async (token) => {
+export const getRepos = async (token: string): Promise<any> => {
   try {
     const response = await axios.post(`${serverUrl}/repos`, {
       token
@@ -58,7 +61,7 @@ export const getRepos = async (token) => {
   }
 }
 
-export const closeIssue = async (dispatch, issue_number, token, owner, repo) => {
+export const closeIssue = async (dispatch: Dispatch, issue_number: number|string, token: string, owner: string, repo: string): Promise<void> => {
   try {
     await axios.post(`${serverUrl}/close`, {
       token,
@@ -78,9 +81,9 @@ export const closeIssue = async (dispatch, issue_number, token, owner, repo) => 
   }
 }
 
-export const updateState = async (dispatch, issue_number, newState, labels, token, owner, repo, filterState) => {
+export const updateState = async (dispatch: Dispatch, issue_number: number|string, newState: string, labels: Label[], token: string, owner: string, repo: string, filterState: FilterState): Promise<void> => {
   const states = ["Open", "Progressing", "Done"];
-  let newLabels = [ {name: newState}, ...labels.filter( label => !states.includes(label.name))]
+  const newLabels = [ {name: newState}, ...labels.filter( label => !states.includes(label.name))]
 
   try {
     await axios.post(`${serverUrl}/updateState`, {
@@ -110,7 +113,7 @@ export const updateState = async (dispatch, issue_number, newState, labels, toke
   }
 }
 
-export const createIssue = async (body, title, token, owner, repo, navigate) => {
+export const createIssue = async (body: string, title: string, token: string, owner: string, repo: string, navigate: NavigateFunction): Promise<void> => {
   try {
     await axios.post(`${serverUrl}/createIssue`,{
         token,
@@ -138,7 +141,7 @@ export const createIssue = async (body, title, token, owner, repo, navigate) => 
   }
 }
 
-export const UpdateIssue = async (issue_number, body, title, token, owner, repo, navigate) => {
+export const UpdateIssue = async (issue_number: number|string, body: string, title: string, token: string, owner: string, repo: string, navigate: NavigateFunction): Promise<void> => {
   try {
     const response =await axios.post(`${serverUrl}/updateIssue`, {
       token,
@@ -164,7 +167,7 @@ export const UpdateIssue = async (issue_number, body, title, token, owner, repo,
   }
 }
 
-export const getIssue = async (issue_number, token, owner, repo) => {
+export const getIssue = async (issue_number: number|string, token: string, owner: string, repo: string): Promise<Issue> => {
   try {
     const response = await axios.post(`${serverUrl}/issue`, {
       token,
@@ -179,21 +182,21 @@ export const getIssue = async (issue_number, token, owner, repo) => {
         'Content-Type': 'application/json'
       },
     })
-    return { title: response.data.title, body: response.data.body}
+    return response.data
   } catch (error) {
     toast.error('Server error');
     console.error(error);
   }
 }
 
-export const getIssues = async (dispatch, labels, orderState, searchKey, token, owner, repo, page) => {
-  let per_page = 10
+export const getIssues = async (dispatch: Dispatch, labelsState: FilterState, orderState: FilterOrder, searchKey: string, token: string, owner: string, repo: string, page: number): Promise<void> => {
+  const per_page = 10
   let labelsQuery = '';
-  if (labels['Open'] == true) {
-    let labelsList = Object.keys(labels).filter(key => labels[key] === false);
+  if (labelsState['Open'] == true) {
+    const labelsList = Object.keys(labelsState).filter(key => labelsState[key] === false);
     labelsQuery = `-label:${labelsList.map(label => label).join(',')}`;
   } else {
-    let labelsList = Object.keys(labels).filter(key => labels[key]);
+    const labelsList = Object.keys(labelsState).filter(key => labelsState[key]);
     labelsQuery = `label:${labelsList.map(label => label).join(',')}`;
   }
   try {
