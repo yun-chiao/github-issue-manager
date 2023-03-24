@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { Menu, MenuItem } from '@szhsin/react-menu';
 import { useState } from "react";
-import { RootState } from "../store/type";
+import { RootState } from "../type";
 import React from 'react';
 
 import '@szhsin/react-menu/dist/transitions/slide.css'

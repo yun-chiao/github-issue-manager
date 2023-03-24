@@ -5,21 +5,20 @@ import { useNavigate } from "react-router-dom";
 import MarkdownIt from 'markdown-it';
 import { useCookies } from 'react-cookie';
 import StateMenu from "./StateMenu";
+import React from "react";
+import { Issue }  from  "../type";
 
-function IssueCard({ issue }) {
+function IssueCard({issue}: {issue: Issue}): JSX.Element {
     const [cookies] = useCookies(['token', 'owner', 'repo']);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const mdParser = new MarkdownIt(/* Markdown-it options */);
 
-    const toEditIssue = () => {
-        navigate(`/edit/${issue.number}`);
-    }
+    const toEditIssue = () => navigate(`/edit/${issue.number}`);
+    
 
     /// To close the issue when users click the trash icon.
-    const deleteIssue = () => {
-        closeIssue(dispatch, issue.number, cookies['token'], cookies['owner'], cookies['repo']);
-    }
+    const deleteIssue = () => closeIssue(dispatch, issue.number, cookies['token'], cookies['owner'], cookies['repo']);
 
     return (
         <div className="bg-white h-56 w-full my-4 shrink-0 pt-6">
@@ -40,14 +39,15 @@ function IssueCard({ issue }) {
                 </div>
             </div>
             <div className="w-full h-4/5 pl-8 pr-6 py-2">
-                <div className="h-1/4 text-2xl truncate pt-1 hover:cursor-pointer hover:underline" onClick={toEditIssue}>{issue.title} </div>
+                <div  className="h-1/4 text-2xl truncate pt-1 hover:cursor-pointer hover:underline" onClick={toEditIssue}>{issue.title} </div>
                 <div  className="pt-2 h-3/4 break-all overflow-y-auto whitespace-pre-wrap hover:cursor-pointer hover:underline" 
                       style={{background: "transparent"}} 
                       onClick={toEditIssue}
-                      dangerouslySetInnerHTML={{ __html:  mdParser.render(issue.body) }} />
+                      dangerouslySetInnerHTML={{ __html:  mdParser.render(issue.body) }} 
+                />
             </div>
         </div>
-            );
+    );
 }
 
 export default IssueCard;

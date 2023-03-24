@@ -1,3 +1,9 @@
+export interface Issue {
+    title: string;
+    body: string;
+    number: number;
+    labels: string[];
+}
 export interface FilterState {
     Open: boolean;
     Progressing: boolean;
@@ -13,7 +19,7 @@ export interface FilterState {
   }
   
   export interface Issues {
-    issues: object[];
+    issues: Issue[];
   }
   
   export interface HasMore {
