@@ -36,16 +36,14 @@ function Filter(): JSX.Element {
     const dispatch = useDispatch();
     const toCreateIssue = () => navigate(`/create`);
     const [searchKey, setSearchKey] = useState(preSearchKey);
-
-    const ChangeState = (e: any)  =>  dispatch({type: 'CHANGE_STATE', payload: { changeState: e.target.value } })
+      
+    const ChangeState = (e: any) => dispatch({type: 'CHANGE_STATE', payload: { changeState: e.value } })
 
     const toggleOrder = () => dispatch({type: 'TOGGLE_ORDER'})
 
-    const handleSearchKey = (e: any) => {
-        setSearchKey(e.target.value)
-    }
+    const handleSearchKey = (e: React.ChangeEvent<HTMLInputElement>) => setSearchKey(e.target.value)
 
-    const handleKeyDown = (event: any) => {if (event.key === 'Enter') searchIssue()}
+    const handleKeyDown = (e:  React.KeyboardEvent) => {if (e.key === 'Enter') searchIssue()}
         
     const searchIssue = async () => dispatch({type: 'UPDATE_KEYWORD', payload: { keyword: searchKey } })
       
@@ -98,7 +96,4 @@ function Filter(): JSX.Element {
 }
 
 export default Filter;
-function dispatch(arg0: { type: string; }) {
-    throw new Error("Function not implemented.");
-}
 
