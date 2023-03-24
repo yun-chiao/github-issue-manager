@@ -3,46 +3,49 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { Menu, MenuItem } from '@szhsin/react-menu';
 import { useState } from "react";
+import { RootState } from "../store/type";
+import React from 'react';
+
 import '@szhsin/react-menu/dist/transitions/slide.css'
 
 
 // Define text's color for different labels.
-const itemTextColor = {
+const itemTextColor: {[key: string]: string} = {
     "Open": "text-amber-500",
     "Progressing": "text-rose-500",
     "Done": "text-emerald-500"
 }
 
 // Define text's color for different labels.
-const infoBgColor = {
+const infoBgColor: {[key: string]: string} = {
     "Open": "bg-amber-500",
     "Progressing": "bg-rose-500",
     "Done": "bg-emerald-500"
 }
 
-const orderText = {
+const orderText: {[key: string]: string} = {
     'asc': "舊新",
     'desc': "新舊"
 }
 
-function Filter() {
-    const filterState = useSelector(state => state.filterStateReducer);
-    const filterOrder = useSelector(state => state.filterOrderReducer);
-    const preSearchKey = useSelector(state => state.filterKeywordReducer.keyword);
+function Filter(): JSX.Element {
+    const filterState = useSelector((state:RootState) => state.filterStateReducer);
+    const filterOrder = useSelector((state:RootState) => state.filterOrderReducer);
+    const preSearchKey = useSelector((state:RootState) => state.filterKeywordReducer.keyword);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const toCreateIssue = () => navigate(`/create`);
     const [searchKey, setSearchKey] = useState(preSearchKey);
 
-    const ChangeState = (e) => dispatch({type: 'CHANGE_STATE', payload: { changeState: e.value } })
+    const ChangeState = (e: any)  =>  dispatch({type: 'CHANGE_STATE', payload: { changeState: e.target.value } })
 
     const toggleOrder = () => dispatch({type: 'TOGGLE_ORDER'})
 
-    const handleSearchKey = (e) => {
+    const handleSearchKey = (e: any) => {
         setSearchKey(e.target.value)
     }
 
-    const handleKeyDown = (event) => {if (event.key === 'Enter') searchIssue()}
+    const handleKeyDown = (event: any) => {if (event.key === 'Enter') searchIssue()}
         
     const searchIssue = async () => dispatch({type: 'UPDATE_KEYWORD', payload: { keyword: searchKey } })
       
@@ -95,3 +98,7 @@ function Filter() {
 }
 
 export default Filter;
+function dispatch(arg0: { type: string; }) {
+    throw new Error("Function not implemented.");
+}
+

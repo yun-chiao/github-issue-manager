@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "overrides": [
+      {
+        "files": ["**/*.ts", "**/*.tsx"],
+        "parser": "@typescript-eslint/parser",
+        "plugins": ["@typescript-eslint"],
+        "rules": {
+          "@typescript-eslint/explicit-module-boundary-types": "error"
+        }
+      }
+  ]
+}
