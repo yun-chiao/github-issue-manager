@@ -3,33 +3,35 @@ import { updateState } from '../service';
 import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
+import React from "react";
+import { Issue, RootState } from '../type';
 
 // Define kinds of displaying label.
-const states = ["Open", "Progressing", "Done"];
+const states: string[] = ["Open", "Progressing", "Done"];
 
 // Define text's color for different labels.
-const itemTextColor = {
+const itemTextColor: {[key: string]: string} = {
     "Open": "text-amber-500",
     "Progressing": "text-rose-500",
     "Done": "text-emerald-500"
 }
 
-function StateMenu({issue}) {
+function StateMenu({issue}: {issue: Issue}): JSX.Element {
     const [cookies] = useCookies(['token', 'owner', 'repo']);
     const dispatch = useDispatch();
-    const filterState = useSelector(state => state.filterStateReducer);
+    const filterState = useSelector((state:RootState) => state.filterStateReducer);
     const [labelText, setLabelText] = useState('')
 
     /// To initial state view.
     useEffect(() => {
-        let label = issue.labels.filter( label => states.includes(label.name));
+        const label = issue.labels.filter( label => states.includes(label.name));
         // If the issue has no state label, give it temp label 'Open'.
         label.length === 0 ? setLabelText('Open') : setLabelText(label[0].name);
     }, [issue])
 
     /// To change the text for displaying state.
     const ChangeState = (e) => {
-        let label = e.syntheticEvent.target.innerText;
+        const label = e.syntheticEvent.target.innerText;
         updateState(dispatch, issue.number, label, issue.labels, cookies['token'], cookies['owner'], cookies['repo'], filterState)
     }
 

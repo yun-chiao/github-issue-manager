@@ -1,8 +1,11 @@
+export interface Label {
+    name: string;
+}
 export interface Issue {
     title: string;
     body: string;
     number: number;
-    labels: string[];
+    labels: Label[];
 }
 export interface FilterState {
     Open: boolean;
