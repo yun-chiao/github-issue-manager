@@ -3,6 +3,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "./pages/ErrorFallback";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import React from 'react';
 
 import Login from './pages/Login';
 import Issues from "./pages/Issues";
@@ -12,7 +13,7 @@ import NotFound from "./pages/notFound";
 import { Provider } from 'react-redux';
 import store from './store';
 
-function App() {
+function App(): JSX.Element {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
