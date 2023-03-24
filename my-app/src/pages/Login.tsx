@@ -12,11 +12,11 @@ function Login(): JSX.Element {
     useEffect(() => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        let code = urlParams.get("code");
+        const code = urlParams.get("code");
         const toGetToken = async () => {
-            let token = await getToken(code)
+            const token = await getToken(code)
             setCookie('token', token, { path: '/' })
-            let username = await getUser(token);
+            const username = await getUser(token);
             setCookie('username', username, { path: '/' })
             navigate("/select");
         }
