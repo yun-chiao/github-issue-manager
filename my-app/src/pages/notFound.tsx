@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
-function NotFound() {
+function NotFound(): JSX.Element {
     const navigate = useNavigate();
 
     const toLogin = () => navigate('/');

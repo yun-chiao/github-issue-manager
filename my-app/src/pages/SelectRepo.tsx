@@ -3,8 +3,9 @@ import { getRepos } from '../service';
 import { useNavigate } from "react-router-dom"
 import { useCookies } from 'react-cookie';
 import { toast } from "react-toastify";
+import React from "react";
 
-function SelectRepo() {
+function SelectRepo(): JSX.Element {
     const [isSelect, setIsSelect] = useState(false);
     const [repos, setRepos] = useState([]);
     const [repoKey, setRepoKey] = useState("");
@@ -13,9 +14,7 @@ function SelectRepo() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const getData = async () => {
-            setRepos(await getRepos(cookies['token']));
-        }
+        const getData = async () => setRepos(await getRepos(cookies['token']));
         getData()
     }, [])
 

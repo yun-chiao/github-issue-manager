@@ -5,15 +5,17 @@ import IssueCard from '../component/IssueCard';
 import InfiniteScroll from "react-infinite-scroll-component";
 import Filter from '../component/Filter';
 import { useCookies } from 'react-cookie';
+import { RootState } from '../type';
 import "./Issues.css"
 import './markdown.css'
+import React from "react";
 
-function Issues() {
-    const issues = useSelector(state => state.issuesReducer.issues);
-    const hasMore = useSelector(state => state.hasMoreReducer.hasMore);
-    const filterState = useSelector(state => state.filterStateReducer);
-    const filterOrder = useSelector(state => state.filterOrderReducer);
-    const preSearchKey = useSelector(state => state.filterKeywordReducer.keyword);
+function Issues(): JSX.Element {
+    const issues = useSelector((state: RootState) => state.issuesReducer.issues);
+    const hasMore = useSelector((state: RootState) => state.hasMoreReducer.hasMore);
+    const filterState = useSelector((state: RootState) => state.filterStateReducer);
+    const filterOrder = useSelector((state: RootState) => state.filterOrderReducer);
+    const preSearchKey = useSelector((state: RootState) => state.filterKeywordReducer.keyword);
     const [page, setPage] = useState(1);
     const [cookies] = useCookies(['token', 'owner', 'repo']);
     const dispatch = useDispatch();
@@ -55,7 +57,7 @@ function Issues() {
                     }
                     >
                     {issues.map( (issue) => (
-                    <IssueCard key={issue.node_id} issue={issue}/>
+                    <IssueCard key={issue.number} issue={issue}/>
                 ) )}
                 </InfiniteScroll>
             </div>

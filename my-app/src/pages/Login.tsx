@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import { getToken, getUser } from '../service';
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
+import React from "react";
 
-function Login() {
+function Login(): JSX.Element {
     const client_id = process.env.REACT_APP_CLIENT_ID
     const navigate = useNavigate();
     const [cookies, setCookie] = useCookies(['token', 'username']);
@@ -23,7 +24,7 @@ function Login() {
             toGetToken()
         }
     }, [navigate])
-    const login = async() => window.location = `https://github.com/login/oauth/authorize?client_id=${client_id}&amp;scope=repo`;
+    const login = async() => window.location.href = `https://github.com/login/oauth/authorize?client_id=${client_id}&amp;scope=repo`;
     
 
     return (

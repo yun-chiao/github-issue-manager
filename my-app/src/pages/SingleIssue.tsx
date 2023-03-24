@@ -5,9 +5,11 @@ import { UpdateIssue, getIssue, createIssue } from '../service';
 import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
 import { toast } from "react-toastify";
+import React from "react";
+
 import './markdown.css'
 
-function SingleIssues() {
+function SingleIssues(): JSX.Element {
     const [cookies] = useCookies(['token', 'owner', 'repo']);
     const [body, setBody] = useState('');
     const [title, setTitle] = useState('');
@@ -41,7 +43,7 @@ function SingleIssues() {
     useEffect( () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         const getContent = async () => {
-            let data = await getIssue(id, cookies['token'], cookies['owner'], cookies['repo'])
+            const data = await getIssue(id, cookies['token'], cookies['owner'], cookies['repo'])
             setTitle(data.title)
             setBody(data.body)
         }
