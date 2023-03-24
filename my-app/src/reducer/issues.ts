@@ -1,8 +1,10 @@
+import { Issue, Issues, HasMore, Label } from "../type";
+
 const issuesState = {
     issues: [],
 };
 
-export const issuesReducer = (state = issuesState, action) => {
+export const issuesReducer = (state: Issues = issuesState, action: { type: string; payload: { issues: Issue[]; closed_number: number; issue_number: number; labels: Label[]; }; }): Issues => {
     switch (action.type) {
         case 'INIT_ISSUES':
             return {
@@ -38,7 +40,7 @@ const hasMoreState = {
     hasMore: true,
 };
 
-export const hasMoreReducer = (state = hasMoreState, action) => {
+export const hasMoreReducer = (state: HasMore = hasMoreState, action: { type: string; }): HasMore => {
     switch (action.type) {
         case 'HAS_MORE':
             return {

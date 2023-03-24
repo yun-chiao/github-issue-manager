@@ -1,13 +1,15 @@
+import { FilterState, FilterKeyword, FilterOrder } from "../type";
+
 const filterStateState = {
     "Open": true, 
     "Progressing": true,
     "Done": true,
 };
 
-export const filterStateReducer = (state = filterStateState, action) => {
+export const filterStateReducer = (state: FilterState = filterStateState, action: { type: string; payload: { changeState: string; }; }): FilterState => {
     switch (action.type) {
         case 'CHANGE_STATE':
-            let newState = {...state};
+            const newState = {...state};
             if( action.payload.changeState !== null ){
                 newState[action.payload.changeState] = !state[action.payload.changeState]
             }
@@ -21,7 +23,7 @@ const filterOrderState = {
     order: "desc"
 };
 
-export const filterOrderReducer = (state = filterOrderState, action) => {
+export const filterOrderReducer = (state: FilterOrder = filterOrderState, action: { type: string; }): FilterOrder => {
     switch (action.type) {
         case 'TOGGLE_ORDER':
             if(state.order === 'desc'){
@@ -40,7 +42,7 @@ const filterKeywordState = {
     keyword: ""
 };
 
-export const filterKeywordReducer = (state = filterKeywordState, action) => {
+export const filterKeywordReducer = (state: FilterKeyword = filterKeywordState, action: { type: string; payload: { keyword: string; }; }): FilterKeyword => {
     switch (action.type) {
         case 'UPDATE_KEYWORD':
             console.log('UPDATE_KEYWORD',  action.payload.keyword)
