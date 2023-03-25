@@ -70,4 +70,10 @@
     .state-item{
         @apply h-12 flex items-center hover:cursor-pointer hover:bg-slate-300;
     }
+    .withoutHeader {
+        height: calc(100vh - 5rem);
+    }
+    .header{
+        height: 5rem;
+    }
 }

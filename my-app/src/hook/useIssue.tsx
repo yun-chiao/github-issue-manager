@@ -49,11 +49,18 @@ export const useSingleIssue = (): {
             toast.warning('請輸入超過30字的內文');
             return;
         }
+        setIsLoading(true);
         if (location.pathname.includes('edit')) {
-            await UpdateIssue(id, body, title, cookies['token'], cookies['owner'], cookies['repo'], navigate);
+            await UpdateIssue(id, body, title, cookies['token'], cookies['owner'], cookies['repo']);
         } else if (location.pathname.includes('create')) {
-            await createIssue(body, title, cookies['token'], cookies['owner'], cookies['repo'], navigate);
+            await createIssue(body, title, cookies['token'], cookies['owner'], cookies['repo']);
         }
+
+        // To avoid the issue not be updated when the issue list get issues data.
+        setTimeout(() => {
+            navigate('/issues');
+            setIsLoading(false);
+        }, 1000);
     };
 
     return { body, setBody, title, setTitle, toPreviousPage, updateIssue, isLoading };

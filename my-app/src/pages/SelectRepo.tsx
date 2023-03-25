@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import React from "react";
 import useRepos from '../hook/useRepo';
+import PacmanLoader from "react-spinners/PacmanLoader";
 
 function SelectRepo(): JSX.Element {
     const [isSelect, setIsSelect] = useState(false);
@@ -13,7 +14,7 @@ function SelectRepo(): JSX.Element {
 
     return (
         <div className="bg-sky-900 w-full h-screen flex justify-center items-center flex-col">
-            {isLoading ? <div className='text-white'>Loading</div> : (
+            {isLoading ? <PacmanLoader color='#ffffff' speedMultiplier={2} size={30} /> : (
                 <>
                     <div onClick={() => setIsSelect(true)} className={isSelect ? `h-10 w-64 border-2 text-white rounded-md` : `h-20 w-20 border-2 text-white transition-all hover:h-10 hover:w-52`}>
                         <button className={`h-full w-full text-white ${isSelect ? "hidden" : ""}`}>Click!</button>

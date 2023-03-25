@@ -4,6 +4,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import React from "react";
 import { useSingleIssue } from '../hook/useIssue';
 import './markdown.css'
+import PacmanLoader from "react-spinners/PacmanLoader";
 
 function SingleIssues(): JSX.Element {
     const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -47,9 +48,9 @@ function SingleIssues(): JSX.Element {
                             </button>
                         </>)}
                     </div>
-                    <div className="w-full min-h-screen bg-white p-10 text-black divide-y-2 divide-sky-200">
-                        {isLoading ? <div>Loading...</div> : (
-                            <>
+                    {isLoading ? <div className='flex flex-col items-center justify-center withoutHeader w-full pr-12'><PacmanLoader color='#3785A8' speedMultiplier={2} size={30} /></div> : (
+                        <>
+                            <div className="w-full withoutHeader bg-white p-10 text-black divide-y-2 divide-sky-200">
                                 <div className='pb-2 text-3xl font-normal cursor-text'>
                                     <input value={title}
                                         onChange={e => handleTitleChange(e.target.value)}
@@ -72,10 +73,11 @@ function SingleIssues(): JSX.Element {
                                         className={`border-none bg-transparent h-full pt-2 focus:outline-1 outline-sky-700 focus:caret-blue-500 w-full ${isBodyFocus || body.length === 0 ? "" : "hidden"}`}
                                     ></TextareaAutosize>
                                 </div>
-                            </>)}
-                    </div>
+                            </div>
+                        </>)}
                 </div>
             </div>
+
 
         </>
 

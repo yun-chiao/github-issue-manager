@@ -7,6 +7,7 @@ import "./Issues.css"
 import './markdown.css'
 import React from "react";
 import useIssues from '../hook/useIssues';
+import PacmanLoader from "react-spinners/PacmanLoader";
 
 function Issues(): JSX.Element {
     const issues = useSelector((state: RootState) => state.issuesReducer.issues);
@@ -20,7 +21,7 @@ function Issues(): JSX.Element {
                     <div className='bg-sky-600 w-full h-20 sticky top-0'>
                         <Filter></Filter>
                     </div>
-                    {isLoading ? (<div>Loading...</div>) : (
+                    {isLoading ? (<div className='flex flex-col items-center justify-center withoutHeader w-full pr-12'><PacmanLoader color='#3785A8' speedMultiplier={2} size={30} /></div>) : (
                         <InfiniteScroll
                             style={{ "overflow": "hidden" }}
                             className='divide-y'

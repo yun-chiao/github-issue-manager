@@ -2,7 +2,6 @@ import axios from 'axios';
 import { toast } from "react-toastify";
 import { Dispatch } from "redux";
 import { Label, FilterState, FilterOrder, Issue } from './type';
-import { NavigateFunction } from "react-router-dom";
 
 const client_id = process.env.REACT_APP_CLIENT_ID
 const client_secret = process.env.REACT_APP_CLIENT_SECRET
@@ -36,7 +35,7 @@ export const getUser = async (token: string): Promise<string> => {
       }
     }
     );
-    toast.success(`嗨 ${response.data.login}！`);
+    toast.success(`嗨 ${response.data.login}!`);
     return response.data.login;
   } catch (error) {
     toast.error('登入失敗');
@@ -112,7 +111,7 @@ export const updateState = async (dispatch: Dispatch, issue_number: number | str
   }
 }
 
-export const createIssue = async (body: string, title: string, token: string, owner: string, repo: string, navigate: NavigateFunction): Promise<void> => {
+export const createIssue = async (body: string, title: string, token: string, owner: string, repo: string): Promise<void> => {
   try {
     await axios.post(`${serverUrl}/createIssue`, {
       token,
@@ -130,19 +129,15 @@ export const createIssue = async (body: string, title: string, token: string, ow
     );
     toast.success("成功新增issue");
 
-    // To avoid the issue not be updated when the issue list get issues data.
-    setTimeout(() => {
-      navigate('/issues');
-    }, 1000);
   } catch (error) {
     toast.error('Server error');
     console.error(error);
   }
 }
 
-export const UpdateIssue = async (issue_number: number | string, body: string, title: string, token: string, owner: string, repo: string, navigate: NavigateFunction): Promise<void> => {
+export const UpdateIssue = async (issue_number: number | string, body: string, title: string, token: string, owner: string, repo: string): Promise<void> => {
   try {
-    const response = await axios.post(`${serverUrl}/updateIssue`, {
+    await axios.post(`${serverUrl}/updateIssue`, {
       token,
       owner,
       body,
@@ -156,10 +151,6 @@ export const UpdateIssue = async (issue_number: number | string, body: string, t
     });
     toast.success("成功更新issue");
 
-    // To avoid the issue not be updated when the issue list get issues data.
-    setTimeout(() => {
-      navigate('/issues');
-    }, 1000);
   } catch (error) {
     toast.error('Server error');
     console.error(error);
