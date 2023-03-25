@@ -20,17 +20,17 @@ function Login(): JSX.Element {
             setCookie('username', username, { path: '/' })
             navigate("/select");
         }
-        if (code !== null){
+        if (code !== null) {
             toGetToken()
         }
     }, [navigate])
-    const login = async() => window.location.href = `https://github.com/login/oauth/authorize?client_id=${client_id}&amp;scope=repo`;
-    
+    const login = async () => window.location.href = `https://github.com/login/oauth/authorize?client_id=${client_id}&amp;scope=repo`;
+
 
     return (
         <div className="bg-sky-900 w-full h-screen flex justify-center items-center">
             <button className="h-20 w-20 border-2 text-white hover:animate-bounce"
-                    onClick={() => login()}        
+                onClick={() => login()}
             >
                 Login
             </button>

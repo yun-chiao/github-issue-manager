@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie';
 import { RootState } from '../type';
 import { toast } from "react-toastify";
 
-const useIssues = ( page: number ): {isLoading: boolean;}  => {
+const useIssues = (page: number): { isLoading: boolean; } => {
   const [isLoading, setIsLoading] = useState(false);
   const [cookies] = useCookies(['token', 'owner', 'repo']);
   const dispatch = useDispatch();
@@ -14,13 +14,13 @@ const useIssues = ( page: number ): {isLoading: boolean;}  => {
   const preSearchKey = useSelector((state: RootState) => state.filterKeywordReducer.keyword);
 
   useEffect(() => {
-    if(page == 1) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        setIsLoading(true);
+    if (page == 1) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setIsLoading(true);
     }
     const fetchIssues = async () => {
       try {
-        await getIssues(dispatch, filterState, filterOrder, preSearchKey, cookies['token'],cookies['owner'], cookies['repo'], page);
+        await getIssues(dispatch, filterState, filterOrder, preSearchKey, cookies['token'], cookies['owner'], cookies['repo'], page);
       } catch (err) {
         toast.error('Server error');
       }

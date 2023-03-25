@@ -17,21 +17,21 @@ function Issues(): JSX.Element {
     const preSearchKey = useSelector((state: RootState) => state.filterKeywordReducer.keyword);
     const [page, setPage] = useState<number>(1);
     const { isLoading } = useIssues(page);
-    
+
     useEffect(() => setPage(1), [filterState, filterOrder, preSearchKey])
 
-    const fetchMoreIssues = () => setPage(page+1);
-    
+    const fetchMoreIssues = () => setPage(page + 1);
+
     return (
         <>
-            {isLoading? (<div>Loading...</div>):(
+            {isLoading ? (<div>Loading...</div>) : (
                 <div className="bg-sky-900 w-full h-full flex justify-center min-h-screen">
                     <div className="bg-white w-list h-full flex flex-col items-center min-h-screen">
-                    <div className='bg-sky-600 w-full h-20 sticky top-0'>
-                        <Filter></Filter>
-                    </div>
-                        <InfiniteScroll  
-                            style={{"overflow": "hidden"}}
+                        <div className='bg-sky-600 w-full h-20 sticky top-0'>
+                            <Filter></Filter>
+                        </div>
+                        <InfiniteScroll
+                            style={{ "overflow": "hidden" }}
                             className='divide-y'
                             dataLength={issues.length}
                             next={fetchMoreIssues}
@@ -46,13 +46,13 @@ function Issues(): JSX.Element {
                                     <h2>No more issues!</h2>
                                 </div>
                             }
-                            >
-                            {issues.map( (issue) => (
-                            <IssueCard key={issue.number} issue={issue}/>
-                        ) )}
+                        >
+                            {issues.map((issue) => (
+                                <IssueCard key={issue.number} issue={issue} />
+                            ))}
                         </InfiniteScroll>
                     </div>
-                </div>            
+                </div>
             )}
         </>
     );

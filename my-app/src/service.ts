@@ -10,21 +10,21 @@ const serverUrl = process.env.REACT_APP_SERVER_URL
 
 export const getToken = async (code: string): Promise<string> => {
   try {
-      const response = await axios.post(`${serverUrl}/login/oauth/access_token`, {
-        client_id,
-        client_secret,
-        code
-      }, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      console.log('getToken',response.data)
-      return response.data.access_token;
-    } catch (error) {
-      toast.success('登入失敗');
-      console.error(error);
-    }
+    const response = await axios.post(`${serverUrl}/login/oauth/access_token`, {
+      client_id,
+      client_secret,
+      code
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    console.log('getToken', response.data)
+    return response.data.access_token;
+  } catch (error) {
+    toast.success('登入失敗');
+    console.error(error);
+  }
 }
 
 export const getUser = async (token: string): Promise<string> => {
@@ -32,10 +32,10 @@ export const getUser = async (token: string): Promise<string> => {
     const response = await axios.post(`${serverUrl}/user`, {
       token
     }, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
+      headers: {
+        'Content-Type': 'application/json'
       }
+    }
     );
     toast.success(`嗨 ${response.data.login}！`);
     return response.data.login;
@@ -61,7 +61,7 @@ export const getRepos = async (token: string): Promise<any> => {
   }
 }
 
-export const closeIssue = async (dispatch: Dispatch, issue_number: number|string, token: string, owner: string, repo: string): Promise<void> => {
+export const closeIssue = async (dispatch: Dispatch, issue_number: number | string, token: string, owner: string, repo: string): Promise<void> => {
   try {
     await axios.post(`${serverUrl}/close`, {
       token,
@@ -81,9 +81,9 @@ export const closeIssue = async (dispatch: Dispatch, issue_number: number|string
   }
 }
 
-export const updateState = async (dispatch: Dispatch, issue_number: number|string, newState: string, labels: Label[], token: string, owner: string, repo: string, filterState: FilterState): Promise<void> => {
+export const updateState = async (dispatch: Dispatch, issue_number: number | string, newState: string, labels: Label[], token: string, owner: string, repo: string, filterState: FilterState): Promise<void> => {
   const states = ["Open", "Progressing", "Done"];
-  const newLabels = [ {name: newState}, ...labels.filter( label => !states.includes(label.name))]
+  const newLabels = [{ name: newState }, ...labels.filter(label => !states.includes(label.name))]
 
   try {
     await axios.post(`${serverUrl}/updateState`, {
@@ -101,9 +101,9 @@ export const updateState = async (dispatch: Dispatch, issue_number: number|strin
     // If the [newState] is in the [filterState] the users checked, the IssueCard would change label.
     // Otherwise, it would be removed from issue list
     // By this way, it doesn't to call api and bring the slower experience or feel the view refreshing to users.
-    if(filterState[newState]){
-      dispatch({type: 'UPDATE_STATE', payload: { issue_number, labels: newLabels } })
-    }else{
+    if (filterState[newState]) {
+      dispatch({ type: 'UPDATE_STATE', payload: { issue_number, labels: newLabels } })
+    } else {
       dispatch({ type: 'REMOVE_ISSUE', payload: { closed_number: issue_number } })
     }
     toast.success("成功更新issue");
@@ -115,14 +115,14 @@ export const updateState = async (dispatch: Dispatch, issue_number: number|strin
 
 export const createIssue = async (body: string, title: string, token: string, owner: string, repo: string, navigate: NavigateFunction): Promise<void> => {
   try {
-    await axios.post(`${serverUrl}/createIssue`,{
-        token,
-        owner,
-        repo,
-        title,
-        body,
-        labels: ['Open'],
-      },
+    await axios.post(`${serverUrl}/createIssue`, {
+      token,
+      owner,
+      repo,
+      title,
+      body,
+      labels: ['Open'],
+    },
       {
         headers: {
           'Content-Type': 'application/json'
@@ -130,20 +130,20 @@ export const createIssue = async (body: string, title: string, token: string, ow
       }
     );
     toast.success("成功新增issue");
-    
+
     // To avoid the issue not be updated when the issue list get issues data.
     setTimeout(() => {
       navigate('/issues');
-    },1000);
+    }, 1000);
   } catch (error) {
     toast.error('Server error');
     console.error(error);
   }
 }
 
-export const UpdateIssue = async (issue_number: number|string, body: string, title: string, token: string, owner: string, repo: string, navigate: NavigateFunction): Promise<void> => {
+export const UpdateIssue = async (issue_number: number | string, body: string, title: string, token: string, owner: string, repo: string, navigate: NavigateFunction): Promise<void> => {
   try {
-    const response =await axios.post(`${serverUrl}/updateIssue`, {
+    const response = await axios.post(`${serverUrl}/updateIssue`, {
       token,
       owner,
       body,
@@ -160,14 +160,14 @@ export const UpdateIssue = async (issue_number: number|string, body: string, tit
     // To avoid the issue not be updated when the issue list get issues data.
     setTimeout(() => {
       navigate('/issues');
-    },1000);
+    }, 1000);
   } catch (error) {
     toast.error('Server error');
     console.error(error);
   }
 }
 
-export const getIssue = async (issue_number: number|string, token: string, owner: string, repo: string): Promise<Issue> => {
+export const getIssue = async (issue_number: number | string, token: string, owner: string, repo: string): Promise<Issue> => {
   try {
     const response = await axios.post(`${serverUrl}/issue`, {
       token,
@@ -218,14 +218,14 @@ export const getIssues = async (dispatch: Dispatch, labelsState: FilterState, or
       },
     })
     console.log(response.data.items)
-    if(response.data.items.length < per_page){
+    if (response.data.items.length < per_page) {
       dispatch({ type: 'NON_HAS_MORE' })
-    }else{
+    } else {
       dispatch({ type: 'HAS_MORE' })
     }
-    if(page === 1){
+    if (page === 1) {
       dispatch({ type: 'INIT_ISSUES', payload: { issues: response.data.items } })
-    }else{
+    } else {
       dispatch({ type: 'UPDATE_ISSUES', payload: { issues: response.data.items } })
     }
   } catch (error) {
