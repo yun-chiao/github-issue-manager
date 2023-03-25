@@ -19,10 +19,9 @@ export const getToken = async (code: string): Promise<string> => {
         'Content-Type': 'application/json'
       }
     });
-    console.log('getToken', response.data)
     return response.data.access_token;
   } catch (error) {
-    toast.success('登入失敗');
+    toast.error('登入失敗');
     console.error(error);
   }
 }
@@ -40,7 +39,7 @@ export const getUser = async (token: string): Promise<string> => {
     toast.success(`嗨 ${response.data.login}！`);
     return response.data.login;
   } catch (error) {
-    toast.success('登入失敗');
+    toast.error('登入失敗');
     console.error(error);
   }
 }
