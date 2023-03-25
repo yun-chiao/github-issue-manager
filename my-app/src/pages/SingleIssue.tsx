@@ -72,7 +72,7 @@ function SingleIssues(): JSX.Element {
                                     />
                                     <TextareaAutosize value={body}
                                         onChange={e => handleBodyChange(e.target.value)}
-                                        minRows={1}
+                                        minRows={5}
                                         ref={bodyRef}
                                         placeholder={"請用markdown語法輸入超過30字的內容"}
                                         className={`h-full w-full border-none bg-transparent pt-2 outline-sky-700 focus:caret-blue-500 focus:outline-1 ${isBodyFocus || body.length === 0 ? "" : "hidden"}`}
