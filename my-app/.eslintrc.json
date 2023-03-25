@@ -1,15 +1,74 @@
 {
-  "extends": [
-    "plugin:@typescript-eslint/recommended"
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "simple-import-sort",
+    "tailwindcss"
   ],
-  "overrides": [
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:tailwindcss/recommended"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "rules": {
+    "@typescript-eslint/explicit-module-boundary-types": "error",
+    "no-shadow": "off",
+    "react/react-in-jsx-scope": "off",
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off",
+    "no-underscore-dangle": "off",
+    "no-use-before-define": "off",
+    "no-case-declarations": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "func-names": ["error", "never"],
+    "padding-line-between-statements": [
+      "warn",
       {
-        "files": ["**/*.ts", "**/*.tsx"],
-        "parser": "@typescript-eslint/parser",
-        "plugins": ["@typescript-eslint"],
-        "rules": {
-          "@typescript-eslint/explicit-module-boundary-types": "error"
-        }
+          "blankLine": "always", "prev": "block", "next": "const"
+      },
+      {
+          "blankLine": "always", "prev": "*", "next": "block"
+      },
+      {
+          "blankLine": "always", "prev": "block", "next": "*"
+      },
+      {
+          "blankLine": "always", "prev": "*", "next": "block-like"
+      },
+      {
+          "blankLine": "always", "prev": "block-like", "next": "*"
       }
-  ]
+  ],
+    "object-curly-newline": ["error", {
+        "ObjectExpression": {
+            "minProperties": 1, "multiline": true, "consistent": true
+        },
+        "ObjectPattern": {
+            "multiline": true
+        },
+        "ImportDeclaration": "never",
+        "ExportDeclaration": {
+            "multiline": true, "minProperties": 3
+        }
+    }],
+    "quotes": ["error", "double"],
+    "max-len": ["error", {
+        "code": 120,
+        "tabWidth": 4,
+        "ignoreComments": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreStrings": true
+    }]
+  }
 }

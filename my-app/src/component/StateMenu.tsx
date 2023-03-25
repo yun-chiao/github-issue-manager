@@ -1,10 +1,11 @@
-import { Menu, MenuItem } from '@szhsin/react-menu';
-import { updateState } from '../service';
-import { useCookies } from 'react-cookie';
-import { useDispatch, useSelector } from 'react-redux';
+import { Menu, MenuItem } from "@szhsin/react-menu";
 import { useEffect, useState } from "react";
 import React from "react";
-import { Issue, RootState } from '../type';
+import { useCookies } from "react-cookie";
+import { useDispatch, useSelector } from "react-redux";
+
+import { updateState } from "../service";
+import { Issue, RootState } from "../type";
 
 // Define kinds of displaying label.
 const states: string[] = ["Open", "Progressing", "Done"];
@@ -17,29 +18,29 @@ const itemTextColor: {[key: string]: string} = {
 }
 
 function StateMenu({issue}: {issue: Issue}): JSX.Element {
-    const [cookies] = useCookies(['token', 'owner', 'repo']);
+    const [cookies] = useCookies(["token", "owner", "repo"]);
     const dispatch = useDispatch();
     const filterState = useSelector((state:RootState) => state.filterStateReducer);
-    const [labelText, setLabelText] = useState('')
+    const [labelText, setLabelText] = useState("")
 
     /// To initial state view.
     useEffect(() => {
         const label = issue.labels.filter( label => states.includes(label.name));
         // If the issue has no state label, give it temp label 'Open'.
-        label.length === 0 ? setLabelText('Open') : setLabelText(label[0].name);
+        label.length === 0 ? setLabelText("Open") : setLabelText(label[0].name);
     }, [issue])
 
     /// To change the text for displaying state.
     const ChangeState = (e) => {
         const label = e.syntheticEvent.target.innerText;
-        updateState(dispatch, issue.number, label, issue.labels, cookies['token'], cookies['owner'], cookies['repo'], filterState)
+        updateState(dispatch, issue.number, label, issue.labels, cookies["token"], cookies["owner"], cookies["repo"], filterState)
     }
 
     return (
         <Menu menuClassName="bg-slate-100 w-28 h-28 p-2 rounded-md flex flex-col justify-evenly"
                       direction="right"
                       offsetX={12}
-                      menuButton={<button className={`bg-slate-100 w-24 h-10 rounded-md hover:bg-slate-400 ${itemTextColor[labelText]}`}>{labelText}</button>} 
+                      menuButton={<button className={`h-10 w-24 rounded-md bg-slate-100 hover:bg-slate-400 ${itemTextColor[labelText]}`}>{labelText}</button>} 
                       transition
                 >
                     {Object.keys(filterState).map((key) => {

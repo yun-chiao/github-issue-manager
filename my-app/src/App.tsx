@@ -1,17 +1,18 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { ErrorBoundary } from "react-error-boundary";
-import ErrorFallback from "./pages/ErrorFallback";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import React from 'react';
+import "react-toastify/dist/ReactToastify.css";
 
-import Login from './pages/Login';
+import React from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import { Provider } from "react-redux";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { toast,ToastContainer } from "react-toastify";
+
+import ErrorFallback from "./pages/ErrorFallback";
 import Issues from "./pages/Issues";
-import SingleIssues from "./pages/SingleIssue";
-import SelectRepo from "./pages/SelectRepo";
+import Login from "./pages/Login";
 import NotFound from "./pages/notFound";
-import { Provider } from 'react-redux';
-import store from './store';
+import SelectRepo from "./pages/SelectRepo";
+import SingleIssues from "./pages/SingleIssue";
+import store from "./store";
 
 function App(): JSX.Element {
 

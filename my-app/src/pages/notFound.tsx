@@ -1,13 +1,13 @@
-import { useNavigate } from "react-router-dom";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function NotFound(): JSX.Element {
     const navigate = useNavigate();
 
-    const toLogin = () => navigate('/');
+    const toLogin = () => navigate("/");
     return (
-        <div className="bg-sky-900 w-full h-screen flex justify-center items-center flex-col">
-            <button className="h-12 w-32 border-2 text-white mb-4"
+        <div className="flex h-screen w-full flex-col items-center justify-center bg-sky-900">
+            <button className="mb-4 h-12 w-32 border-2 text-white"
                 onClick={toLogin}>
                 To login page
             </button>

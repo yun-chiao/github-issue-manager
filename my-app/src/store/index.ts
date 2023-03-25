@@ -1,6 +1,7 @@
-import { createStore, combineReducers } from 'redux';
-import { issuesReducer, hasMoreReducer } from '../reducer/issues';
-import { filterStateReducer, filterOrderReducer, filterKeywordReducer } from '../reducer/filter';
+import { combineReducers,createStore } from "redux";
+
+import { filterKeywordReducer,filterOrderReducer, filterStateReducer } from "../reducer/filter";
+import { hasMoreReducer,issuesReducer } from "../reducer/issues";
 
 const rootReducer = combineReducers({
     issuesReducer,

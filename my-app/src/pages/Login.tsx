@@ -1,12 +1,13 @@
 import React from "react";
-import useAuth from '../hook/useAuth';
 import PacmanLoader from "react-spinners/PacmanLoader";
+
+import useAuth from "../hook/useAuth";
 
 function Login(): JSX.Element {
     const { login, isLoading } = useAuth();
 
     return (
-        <div className="bg-sky-900 w-full h-screen flex justify-center items-center">
+        <div className="flex h-screen w-full items-center justify-center bg-sky-900">
             {isLoading ? <PacmanLoader color='#ffffff' speedMultiplier={2} size={30} /> :
                 <button className="h-20 w-20 border-2 text-white hover:animate-bounce"
                     onClick={() => login()}

@@ -1,15 +1,16 @@
-import { BiEdit, BiTrashAlt } from "react-icons/bi";
-import { useDispatch } from 'react-redux';
-import { closeIssue } from '../service';
-import { useNavigate } from "react-router-dom";
-import MarkdownIt from 'markdown-it';
-import { useCookies } from 'react-cookie';
-import StateMenu from "./StateMenu";
+import MarkdownIt from "markdown-it";
 import React from "react";
+import { useCookies } from "react-cookie";
+import { BiEdit, BiTrashAlt } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { closeIssue } from "../service";
 import { Issue } from "../type";
+import StateMenu from "./StateMenu";
 
 function IssueCard({ issue }: { issue: Issue }): JSX.Element {
-    const [cookies] = useCookies(['token', 'owner', 'repo']);
+    const [cookies] = useCookies(["token", "owner", "repo"]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -18,19 +19,19 @@ function IssueCard({ issue }: { issue: Issue }): JSX.Element {
 
 
     /// To close the issue when users click the trash icon.
-    const deleteIssue = () => closeIssue(dispatch, issue.number, cookies['token'], cookies['owner'], cookies['repo']);
+    const deleteIssue = () => closeIssue(dispatch, issue.number, cookies["token"], cookies["owner"], cookies["repo"]);
 
     return (
-        <div className="bg-white h-56 w-full my-4 shrink-0 pt-6">
-            <div className="w-full h-1/5 flex items-center justify-between pl-7 pr-4">
+        <div className="my-4 h-56 w-full shrink-0 bg-white pt-6">
+            <div className="flex h-1/5 w-full items-center justify-between pl-7 pr-4">
                 <StateMenu issue={issue}></StateMenu>
-                <div className="w-16 h-full flex items-center justify-between">
-                    <button className="h-8 w-8 rounded-md hover:bg-slate-300 flex justify-center items-center"
+                <div className="flex h-full w-16 items-center justify-between">
+                    <button className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-slate-300"
                         onClick={toEditIssue}
                         title="Edit">
                         <BiEdit />
                     </button>
-                    <button className="h-8 w-8 rounded-md hover:bg-slate-300 flex justify-center items-center"
+                    <button className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-slate-300"
                         onClick={deleteIssue}
                         title="Close issue"
                     >
@@ -38,12 +39,16 @@ function IssueCard({ issue }: { issue: Issue }): JSX.Element {
                     </button>
                 </div>
             </div>
-            <div className="w-full h-4/5 pl-8 pr-6 py-2">
-                <div className="h-1/4 text-2xl truncate pt-1 hover:cursor-pointer hover:underline" onClick={toEditIssue}>{issue.title} </div>
-                <div className="pt-2 h-3/4 break-all overflow-y-auto card-scroll whitespace-pre-wrap hover:cursor-pointer hover:underline"
-                    style={{ background: "transparent" }}
+            <div className="h-4/5 w-full py-2 pl-8 pr-6">
+                <div className="h-1/4 truncate pt-1 text-2xl hover:cursor-pointer hover:underline" onClick={toEditIssue}>{issue.title} </div>
+                <div className="card-scroll h-3/4 overflow-y-auto whitespace-pre-wrap break-all pt-2 hover:cursor-pointer hover:underline"
+                    style={{
+ background: "transparent" 
+}}
                     onClick={toEditIssue}
-                    dangerouslySetInnerHTML={{ __html: mdParser.render(issue.body) }}
+                    dangerouslySetInnerHTML={{
+ __html: mdParser.render(issue.body) 
+}}
                 />
             </div>
         </div>
