@@ -28,10 +28,10 @@ function Issues(): JSX.Element {
                             dataLength={issues.length}
                             next={fetchMoreIssues}
                             hasMore={hasMore}
-                            loader={<div className="text-center text-2xl my-4 h-10">
-                                <h2>Loading</h2>
+                            loader={<div className="flex justify-center items-center py-6 h-20 pr-12">
+                                <PacmanLoader color='#3785A8' speedMultiplier={2} size={20} />
                             </div>}
-                            endMessage={<div className="text-center text-2xl my-4 h-10">
+                            endMessage={<div className="text-center text-2xl py-6 h-20 ">
                                 <h2>No more issues!</h2>
                             </div>}
                         >
