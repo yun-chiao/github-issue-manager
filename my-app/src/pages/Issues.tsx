@@ -11,8 +11,11 @@ import IssueCard from "../component/IssueCard";
 import useIssues from "../hook/useIssues";
 import { RootState } from "../type";
 
+/// The page to display all the issues in the repo.
 function Issues(): JSX.Element {
+    // All the issues need to display.
     const issues = useSelector((state: RootState) => state.issuesReducer.issues);
+    // If the InfiniteScroll has more data need to fetch.
     const hasMore = useSelector((state: RootState) => state.hasMoreReducer.hasMore);
     const { isLoading, fetchMoreIssues } = useIssues();
 

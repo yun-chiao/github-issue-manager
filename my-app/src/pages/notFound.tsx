@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+/// The page will be shown when users be navigate to the page not be enrolled in router.
 function NotFound(): JSX.Element {
     const navigate = useNavigate();
 

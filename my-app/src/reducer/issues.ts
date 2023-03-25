@@ -1,5 +1,6 @@
 import { HasMore, Issue, Issues, Label } from "../type";
 
+/// [issuesState] represent the stored issues.
 const issuesState = {
     issues: [],
 };
@@ -23,10 +24,12 @@ export const issuesReducer = (
                     ...action.payload.issues
                 ],
             }
+        // Modify the issues content directly because the API would fetch old data sometime.
         case "REMOVE_ISSUE":
             return {
                 issues: state.issues.filter(item => item.number !== action.payload.closed_number)
             }
+        // Modify the issues content directly because the API would fetch old data sometime.
         case "UPDATE_STATE":
             return {
                 issues: state.issues.map(item => {
@@ -45,6 +48,7 @@ export const issuesReducer = (
     }
 };
 
+/// [hasMoreState] represent whether there are more issues not be fetched or not.
 const hasMoreState = {
     hasMore: true,
 };

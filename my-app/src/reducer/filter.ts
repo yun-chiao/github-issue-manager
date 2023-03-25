@@ -1,11 +1,14 @@
 import { FilterKeyword, FilterOrder, FilterState } from "../type";
 
+/// [filterStateState] represent whether the state be choosen by user or not.
+/// It can be controll from StateMenu Component.
 const filterStateState = {
     "Open": true,
     "Progressing": true,
     "Done": true,
 };
 
+/// The reducer for state filter.
 export const filterStateReducer = (
     state: FilterState = filterStateState,
     action: {
@@ -14,6 +17,7 @@ export const filterStateReducer = (
     }
 ): FilterState => {
     switch (action.type) {
+        // When user change his condition for state filter.
         case "CHANGE_STATE":
             const newState = {
                 ...state
@@ -29,6 +33,8 @@ export const filterStateReducer = (
     }
 };
 
+/// [filterOrderState] represent the order is old->new or new->old.
+/// It can be controll from Filter Component.
 const filterOrderState = {
     order: "desc"
 };
@@ -55,6 +61,8 @@ export const filterOrderReducer = (state: FilterOrder = filterOrderState, action
     }
 };
 
+/// [filterKeywordState] represent the filter keyword which user used for last searching.
+/// It can be controll from Filter Component.
 const filterKeywordState = {
     keyword: ""
 };

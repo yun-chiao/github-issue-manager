@@ -9,12 +9,14 @@ interface Repo {
     name: string;
 }
 
+/// Fetch all the repos of the user, and provide some logical functions for SelectRepo page.
 const useRepos = (): { isLoading: boolean; selectRepo: (repo: Repo) => void; repos: Repo[] } => {
     const [isLoading, setIsLoading] = useState(false);
     const [repos, setRepos] = useState([]);
     const [cookies, setCookie] = useCookies(["token", "owner", "repo"]);
     const navigate = useNavigate();
 
+    /// Fetch all the repos of the user.
     useEffect(() => {
         const getData = async () => {
             setIsLoading(true)
@@ -25,6 +27,7 @@ const useRepos = (): { isLoading: boolean; selectRepo: (repo: Repo) => void; rep
         getData()
     }, [cookies["token"]])
 
+    /// Store the chosen repo and its' owner into cookie.
     const selectRepo = (repo) => {
         setCookie("owner", repo.owner.login, {
             path: "/"

@@ -4,11 +4,15 @@ import PacmanLoader from "react-spinners/PacmanLoader";
 
 import useRepos from "../hook/useRepo";
 
+/// The page let users choose the repo he/she want to manage.
 function SelectRepo(): JSX.Element {
+    // Whether the user get into the block of choosing repos.
     const [isSelect, setIsSelect] = useState(false);
+    // The word in input element.
     const [repoKey, setRepoKey] = useState("");
     const { repos, isLoading, selectRepo } = useRepos();
 
+    /// Updating the stored word [repoKey] when the user typing.
     const handleRepoKey = (e) => {
         setRepoKey(e.target.value)
     }

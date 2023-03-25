@@ -9,16 +9,17 @@ import { closeIssue } from "../service";
 import { Issue } from "../type";
 import StateMenu from "./StateMenu";
 
+/// The component to display each issue on Issues list in Issues page.
 function IssueCard({ issue }: { issue: Issue }): JSX.Element {
     const [cookies] = useCookies(["token", "owner", "repo"]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const mdParser = new MarkdownIt(/* Markdown-it options */);
 
+    /// When users click the Card, navigating to the certain issue page.
     const toEditIssue = () => navigate(`/edit/${issue.number}`);
 
-
-    /// To close the issue when users click the trash icon.
+    /// When users click the trash icon, closing the issue.
     const deleteIssue = () => closeIssue(dispatch, issue.number, cookies["token"], cookies["owner"], cookies["repo"]);
 
     return (

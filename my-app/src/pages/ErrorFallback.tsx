@@ -1,5 +1,6 @@
 import React from "react";
 
+/// The page will be shown when some component crashed and info users something wrong.
 function ErrorFallback(): JSX.Element {
     return (
         <div className="flex h-screen w-full flex-col items-center justify-center bg-sky-900">

@@ -17,41 +17,50 @@ const itemTextColor: { [key: string]: string } = {
     "Done": "text-emerald-500"
 }
 
-// Define text's color for different labels.
+// Define bg-color for different labels displaying on the IssueCard.
 const infoBgColor: { [key: string]: string } = {
     "Open": "bg-amber-500",
     "Progressing": "bg-rose-500",
     "Done": "bg-emerald-500"
 }
 
+// Define the Text on the Filter to displaying the order.
 const orderText: { [key: string]: string } = {
     "asc": "舊新",
     "desc": "新舊"
 }
 
+/// The component to display Filter which can controll filter condition for fetching issues.
 function Filter(): JSX.Element {
     const filterState = useSelector((state: RootState) => state.filterStateReducer);
     const filterOrder = useSelector((state: RootState) => state.filterOrderReducer);
     const preSearchKey = useSelector((state: RootState) => state.filterKeywordReducer.keyword);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const toCreateIssue = () => navigate("/create");
     const [searchKey, setSearchKey] = useState(preSearchKey);
 
+    /// When users click the button '+', navigating to ./create page.
+    const toCreateIssue = () => navigate("/create");
+
+    /// When users click the item in state menu on filter, it would info Reducer to update newest state data.
     const ChangeState = (e: any) => dispatch({
         type: "CHANGE_STATE", payload: {
             changeState: e.value
         }
     })
 
+    /// When users click the order button, it would info Reducer to update newest order.
     const toggleOrder = () => dispatch({
         type: "TOGGLE_ORDER"
     })
 
+    /// To store the newest keyword in input element when users typing.    
     const handleSearchKey = (e: React.ChangeEvent<HTMLInputElement>) => setSearchKey(e.target.value)
 
+    /// When users keydown enter on focusing input element, it would behave like clicking search button.
     const handleKeyDown = (e: React.KeyboardEvent) => { if (e.key === "Enter") searchIssue() }
 
+    /// When users click the search button or keydown enter, it would info Reducer to store the search keyword.
     const searchIssue = async () => dispatch({
         type: "UPDATE_KEYWORD", payload: {
             keyword: searchKey

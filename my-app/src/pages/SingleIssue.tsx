@@ -8,6 +8,7 @@ import TextareaAutosize from "react-textarea-autosize";
 
 import { useSingleIssue } from "../hook/useIssue";
 
+/// The page to display the single issue's information, and the user can edit it.
 function SingleIssues(): JSX.Element {
     const mdParser = new MarkdownIt(/* Markdown-it options */);
     const bodyRef = useRef(null);
@@ -26,7 +27,7 @@ function SingleIssues(): JSX.Element {
     /// [isFocus] will be false if users click not focus on body content, and users can't edit it.
     const handleEditorBlur = () => setIsBodyFocus(false);
 
-    // Check if the body can be edited.
+    /// Check if the body can be edited.
     useEffect(() => {
         if (isBodyFocus) {
             bodyRef.current.focus();

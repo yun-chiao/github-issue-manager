@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 import { createIssue, getIssue, UpdateIssue } from "../service";
 
+/// Fetch the single issue's data, and provide some logical functions for SingleIssue page.
 export const useSingleIssue = (): {
     body: string;
     setBody: React.Dispatch<React.SetStateAction<string>>;
@@ -25,10 +26,13 @@ export const useSingleIssue = (): {
     /// When users in the edit mode, fetching issue data.
     /// When users in the create mode, do nothing.
     useEffect(() => {
+
+        // Scroll to top to make view consistent.
         window.scrollTo({
             top: 0, behavior: "smooth"
         });
 
+        // Fetch the issue's data.
         const getContent = async () => {
             setIsLoading(true);
             const data = await getIssue(id, cookies["token"], cookies["owner"], cookies["repo"]);

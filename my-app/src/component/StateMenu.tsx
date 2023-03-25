@@ -17,6 +17,7 @@ const itemTextColor: { [key: string]: string } = {
     "Done": "text-emerald-500"
 }
 
+/// The component to display the menu that let users can choose and view the current state.
 function StateMenu({ issue }: { issue: Issue }): JSX.Element {
     const [cookies] = useCookies(["token", "owner", "repo"]);
     const dispatch = useDispatch();

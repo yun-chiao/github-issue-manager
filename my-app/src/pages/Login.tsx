@@ -3,6 +3,7 @@ import PacmanLoader from "react-spinners/PacmanLoader";
 
 import useAuth from "../hook/useAuth";
 
+/// The page to let users login.
 function Login(): JSX.Element {
     const { login, isLoading } = useAuth();
 
