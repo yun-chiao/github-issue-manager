@@ -21,25 +21,23 @@ function Issues(): JSX.Element {
                         <Filter></Filter>
                     </div>
                     {isLoading ? (<div>Loading...</div>) : (
-                        <>
-                            <InfiniteScroll
-                                style={{ "overflow": "hidden" }}
-                                className='divide-y'
-                                dataLength={issues.length}
-                                next={fetchMoreIssues}
-                                hasMore={hasMore}
-                                loader={<div className="text-center text-2xl my-4 h-10">
-                                    <h2>Loading</h2>
-                                </div>}
-                                endMessage={<div className="text-center text-2xl my-4 h-10">
-                                    <h2>No more issues!</h2>
-                                </div>}
-                            >
-                                {issues.map((issue) => (
-                                    <IssueCard key={issue.number} issue={issue} />
-                                ))}
-                            </InfiniteScroll>
-                        </>
+                        <InfiniteScroll
+                            style={{ "overflow": "hidden" }}
+                            className='divide-y'
+                            dataLength={issues.length}
+                            next={fetchMoreIssues}
+                            hasMore={hasMore}
+                            loader={<div className="text-center text-2xl my-4 h-10">
+                                <h2>Loading</h2>
+                            </div>}
+                            endMessage={<div className="text-center text-2xl my-4 h-10">
+                                <h2>No more issues!</h2>
+                            </div>}
+                        >
+                            {issues.map((issue) => (
+                                <IssueCard key={issue.number} issue={issue} />
+                            ))}
+                        </InfiniteScroll>
                     )}
                 </div>
             </div>
