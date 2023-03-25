@@ -85,7 +85,7 @@ export const closeIssue = async (
       }
     });
   } catch (error) {
-    toast.error("Server error");
+    toast.error("Server error - 關閉失敗");
     console.error(error);
   }
 }
@@ -137,7 +137,7 @@ export const updateState = async (
 
     toast.success("成功更新issue");
   } catch (error) {
-    toast.error("Server error");
+    toast.error("Server error - 更新失敗");
     console.error(error);
   }
 }
@@ -167,7 +167,7 @@ export const createIssue = async (
     toast.success("成功新增issue");
 
   } catch (error) {
-    toast.error("Server error");
+    toast.error("Server error - 新增失敗");
     console.error(error);
   }
 }
@@ -196,7 +196,7 @@ export const UpdateIssue = async (
     toast.success("成功更新issue");
 
   } catch (error) {
-    toast.error("Server error");
+    toast.error("Server error - 更新失敗");
     console.error(error);
   }
 }
@@ -223,7 +223,7 @@ export const getIssue = async (
     })
     return response.data
   } catch (error) {
-    toast.error("Server error");
+    toast.error("Server error - 抓取資料失敗");
     console.error(error);
   }
 }
@@ -292,7 +292,7 @@ export const getIssues = async (
       })
     }
   } catch (error) {
-    toast.error("Server error");
+    toast.error("Server error - 抓取資料失敗");
     console.error(error);
   }
 }
