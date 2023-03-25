@@ -24,9 +24,9 @@ export const useSingleIssue = (): {
     /// When users in the edit mode, fetching issue data.
     /// When users in the create mode, do nothing.
     useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         const getContent = async () => {
             setIsLoading(true);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
             const data = await getIssue(id, cookies['token'], cookies['owner'], cookies['repo']);
             setTitle(data.title);
             setBody(data.body);
