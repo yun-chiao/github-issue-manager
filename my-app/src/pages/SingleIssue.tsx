@@ -32,40 +32,51 @@ function SingleIssues(): JSX.Element {
 
     return (
         <>
-            {isLoading ? <div>Loading...</div> :
-                <div className="bg-sky-900 w-full h-full flex justify-center min-h-screen">
-                    <div className="bg-white w-list h-full flex flex-col items-center min-h-screen">
-                        <div className='w-full flex justify-end items-center gap-x-4 sticky top-0 bg-sky-600 h-20 px-10'>
-                            <button className="bg-sky-700 hover:bg-sky-800 text-white w-12 h-8 rounded-md text-sm" onClick={toPreviousPage}>返回</button>
-                            <button className="bg-sky-700 hover:bg-sky-800 text-white w-12 h-8 rounded-md text-sm" onClick={updateIssue}>提交</button>
-                        </div>
-                        <div className="w-full min-h-screen bg-white p-10 text-black divide-y-2 divide-sky-200">
-                            <div className='pb-2 text-3xl font-normal cursor-text'>
-                                <input value={title}
-                                    onChange={e => handleTitleChange(e.target.value)}
-                                    placeholder={"請輸入標題"}
-                                    className={`border-none h-full w-full bg-transparent focus:outline-0 truncate`}>
-                                </input>
-                            </div>
-                            <div onClick={handleEditorFocus}
-                                onBlur={handleEditorBlur}
-                                className="pt-2 cursor-text">
-                                <div className={`whitespace-pre text-lg pt-4 ${isBodyFocus || body.length === 0 ? "hidden" : ""}`}
-                                    style={{ background: "transparent", color: "black" }}
-                                    dangerouslySetInnerHTML={{ __html: mdParser.render(body) }}
-                                />
-                                <TextareaAutosize value={body}
-                                    onChange={e => handleBodyChange(e.target.value)}
-                                    minRows={1}
-                                    ref={bodyRef}
-                                    placeholder={"請用markdown語法輸入超過30字的內容"}
-                                    className={`border-none bg-transparent h-full pt-2 focus:outline-1 outline-sky-700 focus:caret-blue-500 w-full ${isBodyFocus || body.length === 0 ? "" : "hidden"}`}
-                                ></TextareaAutosize>
-                            </div>
-                        </div>
+
+            <div className="bg-sky-900 w-full h-full flex justify-center min-h-screen">
+                <div className="bg-white w-list h-full flex flex-col items-center min-h-screen">
+                    <div className='w-full flex justify-end items-center gap-x-4 sticky top-0 bg-sky-600 h-20 px-10'>
+                        {isLoading ? <></> : (<>
+                            <button className="bg-sky-700 hover:bg-sky-800 text-white w-12 h-8 rounded-md text-sm"
+                                onClick={toPreviousPage}>
+                                返回
+                            </button>
+                            <button className="bg-sky-700 hover:bg-sky-800 text-white w-12 h-8 rounded-md text-sm"
+                                onClick={updateIssue}>
+                                提交
+                            </button>
+                        </>)}
+                    </div>
+                    <div className="w-full min-h-screen bg-white p-10 text-black divide-y-2 divide-sky-200">
+                        {isLoading ? <div>Loading...</div> : (
+                            <>
+                                <div className='pb-2 text-3xl font-normal cursor-text'>
+                                    <input value={title}
+                                        onChange={e => handleTitleChange(e.target.value)}
+                                        placeholder={"請輸入標題"}
+                                        className={`border-none h-full w-full bg-transparent focus:outline-0 truncate`}>
+                                    </input>
+                                </div>
+                                <div onClick={handleEditorFocus}
+                                    onBlur={handleEditorBlur}
+                                    className="pt-2 cursor-text">
+                                    <div className={`whitespace-pre text-lg pt-4 ${isBodyFocus || body.length === 0 ? "hidden" : ""}`}
+                                        style={{ background: "transparent", color: "black" }}
+                                        dangerouslySetInnerHTML={{ __html: mdParser.render(body) }}
+                                    />
+                                    <TextareaAutosize value={body}
+                                        onChange={e => handleBodyChange(e.target.value)}
+                                        minRows={1}
+                                        ref={bodyRef}
+                                        placeholder={"請用markdown語法輸入超過30字的內容"}
+                                        className={`border-none bg-transparent h-full pt-2 focus:outline-1 outline-sky-700 focus:caret-blue-500 w-full ${isBodyFocus || body.length === 0 ? "" : "hidden"}`}
+                                    ></TextareaAutosize>
+                                </div>
+                            </>)}
                     </div>
                 </div>
-            }
+            </div>
+
         </>
 
     );
