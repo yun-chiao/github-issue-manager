@@ -42,6 +42,28 @@
         white-space: pre-wrap;
         word-break: break-all;
     }
+    ::-webkit-scrollbar {
+        @apply bg-transparent w-2
+      }
+  
+      ::-webkit-scrollbar-button {
+        background: transparent;
+        border-radius: 4px;
+      }
+  
+      ::-webkit-scrollbar-track-piece {
+        background: transparent;
+      }
+  
+      ::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0.4);
+        border: 1px solid slategrey;
+      }
+  
+      ::-webkit-scrollbar-track {
+        box-shadow: transparent;
+      }
 }
 
 @layer components {
