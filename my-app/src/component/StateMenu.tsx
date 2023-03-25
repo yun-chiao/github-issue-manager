@@ -11,21 +11,21 @@ import { Issue, RootState } from "../type";
 const states: string[] = ["Open", "Progressing", "Done"];
 
 // Define text's color for different labels.
-const itemTextColor: {[key: string]: string} = {
+const itemTextColor: { [key: string]: string } = {
     "Open": "text-amber-500",
     "Progressing": "text-rose-500",
     "Done": "text-emerald-500"
 }
 
-function StateMenu({issue}: {issue: Issue}): JSX.Element {
+function StateMenu({ issue }: { issue: Issue }): JSX.Element {
     const [cookies] = useCookies(["token", "owner", "repo"]);
     const dispatch = useDispatch();
-    const filterState = useSelector((state:RootState) => state.filterStateReducer);
+    const filterState = useSelector((state: RootState) => state.filterStateReducer);
     const [labelText, setLabelText] = useState("")
 
     /// To initial state view.
     useEffect(() => {
-        const label = issue.labels.filter( label => states.includes(label.name));
+        const label = issue.labels.filter(label => states.includes(label.name));
         // If the issue has no state label, give it temp label 'Open'.
         label.length === 0 ? setLabelText("Open") : setLabelText(label[0].name);
     }, [issue])
@@ -38,18 +38,18 @@ function StateMenu({issue}: {issue: Issue}): JSX.Element {
 
     return (
         <Menu menuClassName="bg-slate-100 w-28 h-28 p-2 rounded-md flex flex-col justify-evenly"
-                      direction="right"
-                      offsetX={12}
-                      menuButton={<button className={`h-10 w-24 rounded-md bg-slate-100 hover:bg-slate-400 ${itemTextColor[labelText]}`}>{labelText}</button>} 
-                      transition
-                >
-                    {Object.keys(filterState).map((key) => {
-                    return (
-                        <MenuItem key={`${issue.number}-${key}`}  onClick={(e) => ChangeState(e)} className={`state-item ${itemTextColor[key]}`}>
-                             {key}
-                        </MenuItem>
-                    )
-                })}
+            direction="right"
+            offsetX={12}
+            menuButton={<button className={`h-10 w-24 rounded-md bg-slate-100 hover:bg-slate-400 ${itemTextColor[labelText]}`}>{labelText}</button>}
+            transition
+        >
+            {Object.keys(filterState).map((key) => {
+                return (
+                    <MenuItem key={`${issue.number}-${key}`} onClick={(e) => ChangeState(e)} className={`state-item ${itemTextColor[key]}`}>
+                        {key}
+                    </MenuItem>
+                )
+            })}
         </Menu>
     );
 }

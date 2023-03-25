@@ -43,12 +43,12 @@ function IssueCard({ issue }: { issue: Issue }): JSX.Element {
                 <div className="h-1/4 truncate pt-1 text-2xl hover:cursor-pointer hover:underline" onClick={toEditIssue}>{issue.title} </div>
                 <div className="card-scroll h-3/4 overflow-y-auto whitespace-pre-wrap break-all pt-2 hover:cursor-pointer hover:underline"
                     style={{
- background: "transparent" 
-}}
+                        background: "transparent"
+                    }}
                     onClick={toEditIssue}
                     dangerouslySetInnerHTML={{
- __html: mdParser.render(issue.body) 
-}}
+                        __html: mdParser.render(issue.body)
+                    }}
                 />
             </div>
         </div>
