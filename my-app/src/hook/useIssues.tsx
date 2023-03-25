@@ -27,8 +27,8 @@ const useIssues = (): { isLoading: boolean; fetchMoreIssues: () => void } => {
 
   useEffect(() => {
     window.scrollTo({
- top: 0, behavior: "smooth" 
-});
+      top: 0, behavior: "smooth"
+    });
     setIsLoading(true);
     fetchIssues(1);
     setPage(1);
@@ -40,8 +40,9 @@ const useIssues = (): { isLoading: boolean; fetchMoreIssues: () => void } => {
   };
 
   return {
- isLoading, fetchMoreIssues 
-};
+    isLoading,
+    fetchMoreIssues
+  };
 };
 
 export default useIssues;

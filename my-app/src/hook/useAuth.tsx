@@ -19,12 +19,12 @@ function useAuth(): { login: () => void; isLoading: boolean } {
             setIsLoading(true);
             const token = await getToken(code)
             setCookie("token", token, {
- path: "/" 
-})
+                path: "/"
+            })
             const username = await getUser(token);
             setCookie("username", username, {
- path: "/" 
-})
+                path: "/"
+            })
             navigate("/select");
             setIsLoading(false);
         }
@@ -39,8 +39,8 @@ function useAuth(): { login: () => void; isLoading: boolean } {
     };
 
     return {
- login, isLoading 
-};
+        login, isLoading
+    };
 }
 
 export default useAuth;

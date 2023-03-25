@@ -37,8 +37,8 @@ function SelectRepo(): JSX.Element {
                                 onClick={() => selectRepo(repo)}>{repo.name}</button>
                         })}
                     </div>
-                </>
-            )}
+                </>)
+            }
         </div>
     );
 }

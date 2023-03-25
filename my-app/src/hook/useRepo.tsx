@@ -27,18 +27,18 @@ const useRepos = (): { isLoading: boolean; selectRepo: (repo: Repo) => void; rep
 
     const selectRepo = (repo) => {
         setCookie("owner", repo.owner.login, {
- path: "/" 
-})
+            path: "/"
+        })
         setCookie("repo", repo.name, {
- path: "/" 
-})
+            path: "/"
+        })
         toast.success(`進入${repo.owner.login}的${repo.name}！`);
         navigate("/issues")
     }
 
     return {
- isLoading, selectRepo, repos 
-};
+        isLoading, selectRepo, repos
+    };
 };
 
 export default useRepos;

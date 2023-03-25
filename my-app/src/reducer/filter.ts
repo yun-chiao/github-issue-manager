@@ -68,7 +68,6 @@ export const filterKeywordReducer = (
 ): FilterKeyword => {
     switch (action.type) {
         case "UPDATE_KEYWORD":
-            console.log("UPDATE_KEYWORD", action.payload.keyword)
             return {
                 keyword: action.payload.keyword
             }

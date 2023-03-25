@@ -1,6 +1,6 @@
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { useLocation,useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { createIssue, getIssue, UpdateIssue } from "../service";
@@ -26,8 +26,8 @@ export const useSingleIssue = (): {
     /// When users in the create mode, do nothing.
     useEffect(() => {
         window.scrollTo({
- top: 0, behavior: "smooth" 
-});
+            top: 0, behavior: "smooth"
+        });
 
         const getContent = async () => {
             setIsLoading(true);
@@ -71,6 +71,12 @@ export const useSingleIssue = (): {
     };
 
     return {
- body, setBody, title, setTitle, toPreviousPage, updateIssue, isLoading 
-};
+        body,
+        setBody,
+        title,
+        setTitle,
+        toPreviousPage,
+        updateIssue,
+        isLoading
+    };
 };

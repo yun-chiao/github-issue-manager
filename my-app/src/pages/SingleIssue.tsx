@@ -1,7 +1,7 @@
 import "./markdown.css"
 
 import MarkdownIt from "markdown-it";
-import { useEffect, useRef,useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import React from "react";
 import PacmanLoader from "react-spinners/PacmanLoader";
 import TextareaAutosize from "react-textarea-autosize";
@@ -35,7 +35,6 @@ function SingleIssues(): JSX.Element {
 
     return (
         <>
-
             <div className="flex h-full min-h-screen w-full justify-center bg-sky-900">
                 <div className="flex h-full min-h-screen w-list flex-col items-center bg-white">
                     <div className='sticky top-0 flex h-20 w-full items-center justify-end gap-x-4 bg-sky-600 px-10'>
@@ -65,11 +64,11 @@ function SingleIssues(): JSX.Element {
                                     className="cursor-text pt-2">
                                     <div className={`whitespace-pre pt-4 text-lg ${isBodyFocus || body.length === 0 ? "hidden" : ""}`}
                                         style={{
- background: "transparent", color: "black" 
-}}
+                                            background: "transparent", color: "black"
+                                        }}
                                         dangerouslySetInnerHTML={{
- __html: mdParser.render(body) 
-}}
+                                            __html: mdParser.render(body)
+                                        }}
                                     />
                                     <TextareaAutosize value={body}
                                         onChange={e => handleBodyChange(e.target.value)}
@@ -80,13 +79,11 @@ function SingleIssues(): JSX.Element {
                                     ></TextareaAutosize>
                                 </div>
                             </div>
-                        </>)}
+                        </>)
+                    }
                 </div>
             </div>
-
-
         </>
-
     );
 }
 

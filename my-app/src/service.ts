@@ -267,7 +267,6 @@ export const getIssues = async (
         "Content-Type": "application/json"
       },
     })
-    console.log(response.data.items)
 
     if (response.data.items.length < per_page) {
       dispatch({

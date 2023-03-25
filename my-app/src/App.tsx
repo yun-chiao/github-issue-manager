@@ -4,7 +4,7 @@ import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { toast,ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 import ErrorFallback from "./pages/ErrorFallback";
 import Issues from "./pages/Issues";
@@ -32,7 +32,6 @@ function App(): JSX.Element {
         </Router>
       </Provider>
     </ErrorBoundary>
-
   );
 }
 
