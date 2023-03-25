@@ -42,6 +42,9 @@
         white-space: pre-wrap;
         word-break: break-all;
     }
+    body{
+        overflow: overlay;
+    }
     ::-webkit-scrollbar {
         @apply bg-transparent w-2
       }
