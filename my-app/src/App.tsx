@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
+import Logout from "./component/Logout";
 import ErrorFallback from "./pages/ErrorFallback";
 import Issues from "./pages/Issues";
 import Login from "./pages/Login";
@@ -21,6 +22,7 @@ function App(): JSX.Element {
       <ToastContainer autoClose={2000} position={toast.POSITION.BOTTOM_RIGHT} />
       <Provider store={store}>
         <Router>
+          <Logout></Logout>
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/issues" element={<Issues />} />
