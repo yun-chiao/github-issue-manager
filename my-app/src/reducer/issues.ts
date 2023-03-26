@@ -24,12 +24,14 @@ export const issuesReducer = (
                     ...action.payload.issues
                 ],
             }
-        // Modify the issues content directly because the API would fetch old data sometime.
+        // Modify the issues content directly rather than recall API. Both the close and update state may be act frequently, 
+        // so it should not recall API. Moreover, many refresh for view will decrease experience.
         case "REMOVE_ISSUE":
             return {
                 issues: state.issues.filter(item => item.number !== action.payload.closed_number)
             }
-        // Modify the issues content directly because the API would fetch old data sometime.
+        // Modify the issues content directly rather than recall API. Both the close and update state may be act frequently, 
+        // so it should not recall API. Moreover, many refresh for view will decrease experience.        
         case "UPDATE_STATE":
             return {
                 issues: state.issues.map(item => {
