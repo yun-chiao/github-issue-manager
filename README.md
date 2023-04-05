@@ -15,7 +15,7 @@ Homepage URL 以及 Authorization callback URL 皆填入 http://localhost:3000/ 
 .env檔的內容如下： \
 REACT_APP_CLIENT_ID = "your client id" \
 REACT_APP_CLIENT_SECRET = "your client secret" \
-REACT_APP_SERVER_URL = "https://manager-proxy-server-production.up.railway.app" \
+REACT_APP_SERVER_URL = "https://manager-proxy-server-production.up.railway.app" 
 7. npm start 即可使用
 
 ## 架構設計 
