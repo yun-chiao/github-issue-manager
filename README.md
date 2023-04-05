@@ -3,15 +3,19 @@ https://github-issue-manager.up.railway.app
 
 ## 啟動步驟
 1. clone 這個 repo
-2. cd至my-app資料夾
-3. git checkout origin/dev 切到 dev branch
+2. cd github-issue-manager/my-app 到my-app資料夾
+3. git checkout dev 切到 dev branch
 4. npm install
-5. 到https://github.com/settings/developers註冊一個 github oauth app 並記下 client id 以及 client secret 以供下一步驟使用
-6. 在my-app資料夾下新增.env檔案 
-.env檔的內容如下：
-REACT_APP_CLIENT_ID = "your client id"
-REACT_APP_CLIENT_SECRET = "your client secret"
-REACT_APP_SERVER_URL = "https://manager-proxy-server-production.up.railway.app"
+5. 到 https://github.com/settings/developers 註冊一個 github oauth app\
+Application name 任意填\
+Homepage URL 以及 Authorization callback URL 皆填入 http://localhost:3000/ \
+創建好之後要生成Client secrets\
+記下 Client ID 以及 Client secrets 以供下一步驟使用
+6. 在my-app資料夾下新增.env檔案 \
+.env檔的內容如下： \
+REACT_APP_CLIENT_ID = "your client id" \
+REACT_APP_CLIENT_SECRET = "your client secret" \
+REACT_APP_SERVER_URL = "https://manager-proxy-server-production.up.railway.app" 
 7. npm start 即可使用
 
 ## 架構設計 
@@ -25,10 +29,10 @@ src \
 |- App.tsx  \
 |- index.tsx\
 |- service.ts 用來放所有與 API 有關的服務\
-|- type.ts 用來定義所需要的 type\
+|- type.ts 用來定義所需要的 type
 
 ## Error 
-1. 若是接server有問題(deplot平台偶爾會壞掉)，可以clone https://github.com/yun-chiao/manager-proxy-server，然後輸入node index.js啟動server，
+1. 若是接server有問題(deploy平台偶爾會壞掉)，可以clone https://github.com/yun-chiao/manager-proxy-server，然後輸入node index.js啟動server，
 並把.env檔案中更改 REACT_APP_SERVER_URL =  "http://localhost:5000"來使用 local 的 server。 
 
 ## FQA
