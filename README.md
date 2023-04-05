@@ -29,7 +29,7 @@ src \
 |- App.tsx  \
 |- index.tsx\
 |- service.ts 用來放所有與 API 有關的服務\
-|- type.ts 用來定義所需要的 type\
+|- type.ts 用來定義所需要的 type
 
 ## Error 
 1. 若是接server有問題(deploy平台偶爾會壞掉)，可以clone https://github.com/yun-chiao/manager-proxy-server，然後輸入node index.js啟動server，
